@@ -1,46 +1,31 @@
 <template>
-  <div id="map"></div>
+  <Map v-bind:center="center" id="map" :zoom="8" v-on:click="handleClick">
+    <GMarker :position="currentMarker"/>
+  </Map>
 </template>
 
 <script>
-import { Loader } from "@googlemaps/js-api-loader";
-
+import { Map, Marker as GMarker } from "vue2-google-maps";
 export default {
-  data() {
-    return { map: null, currentMarker: null };
-  },
+  components: { Map, GMarker },
 
-  methods:{
-    doSomething(event){
-      console.log(event)
-    }
+  data() {
+    return { map: null, currentMarker: null, center: { lat: 39.1, lng: 280 }};
   },
 
   mounted() {
-    const loader = new Loader({
-      apiKey: process.env.VUE_APP_GOOGLE_API_KEY,
-    });
-
-    let center = { lat: 39.2, lng: 280 };
     window.navigator.geolocation.getCurrentPosition((position) => {
-      center.lat = position.coords.latitude;
-      center.lng = position.coords.longitude;
+      this.center = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude,
+      };
     });
+  },
 
-    loader.load().then((google) => {
-      this.map = new google.maps.Map(document.getElementById("map"), {
-        center,
-        zoom: 8,
-      });
-
-      this.currentMarker = new google.maps.Marker({ map: this.map });
-
-      this.map.addListener("click", (e) => {
-        const position = { lat: e.latLng.lat(), lng: e.latLng.lng() };
-        this.currentMarker.setPosition(position);
-        this.doSomething(e);
-      });
-    });
+  methods: {
+    handleClick(event) {
+      this.currentMarker = { lat: event.latLng.lat(), lng: event.latLng.lng() };
+    },
   },
 };
 </script>
