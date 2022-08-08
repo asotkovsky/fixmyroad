@@ -1,5 +1,5 @@
 <template>
-  <Map v-bind:center="center" id="map" :zoom="8" v-on:click="handleClick">
+  <Map v-bind:center="center" id="map" :zoom="12" v-on:click="handleClick">
     <GMarker :position="currentMarker"/>
   </Map>
 </template>
@@ -25,6 +25,7 @@ export default {
   methods: {
     handleClick(event) {
       this.currentMarker = { lat: event.latLng.lat(), lng: event.latLng.lng() };
+      console.log(this.currentMarker)
     },
   },
 };
