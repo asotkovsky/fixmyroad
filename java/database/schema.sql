@@ -22,14 +22,14 @@ INSERT INTO users (username,password_hash,role) VALUES ('user','$2a$08$UkVvwpULi
 INSERT INTO users (username,password_hash,role) VALUES ('admin','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_ADMIN');
 
 CREATE TABLE potholes (
-  pothole_id serial NOT NULL,
+  id serial NOT NULL,
   datetime_reported timestamp DEFAULT now(),
   longitude decimal (9,6) NOT NULL,
   latitude decimal (8,6) NOT NULL,
   description varchar (200),
   severity int,
   location_on_roadway varchar (10),
-  PRIMARY KEY (pothole_id)
+  PRIMARY KEY (id)
 );
 
 INSERT INTO potholes (longitude, latitude, description, severity, location_on_roadway) VALUES (-82.983330, 39.983334, 'pothole 1', 5, 'shoulder');
