@@ -83,4 +83,4 @@ target
 .worksheet
 
 #secrets
-/.env
+/.env.local
