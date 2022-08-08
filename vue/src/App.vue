@@ -5,7 +5,7 @@
       <div class='links'>
         <router-link v-bind:to="{ name: 'home' }" tag="button">Home</router-link>
         <router-link v-bind:to="{ name: 'potholes-list' }" tag="button">Reported Potholes</router-link>
-        <router-link v-bind:to="{ name: 'report' }" v-if="$store.state.token != ''" tag="button">Report A Pothole</router-link>
+        <router-link v-bind:to="{ name: 'report-pothole' }" v-if="$store.state.token != ''" tag="button">Report A Pothole</router-link>
         <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''" tag="button">Logout</router-link>
         </div>
     </span>
