@@ -1,25 +1,22 @@
 <template>
+<div>
   <div class="pothole-card">
-
-    <Map v-bind:center="center"  :zoom="16" class="card-map">
-      <GMarker :position="center" />
-    </Map>
-    <p>ID: {{ pothole.id }}</p>
-    <p>Description: {{ pothole.description }}</p>
-    <img v-bind:src="require('../assets/severity-icon-' + pothole.severity + '.png')">
-    <p>Location On Roadway: {{ pothole.locationOnRoadway }}</p>
+    <img class='severity-icon' v-bind:src="require('../assets/severity-icon-' + pothole.severity + '.png')">
+    <p>Route</p>
+    <p>Neighborhood</p>
+    <p>{{ pothole.description }}</p>
+    <img class='location-on-roadway-icon' v-bind:src="require('../assets/icon-' + pothole.locationOnRoadway + '.jpg')">
   </div>
+</div>
 
 </template>
 
 <script>
-import { Map, Marker as GMarker } from "vue2-google-maps";
 
 export default {
   props: {
     pothole: Object,
   },
-  components: { Map, GMarker },
 
   data() {
     return {
@@ -30,9 +27,10 @@ export default {
 </script>
 
 <style>
+
 div.pothole-card {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   border-style: solid;
   border-width: 3px;
   border-color:black;
@@ -43,6 +41,16 @@ div.pothole-card {
 .card-map{
   height:15vh;
   width:15vw;
+}
+
+img.location-on-roadway-icon {
+  width: 60px;
+  height: 60px
+}
+
+img.severity-icon {
+  width: 60px;
+  height: 60px
 }
 </style>
 
