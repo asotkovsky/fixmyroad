@@ -21,5 +21,19 @@ CREATE TABLE users (
 INSERT INTO users (username,password_hash,role) VALUES ('user','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER');
 INSERT INTO users (username,password_hash,role) VALUES ('admin','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_ADMIN');
 
+CREATE TABLE potholes (
+  pothole_id serial NOT NULL,
+  datetime_reported timestamp DEFAULT now(),
+  longitude decimal (9,6) NOT NULL,
+  latitude decimal (8,6) NOT NULL,
+  description varchar (200),
+  severity int,
+  location_on_roadway varchar (10),
+  PRIMARY KEY (pothole_id)
+);
+
+INSERT INTO potholes (longitude, latitude, description, severity, location_on_roadway) VALUES (-82.983330, 39.983334, 'pothole 1', 5, 'shoulder');
+INSERT INTO potholes (longitude, latitude, description, severity, location_on_roadway) VALUES (-82.998790, 39.961180, 'pothole 2', 3, 'road');
+INSERT INTO potholes (longitude, latitude, description, severity, location_on_roadway) VALUES (-83.042504, 39.997804, 'pothole 3', 1, 'shoulder');
 
 COMMIT TRANSACTION;
