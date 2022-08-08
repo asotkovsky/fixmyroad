@@ -7,6 +7,7 @@
    Neighborhood: {{neighborhood}}
    City name: {{city}}
    State: {{state}}
+
    </div>
 </template>
 
