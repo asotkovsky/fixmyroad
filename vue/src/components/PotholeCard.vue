@@ -1,10 +1,10 @@
 <template>
   <div class="pothole-card">
       <p>{{pothole.id}}</p>
-      <p>{{pothole.longtitude}}</p>
+      <p>{{pothole.longitude}}</p>
       <p>{{pothole.latitude}}</p>
       <p>{{pothole.description}}</p>
-      <p>{{pothole.severity}}</p>
+      <img v-bind:src="require('../assets/severity-icon-' + pothole.severity + '.png')">
       <p>{{pothole.locationOnRoadway}}</p>
       </div>
 </template>
