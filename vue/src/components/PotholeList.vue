@@ -9,7 +9,7 @@
         <p>Location On Roadway</p>
     </div>
   <div class="potholes-list">
-      <pothole-card v-for="currentPothole in potholes" :key="currentPothole.id" :pothole="currentPothole" />
+      <pothole-card class="pothole.card" v-for="currentPothole in potholes" :key="currentPothole.id" :pothole="currentPothole" />
       </div>
     </div>
 </template>
@@ -39,10 +39,19 @@ PotholeService.getPotholes().then((response) => {
 
 <style>
 
+body {
+    background-color: #0079BF;
+    color: white;
+}
 div.potholes-list {
     display:flex;
     flex-direction: column;
     gap: 20px;
+}
+
+.pothole-card {
+    background-color: white;
+    color:black;
 }
 
 div.list-headers {

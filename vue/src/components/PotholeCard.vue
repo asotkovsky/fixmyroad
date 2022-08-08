@@ -33,7 +33,7 @@ div.pothole-card {
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   border-style: solid;
   border-width: 3px;
-  border-color:black;
+  border-color: #737373;
   border-radius:5px;
   align-items: center;
 }
