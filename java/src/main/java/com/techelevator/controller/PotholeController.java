@@ -1,11 +1,9 @@
 package com.techelevator.controller;
 
+import com.techelevator.dao.LocationDao;
 import com.techelevator.dao.PotholeDao;
 import com.techelevator.model.Pothole;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -14,13 +12,21 @@ import java.util.List;
 public class PotholeController {
 
     private final PotholeDao potholeDao;
+    private final LocationDao locationDao;
 
-    public PotholeController(PotholeDao potholeDao) {
+    public PotholeController(PotholeDao potholeDao, LocationDao locationDao) {
         this.potholeDao = potholeDao;
+        this.locationDao = locationDao;
     }
 
-    @RequestMapping(path="/potholes", method= RequestMethod.GET)
+    @RequestMapping(path = "/potholes", method = RequestMethod.GET)
     public List<Pothole> getAllPotholes() {
         return potholeDao.getAllPotholes();
     }
+
+    @RequestMapping(path = "/location", method = RequestMethod.GET)
+    public String getLocationInfo(@RequestParam double latitude, @RequestParam double longitude){
+        return locationDao.getFromCoordinates(latitude, longitude);
+    }
+
 }
