@@ -1,10 +1,10 @@
 <template>
 <div>
-  <div class="pothole-card">
+  <div :class="{'pothole-card-hover' : descriptionHover}" class="pothole-card">
     <img class='severity-icon' v-bind:src="require('../assets/severity-icon-' + pothole.severity + '.png')">
-    <p>Route</p>
-    <p>Neighborhood</p>
-    <p>{{ pothole.description }}</p>
+    <p>{{pothole.roadName}}</p>
+    <p>{{pothole.neighborhood}}</p>
+    <div id="description" @mouseover.stop="descriptionHover = true" @mouseleave.stop="descriptionHover = false">{{pothole.description }}</div>
     <img class='location-on-roadway-icon' v-bind:src="require('../assets/icon-' + pothole.locationOnRoadway + '.jpg')">
   </div>
 </div>
@@ -21,6 +21,7 @@ export default {
   data() {
     return {
       center: { lat: this.pothole.latitude, lng: this.pothole.longitude },
+      descriptionHover: false
     };
   },
 };
@@ -28,14 +29,34 @@ export default {
 
 <style>
 
+#description {
+  overflow: hidden;
+  text-overflow: clip;
+  max-height: 2.2em;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+#description:hover {
+  max-height: 100%;
+  
+}
+
+
 div.pothole-card {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  gap: 15px;
+  grid-template-columns: .7fr 1.5fr 1.5fr 2fr .7fr;
   border-style: solid;
   border-width: 3px;
   border-color: #737373;
   border-radius:5px;
   align-items: center;
+  min-height:4em;
+}
+
+div.pothole-card-hover {
+  height: auto
 }
 
 .card-map{

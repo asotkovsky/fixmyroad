@@ -26,10 +26,9 @@ export default {
   animation-duration: 2s;
     animation-name: slideIn;
     animation-iteration-count: 1;
-    
-    
-   
+
  }
+ 
  form{
    display: flex;
     flex-direction: column;
