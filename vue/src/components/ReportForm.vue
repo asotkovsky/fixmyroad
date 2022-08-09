@@ -4,6 +4,9 @@
       <div> Neighborhood: {{ neighborhood }}</div>
       <div>City name:{{ city }}</div>
       <div>State: {{ state }}</div>
+
+  
+
     <form class="report-form" @submit.prevent="handleSave">
      <label id="severity" for="severity">Severity </label>
     <div id="severity-selection">
@@ -15,11 +18,15 @@
     </div>
   <label id="location_on_roadway" for="location_on_roadway">Location On Roadway</label>
   <select id="location_on_roadway" v-model="newPothole.locationOnRoadway">
+
     <option value="road">Road</option>
     <option value="shoulder">Shoulder</option>
+
     </select>
+
     <label for="description">Description </label>
   <textarea id="description" v-model="newPothole.description" rows="4" cols="50">Please describe the pothole</textarea>
+
     <input type="submit" value="Submit">
    </form>
   </div>
@@ -104,6 +111,10 @@ export default {
  
  <style>
 
+ 
+
+ 
+
   #severity-selection {
   display: inline-block
   }
@@ -111,4 +122,5 @@ export default {
  .report-form {
    display: flex;
    flex-direction: column; }
+
 </style>
