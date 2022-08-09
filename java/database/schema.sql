@@ -29,13 +29,18 @@ CREATE TABLE potholes (
   description varchar (200),
   severity int,
   location_on_roadway varchar (10),
+  road_name varchar (32),
+  neighborhood varchar (32),
+  city varchar (20),
+  state varchar (2),
+
   PRIMARY KEY (id)
 );
 
-INSERT INTO potholes (longitude, latitude, description, severity, location_on_roadway) VALUES (-82.983330, 39.983334, 'pothole 1', 5, 'shoulder');
-INSERT INTO potholes (longitude, latitude, description, severity, location_on_roadway) VALUES (-82.998790, 39.961180, 'pothole 2', 3, 'road');
-INSERT INTO potholes (longitude, latitude, description, severity, location_on_roadway) VALUES (-83.042504, 39.997804, 'pothole 3', 1, 'shoulder');
-INSERT INTO potholes (longitude, latitude, description, severity, location_on_roadway) VALUES (-83.002533, 39.965521, 'pothole 4', 2, 'road');
-INSERT INTO potholes (longitude, latitude, description, severity, location_on_roadway) VALUES (-83.014596, 39.960514, 'pothole 5', 4, 'shoulder');
+INSERT INTO potholes (longitude, latitude, description, severity, location_on_roadway, road_name, neighborhood, city, state) VALUES (-82.983330, 39.983334, 'pothole 1', 5, 'shoulder', 'Cleveland Ave', 'Linden', 'Columbus', 'OH');
+INSERT INTO potholes (longitude, latitude, description, severity, location_on_roadway, road_name, neighborhood, city, state) VALUES (-82.998790, 39.961180, 'pothole 2', 3, 'road', 'Cleveland Ave', 'Linden', 'Columbus', 'OH');
+INSERT INTO potholes (longitude, latitude, description, severity, location_on_roadway, road_name, neighborhood, city, state) VALUES (-83.042504, 39.997804, 'pothole 3', 1, 'shoulder', 'Cleveland Ave', 'Linden', 'Columbus', 'OH');
+INSERT INTO potholes (longitude, latitude, description, severity, location_on_roadway, road_name, neighborhood, city, state) VALUES (-83.002533, 39.965521, 'pothole 4', 2, 'road', 'Cleveland Ave', 'Linden', 'Columbus', 'OH');
+INSERT INTO potholes (longitude, latitude, description, severity, location_on_roadway, road_name, neighborhood, city, state) VALUES (-83.014596, 39.960514, 'pothole 5', 4, 'shoulder', 'Cleveland Ave', 'Linden', 'Columbus', 'OH');
 
 COMMIT TRANSACTION;

@@ -19,7 +19,7 @@ public class JdbcPotholeDao implements PotholeDao {
     public List<Pothole> getAllPotholes() {
         List<Pothole> potholes = new ArrayList<Pothole>();
 
-        String sql = "SELECT potholes.id, potholes.datetime_reported, potholes.longitude, potholes.latitude, potholes.description, potholes.severity, potholes.location_on_roadway FROM potholes";
+        String sql = "SELECT potholes.id, potholes.datetime_reported, potholes.longitude, potholes.latitude, potholes.description, potholes.severity, potholes.location_on_roadway, potholes.road_name, potholes.neighborhood, potholes.city, potholes.state FROM potholes";
 
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
 
@@ -28,6 +28,18 @@ public class JdbcPotholeDao implements PotholeDao {
         }
         return potholes;
     }
+
+    @Override
+    public Pothole createPothole(Pothole pothole) {
+        String sql = "INSERT INTO potholes (longitude, latitude, description, severity, location_on_roadway, road_name, neighborhood, city, state) " +
+                "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) returning id";
+        Integer id = jdbcTemplate.queryForObject(sql, Integer.class, pothole.getLongitude(), pothole.getLatitude(), pothole.getDescription(), pothole.getSeverity(), pothole.getLocationOnRoadway(), pothole.getRoadName(), pothole.getNeighborhood(), pothole.getCity(), pothole.getState());
+        pothole .setId(id);
+        return pothole;
+    }
+
+
+
 
     private Pothole mapRowToPothole(SqlRowSet results) {
         Pothole pothole = new Pothole();
@@ -39,6 +51,10 @@ public class JdbcPotholeDao implements PotholeDao {
         pothole.setDescription( results.getString("description"));
         pothole.setSeverity( results.getInt("severity"));
         pothole.setLocationOnRoadway( results.getString("location_on_roadway"));
+        pothole.setRoadName(results.getString("road_name"));
+        pothole.setNeighborhood(results.getString("neighborhood"));
+        pothole.setCity(results.getString("city"));
+        pothole.setState(results.getString("state"));
 
         return pothole;
 
