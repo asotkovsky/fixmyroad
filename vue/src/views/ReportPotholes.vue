@@ -1,5 +1,6 @@
 <template>
 <div class="report-form">
+
     <report-map/> 
     <report-form/>
 
@@ -25,6 +26,7 @@ export default {
   animation-duration: 2s;
     animation-name: slideIn;
     animation-iteration-count: 1;
+
  }
  
  form{
