@@ -28,5 +28,9 @@ public class PotholeController {
     public String getLocationInfo(@RequestParam double latitude, @RequestParam double longitude){
         return locationDao.getFromCoordinates(latitude, longitude);
     }
+    @RequestMapping(path = "/potholes", method = RequestMethod.POST)
+    public Pothole createPothole (@RequestBody Pothole pothole){
+        return potholeDao.createPothole(pothole);
+    }
 
 }

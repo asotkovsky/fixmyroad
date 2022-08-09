@@ -1,6 +1,7 @@
 package com.techelevator.model;
 
 import java.sql.Timestamp;
+import java.util.Objects;
 
 public class Pothole {
 
@@ -11,6 +12,55 @@ public class Pothole {
     private String description;
     private int severity;
     private String locationOnRoadway;
+    private String roadName;
+    private String neighborhood;
+    private String city;
+    private String state;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Pothole)) return false;
+        Pothole pothole = (Pothole) o;
+        return id == pothole.id && Double.compare(pothole.longitude, longitude) == 0 && Double.compare(pothole.latitude, latitude) == 0 && severity == pothole.severity && Objects.equals(datetimeReported, pothole.datetimeReported) && Objects.equals(description, pothole.description) && Objects.equals(locationOnRoadway, pothole.locationOnRoadway) && Objects.equals(roadName, pothole.roadName) && Objects.equals(neighborhood, pothole.neighborhood) && Objects.equals(city, pothole.city) && Objects.equals(state, pothole.state);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, datetimeReported, longitude, latitude, description, severity, locationOnRoadway, roadName, neighborhood, city, state);
+    }
+
+    public String getRoadName() {
+        return roadName;
+    }
+
+    public void setRoadName(String roadName) {
+        this.roadName = roadName;
+    }
+
+    public String getNeighborhood() {
+        return neighborhood;
+    }
+
+    public void setNeighborhood(String neighborhood) {
+        this.neighborhood = neighborhood;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
 
     public int getId() {
         return id;
@@ -67,4 +117,5 @@ public class Pothole {
     public void setLocationOnRoadway(String locationOnRoadway) {
         this.locationOnRoadway = locationOnRoadway;
     }
+
 }

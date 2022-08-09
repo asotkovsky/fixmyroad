@@ -1,5 +1,8 @@
 <template>
-<div >
+
+
+
+<div class="map">
   <Map v-bind:center="center" id="map" :zoom="12" v-on:click="handleClick">
     <GMarker :position="$store.state.currentPin" />
   </Map>
