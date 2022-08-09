@@ -5,7 +5,7 @@
       <div>City name:{{ city }}</div>
       <div>State: {{ state }}</div>
     <form>
-     <label id="severity" for="severity">Severity </label>
+     <label id="severity" for="severity">Severity: </label>
      <select id="severity">
       <option value="1">1</option>
       <option value="2">2</option>
@@ -13,13 +13,15 @@
       <option value="4">4</option>
       <option value="5">5</option>
      </select>
-     <label for="description">Description </label>
-  <textarea id="description"  rows="4" cols="50">Please describe the pothole</textarea>
-  <label id="location_on_roadway" for="location_on_roadway">Location On Roadway</label>
+     
+  <label id="location_on_roadway" for="location_on_roadway">Location On Roadway:</label>
   <select id="location_on_roadway">
     <option value="road">Road</option>
     <option value="shoulder">Shoulder</option>
+
     </select>
+    <label for="description">Description: </label>
+  <textarea id="description"  rows="4" cols="50">Please describe the pothole</textarea>
     <input type="submit" value="Submit">
    </form>
   </div>
@@ -62,4 +64,10 @@ export default {
 </script>
  
  <style>
+
+ 
+
+ 
+
+
 </style>

@@ -29,7 +29,19 @@
   flex-direction: row;
   justify-content: flex-end;
   align-items: center;
-  gap: 5px
+  gap: 5px;
+  border: #737373;
+  
+  
+  
+}
+.links :hover{
+  background-color: #a1a1a1;
+  color: yellow;
+  border: #737373;
+  
+  
+
 }
 
 #nav img {
