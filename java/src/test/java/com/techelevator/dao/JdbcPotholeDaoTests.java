@@ -31,9 +31,9 @@ public class JdbcPotholeDaoTests extends BaseDaoTests{
         POTHOLE_1.setLocationOnRoadway("shoulder");
         POTHOLE_1.setSeverity(5);
         POTHOLE_1.setDescription("pothole 1");
-        POTHOLE_1.setLatitude(-90);
-        POTHOLE_1.setLongitude(12);
-        POTHOLE_2.setId(1);
+        POTHOLE_1.setLatitude(12);
+        POTHOLE_1.setLongitude(-90);
+        POTHOLE_2.setId(2);
         POTHOLE_2.setState("OH");
         POTHOLE_2.setCity("Columbus");
         POTHOLE_2.setNeighborhood("Linden");

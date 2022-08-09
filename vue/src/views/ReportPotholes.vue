@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="report-form">
     <report-map/> 
     <report-form/>
 
@@ -16,6 +16,13 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+#report-form {
+  border-style: solid;
+  border-width: 3px;
+  border-color: #737373;
+  border-radius:5px;
+  padding: 5px;
+  background-color: white;
+}
 </style>
