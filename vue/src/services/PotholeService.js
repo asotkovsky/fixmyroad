@@ -11,6 +11,9 @@ export default {
 
 
     },
+    createPothole(pothole){
+      return axios.post('/potholes', pothole)
+    }
 
    
 
