@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="report-form">
     <report-map/> 
     <report-form/>
 
@@ -17,5 +17,31 @@ export default {
 </script>
 
 <style>
+.report-form{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;  
+  animation-duration: 2s;
+    animation-name: slideIn;
+    animation-iteration-count: 1;
+
+   
+ }
+ form{
+   display: flex;
+    flex-direction: column;
+    
+ }
+
+
+ @keyframes slideIn {
+    from {
+        margin-left: -300%;
+    }
+    to {
+        margin-left: 0%;
+     }
+}
 
 </style>
