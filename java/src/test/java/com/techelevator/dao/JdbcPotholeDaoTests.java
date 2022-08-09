@@ -56,9 +56,25 @@ public class JdbcPotholeDaoTests extends BaseDaoTests {
         expected.add(POTHOLE_1);
         expected.add(POTHOLE_2);
         List<Pothole> actual = potholeDao.getAllPotholes();
-
         Assert.assertEquals(expected,actual);
 
     }
+    @Test
+    public void addPotholeReturnsNewPothole(){
+       Pothole pothole = new Pothole();
+       pothole.setState("ZZ");
+       Pothole createdPothole = potholeDao.createPothole(pothole);
+       Assert.assertEquals(createdPothole.getId(),3);
+       Assert.assertEquals(pothole, createdPothole);
+
+    }
+    @Test
+    public void addPotholeCreatesInDataBase(){
+        Pothole pothole = new Pothole();
+        potholeDao.createPothole(pothole);
+        List<Pothole> potholeList = potholeDao.getAllPotholes();
+        Assert.assertEquals(potholeList.size(),3);
+    }
+
 
 }
