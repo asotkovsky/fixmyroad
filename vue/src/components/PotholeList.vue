@@ -3,7 +3,7 @@
     <h1>Reported Potholes: {{potholes.length}}</h1>
     <div class='list-headers'>
         <p>Severity</p>
-        <p>Route</p>
+        <p>Road</p>
         <p>Neighborhood</p>
         <p>Description</p>
         <p>Location On Roadway</p>
@@ -29,11 +29,12 @@ data() {
         potholes: []
     }
 },
-created() {
+mounted() {
 PotholeService.getPotholes().then((response) => {
     this.potholes = response.data;
+    this.potholes.sort((a,b) => {return new Date(b.datetimeReported) - new Date(a.datetimeReported)})
 })
-}
+},
 }
 </script>
 
@@ -56,7 +57,8 @@ div.potholes-list {
 
 div.list-headers {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    gap: 15px;
+    grid-template-columns: .7fr 1.5fr 1.5fr 2fr .7fr;
 }
 
 p {
