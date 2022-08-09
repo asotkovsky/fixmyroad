@@ -152,7 +152,14 @@ public class Pothole {
     }
 
     public void setDescription(String description) {
-        this.description = description.substring(0,200);
+        if(description == null){
+            this.description = description;
+        }
+      else if(description.length() > 200){
+           this.description = description.substring(0,200);
+       }
+       else {this.description = description;};
+
     }
 
     public int getSeverity() {
