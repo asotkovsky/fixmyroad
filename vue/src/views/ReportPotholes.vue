@@ -1,6 +1,6 @@
 <template>
 <div class="report-form">
->>>>>>> a1a39300c7b3c892abb8b37c5b200ab60ba3ad40
+
     <report-map/> 
     <report-form/>
 
@@ -26,12 +26,8 @@ export default {
   animation-duration: 2s;
     animation-name: slideIn;
     animation-iteration-count: 1;
-    border-style: solid;
-    border-width: 3px;
-    border-color: #737373;
-    border-radius:5px;
-    padding: 5px;
-    background-color: white;
+    
+    
    
  }
  form{

@@ -116,11 +116,16 @@ export default {
  
 
   #severity-selection {
-  display: inline-block
+  display: inline-block;
+ 
+  
   }
+
 
  .report-form {
    display: flex;
    flex-direction: column; }
 
+  
+  
 </style>
