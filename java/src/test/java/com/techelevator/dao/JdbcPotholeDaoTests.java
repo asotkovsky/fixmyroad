@@ -56,9 +56,7 @@ public class JdbcPotholeDaoTests extends BaseDaoTests {
         expected.add(POTHOLE_1);
         expected.add(POTHOLE_2);
         List<Pothole> actual = potholeDao.getAllPotholes();
-        Assert.assertEquals(actual.size(), 2);
-        Assert.assertEquals(POTHOLE_1, actual.get(0));
-        Assert.assertEquals(POTHOLE_2,actual.get(1));
+
         Assert.assertEquals(expected,actual);
 
     }
