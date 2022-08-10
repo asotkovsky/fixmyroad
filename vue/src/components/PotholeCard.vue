@@ -1,7 +1,7 @@
 <template>
 <div>
   <div :class="{'pothole-card-hover' : descriptionHover}" class="pothole-card">
-    <img class='severity-icon' v-bind:src="require('../assets/severity-icon-' + pothole.severity + '.png')">
+    <img class='severity-icon' v-if="pothole.severity != 0" v-bind:src="require('../assets/severity-icon-' + pothole.severity + '.png')">
     <p>{{pothole.roadName}}</p>
     <p>{{pothole.neighborhood}}</p>
     <div id="description" @mouseover.stop="descriptionHover = true" @mouseleave.stop="descriptionHover = false">{{pothole.description }}</div>
