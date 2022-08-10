@@ -7,6 +7,7 @@ import Register from '../views/Register.vue'
 import store from '../store/index'
 import PotholeList from '../views/Potholes.vue'
 import ReportPotholes from '../views/ReportPotholes.vue'
+import PageNotFound from '../components/404.vue'
 
 Vue.use(Router)
 
@@ -72,7 +73,19 @@ const router = new Router({
         requiresAuth: true
       }
 
-    }
+    },
+    {
+      path: "/404",
+      name: "404",
+      component: PageNotFound,
+      meta: {
+        requiresAuth: false
+      }
+    },
+    { 
+      path: "*", 
+      redirect: "/404" 
+    },
 
   ]
 })
