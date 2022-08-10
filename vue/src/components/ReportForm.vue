@@ -60,7 +60,7 @@ export default {
       if (this.newPothole.description == ""){
         this.newPothole.description = "None provided.";
       }
-      PotholeService.createPothole(this.newPothole).catch(error => {
+      PotholeService.createPothole(this.newPothole).then(this.$router.push("/potholes")).catch(error => {
         alert(error.message)
         })
 
@@ -77,10 +77,6 @@ export default {
         state: this.newPothole.roadName,
       };
     this.newPothole = newPothole;
-    
-    this.$store.commit("SET_CURRENT_PIN", null)
-
-    this.$router.push("/potholes")
   }
   },
   watch: {
