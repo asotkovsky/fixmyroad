@@ -7,6 +7,11 @@
       <div>State: {{ newPothole.state }}</div>
     </div>
 
+    <div>Road name: {{ $store.state.currentPin.roadName }}</div>
+    <div>Neighborhood: {{ $store.state.currentPin.neighborhood }}</div>
+    <div>City name:{{ $store.state.currentPin.city }}</div>
+    <div>State: {{ $store.state.currentPin.state }}</div>
+
     <form class="report-form" @submit.prevent="handleSave">
       <label id="severity" for="severity">Severity </label>
       <div id="severity-selection">
@@ -63,7 +68,7 @@ Please describe the pothole</textarea
       <input
         type="submit"
         value="Submit"
-        :disabled="$store.state.currentPin == null"
+        :disabled="$store.state.currentPin == null || newPothole.severity == 0"
       />
     </form>
   </div>
@@ -93,9 +98,23 @@ export default {
       this.newPothole.severity = severitySelection;
     },
     handleSave() {
+
       PotholeService.createPothole(this.newPothole).catch((error) => {
         alert(error.message);
       });
+
+      if (this.newPothole.description == "") {
+        this.newPothole.description = "None provided.";
+      }
+      this.newPothole.city = this.$store.state.currentPin.city;
+      this.newPothole.state = this.$store.state.currentPin.state;
+      this.newPothole.neighborhood = this.$store.state.currentPin.neighborhood;
+      this.newPothole.roadName = this.$store.state.currentPin.roadName;
+
+      PotholeService.createPothole(this.newPothole)
+        .then(() => this.$router.push({ name: "potholes-list" }))
+        .catch((error) => {
+          alert(error.message);
 
       // Clear the form for the next addition (and prevents odd bugs in adding data multiple times)
       const newPothole = {
@@ -111,41 +130,35 @@ export default {
       };
       this.newPothole = newPothole;
       this.$router.push("/potholes");
+       
+    }
+  
     },
-  },
   watch: {
     "$store.state.currentPin": function () {
       PotholeService.getLocation(
         this.$store.state.currentPin.lat,
         this.$store.state.currentPin.lng
-      ).then((response) => {
+      )
+      .then((response) => {
         this.newPothole.latitude = this.$store.state.currentPin.lat;
         this.newPothole.longitude = this.$store.state.currentPin.lng;
+        roadName: this.$store.state.currentPin.roadName;
+        neighborhood: this.$store.state.currentPin.neighborhood;
+        city: this.$store.state.currentPin.city;
+        state: this.$store.state.currentPin.roadName;
+    };
+      this.newPothole = newPothole;
 
-        let addressParts = response.data.results[0].address_components;
-        console.log(addressParts);
-        this.newPothole.city = addressParts.find((part) =>
-          part.types.includes("locality")
-        ).short_name;
-        this.newPothole.roadName = addressParts.find((part) =>
-          part.types.includes("route")
-        ).short_name;
-        let neighborhoodPart = addressParts.find((part) =>
-          part.types.includes("neighborhood")
-        );
-        if (neighborhoodPart) {
-          this.newPothole.neighborhood = neighborhoodPart.short_name;
-        } else this.neighborhood = "";
 
-        this.newPothole.state = addressParts.find((part) =>
-          part.types.includes("administrative_area_level_1")
-        ).short_name;
-      });
+      this.$store.commit("SET_CURRENT_PIN", {});
     },
   },
 };
 </script>
  
+
+
  <style>
 img.selected {
   border-style: solid;
@@ -165,5 +178,8 @@ img.selected {
 .report {
   line-height: 26pt;
   justify-content: space-between;
+}
+.report-form {
+  display: flex;
 }
 </style>

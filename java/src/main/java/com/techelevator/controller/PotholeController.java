@@ -5,6 +5,7 @@ import com.techelevator.dao.PotholeDao;
 import com.techelevator.model.Pothole;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @CrossOrigin
@@ -29,7 +30,7 @@ public class PotholeController {
         return locationDao.getFromCoordinates(latitude, longitude);
     }
     @RequestMapping(path = "/potholes", method = RequestMethod.POST)
-    public Pothole createPothole (@RequestBody Pothole pothole){
+    public Pothole createPothole(@Valid @RequestBody Pothole pothole){
         return potholeDao.createPothole(pothole);
     }
 
