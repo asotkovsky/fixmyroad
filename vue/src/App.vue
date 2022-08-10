@@ -1,7 +1,8 @@
 <template>
   <div id="app">
     <span id="nav">
-      <img class='horizontal-logo' v-bind:src="require('@/assets/fixmyroad-horizontal-logo.png')">
+    
+      <img class='horizontal-logo'  @click="reDirect('/')" v-bind:src="require('@/assets/fixmyroad-horizontal-logo.png')"> 
       <div class='links'>
         <router-link v-bind:to="{ name: 'home' }" tag="button">Home</router-link>
         <router-link v-bind:to="{ name: 'potholes-list' }" tag="button">Reported Potholes</router-link>
@@ -12,6 +13,19 @@
     <router-view />
   </div>
 </template>
+
+
+<script>
+export default {
+  methods: {
+    reDirect(path){
+      this.$router.push(path)
+      console.log("this click")
+    }
+
+  }
+}
+</script>
 
 <style scoped>
 
@@ -46,6 +60,11 @@
 
 #nav img {
   height: 100px
+}
+.horizontal-logo {
+  cursor: pointer;
+
+
 }
 
 </style>

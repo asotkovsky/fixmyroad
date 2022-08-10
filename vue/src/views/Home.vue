@@ -49,4 +49,7 @@ a {
   
 
 }
+.home-icon{
+  cursor: pointer;
+}
 </style>

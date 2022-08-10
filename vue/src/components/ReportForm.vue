@@ -1,34 +1,71 @@
  <template>
-  <div class='report-attributes'>
+  <div class="report-attributes">
+    <div class="report">
       <div>Road name: {{ newPothole.roadName }}</div>
-      <div> Neighborhood: {{ newPothole.neighborhood }}</div>
-      <div>City name:{{ newPothole.city }}</div>
+      <div>Neighborhood: {{ newPothole.neighborhood }}</div>
+      <div>City name: {{ newPothole.city }}</div>
       <div>State: {{ newPothole.state }}</div>
-
-  
+    </div>
 
     <form class="report-form" @submit.prevent="handleSave">
-     <label id="severity" for="severity">Severity </label>
-    <div id="severity-selection">
-      <img class='severity-icon' @click="setSeverity(1)" :class="{selected: newPothole.severity == 1}" v-bind:src="require('../assets/severity-icon-1.png')">
-      <img class='severity-icon' @click="setSeverity(2)" :class="{selected: newPothole.severity == 2}" v-bind:src="require('../assets/severity-icon-2.png')">
-      <img class='severity-icon' @click="setSeverity(3)" :class="{selected: newPothole.severity == 3}" v-bind:src="require('../assets/severity-icon-3.png')">
-      <img class='severity-icon' @click="setSeverity(4)" :class="{selected: newPothole.severity == 4}" v-bind:src="require('../assets/severity-icon-4.png')">
-      <img class='severity-icon' @click="setSeverity(5)" :class="{selected: newPothole.severity == 5}" v-bind:src="require('../assets/severity-icon-5.png')">
-    </div>
-  <label id="location_on_roadway" for="location_on_roadway">Location On Roadway</label>
-  <select id="location_on_roadway" v-model="newPothole.locationOnRoadway">
+      <label id="severity" for="severity">Severity </label>
+      <div id="severity-selection">
+        <img
+          class="severity-icon"
+          @click="setSeverity(1)"
+          :class="{ selected: newPothole.severity == 1 }"
+          v-bind:src="require('../assets/severity-icon-1.png')"
+        />
+        <img
+          class="severity-icon"
+          @click="setSeverity(2)"
+          :class="{ selected: newPothole.severity == 2 }"
+          v-bind:src="require('../assets/severity-icon-2.png')"
+        />
+        <img
+          class="severity-icon"
+          @click="setSeverity(3)"
+          :class="{ selected: newPothole.severity == 3 }"
+          v-bind:src="require('../assets/severity-icon-3.png')"
+        />
+        <img
+          class="severity-icon"
+          @click="setSeverity(4)"
+          :class="{ selected: newPothole.severity == 4 }"
+          v-bind:src="require('../assets/severity-icon-4.png')"
+        />
+        <img
+          class="severity-icon"
+          @click="setSeverity(5)"
+          :class="{ selected: newPothole.severity == 5 }"
+          v-bind:src="require('../assets/severity-icon-5.png')"
+        />
+      </div>
+      <label id="location_on_roadway" for="location_on_roadway"
+        >Location On Roadway</label
+      >
+      <select id="location_on_roadway" v-model="newPothole.locationOnRoadway">
+        <option value="road">Road</option>
+        <option value="shoulder">Shoulder</option>
+      </select>
 
-    <option value="road">Road</option>
-    <option value="shoulder">Shoulder</option>
+      <label for="description">Description </label>
+      <textarea
+        id="description"
+        maxlength="200"
+        v-model="newPothole.description"
+        rows="4"
+        cols="50"
+      >
+Please describe the pothole</textarea
+      >
 
-    </select>
-
-    <label for="description">Description </label>
-  <textarea id="description" maxlength = "200" v-model="newPothole.description" rows="4" cols="50">Please describe the pothole</textarea>
-
-    <input type="submit" value="Submit" :disabled="$store.state.currentPin == null">
-   </form>
+      <input
+        type="submit"
+        value="Submit"
+        :disabled="$store.state.currentPin == null"
+      />
+    </form>
   </div>
 </template>
  
@@ -37,29 +74,28 @@ import PotholeService from "@/services/PotholeService.js";
 
 export default {
   data() {
-    return { 
+    return {
       newPothole: {
         latitude: null,
         longitude: null,
         severity: "",
         description: "",
         locationOnRoadway: "",
-        roadName : "", 
-        neighborhood : "", 
-        city: "", 
-        state : ""
+        roadName: "",
+        neighborhood: "",
+        city: "",
+        state: "",
       },
     };
   },
   methods: {
-    setSeverity(severitySelection){
+    setSeverity(severitySelection) {
       this.newPothole.severity = severitySelection;
     },
     handleSave() {
-
-      PotholeService.createPothole(this.newPothole).catch(error => {
-        alert(error.message)
-        })
+      PotholeService.createPothole(this.newPothole).catch((error) => {
+        alert(error.message);
+      });
 
       // Clear the form for the next addition (and prevents odd bugs in adding data multiple times)
       const newPothole = {
@@ -68,14 +104,14 @@ export default {
         severity: "",
         description: "",
         locationOnRoadway: "",
-        roadName : this.newPothole.roadName, 
-        neighborhood : this.newPothole.neighborhood, 
-        city: this.newPothole.city, 
+        roadName: this.newPothole.roadName,
+        neighborhood: this.newPothole.neighborhood,
+        city: this.newPothole.city,
         state: this.newPothole.roadName,
       };
-    this.newPothole = newPothole;
-    this.$router.push("/potholes")
-  }
+      this.newPothole = newPothole;
+      this.$router.push("/potholes");
+    },
   },
   watch: {
     "$store.state.currentPin": function () {
@@ -107,30 +143,27 @@ export default {
       });
     },
   },
-}
+};
 </script>
  
  <style>
+img.selected {
+  border-style: solid;
+  border-color: #737373;
+  border-width: 5px;
+}
 
- 
-
-  img.selected {
-    border-style: solid;
-    border-color: #737373;
-    border-width: 5px;
-  }
-
-  #severity-selection {
+#severity-selection {
   display: inline-block;
- 
-  
-  }
+}
 
-
- .report-form {
-   display: flex;
-   flex-direction: column; }
-
-  
-  
+.report-attributes {
+  display: grid;
+  grid-template-columns: 1.7fr 2fr;
+  padding-top: 10px;
+}
+.report {
+  line-height: 26pt;
+  justify-content: space-between;
+}
 </style>

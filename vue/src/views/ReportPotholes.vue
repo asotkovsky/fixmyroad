@@ -19,19 +19,27 @@ export default {
 
 <style>
 .report-form{
+  border: #737373;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-around;  
   animation-duration: 2s;
-    animation-name: slideIn;
-    animation-iteration-count: 1;
+  animation-name: slideIn;
+  animation-iteration-count: 1;
+   
+  
+    
 
  }
  
  form{
-   display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
+   
+  
+
+  
     
  }
 
