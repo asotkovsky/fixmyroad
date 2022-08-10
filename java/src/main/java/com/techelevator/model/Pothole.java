@@ -1,5 +1,6 @@
 package com.techelevator.model;
 
+import javax.validation.constraints.AssertTrue;
 import java.sql.Timestamp;
 import java.util.Objects;
 
@@ -16,6 +17,13 @@ public class Pothole {
     private String neighborhood;
     private String city;
     private String state;
+
+
+    @AssertTrue(message = "Latitude and Longitude must be provided")
+    public boolean hasValidLatLng(){
+        return (this.latitude!=0)&&(this.longitude!=0);
+    }
+
 
     @Override
     public String toString() {
