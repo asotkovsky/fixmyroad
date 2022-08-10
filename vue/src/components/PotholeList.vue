@@ -34,13 +34,11 @@ export default {
     };
   },
   mounted() {
-      console.log("pothole list mounted");
     PotholeService.getPotholes().then((response) => {
       this.potholes = response.data;
       this.potholes.sort((a, b) => {
         return new Date(b.datetimeReported) - new Date(a.datetimeReported);
       });
-      console.log("pothole list sorted")
     });
   },
   unmounted(){
