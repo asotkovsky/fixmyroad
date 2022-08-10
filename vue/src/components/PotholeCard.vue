@@ -4,7 +4,7 @@
     <img class='severity-icon' v-if="pothole.severity != 0" v-bind:src="require('../assets/severity-icon-' + pothole.severity + '.png')">
     <p>{{pothole.roadName}}</p>
     <p>{{pothole.neighborhood}}</p>
-    <div id="description" @mouseover.stop="descriptionHover = true" @mouseleave.stop="descriptionHover = false">{{pothole.description }}</div>
+    <p id="description" @mouseover.stop="descriptionHover = true" @mouseleave.stop="descriptionHover = false">{{pothole.description }}</p>
     <img class='location-on-roadway-icon' v-bind:src="require('../assets/icon-' + pothole.locationOnRoadway + '.jpg')">
   </div>
 </div>

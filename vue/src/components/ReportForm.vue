@@ -27,7 +27,7 @@
     <label for="description">Description </label>
   <textarea id="description" maxlength = "200" v-model="newPothole.description" rows="4" cols="50">Please describe the pothole</textarea>
 
-    <input type="submit" value="Submit" :disabled="$store.state.currentPin == null">
+    <input type="submit" value="Submit" :disabled="$store.state.currentPin == null || newPothole.severity == 0">
    </form>
   </div>
 </template>
@@ -57,6 +57,9 @@ export default {
     },
     handleSave() {
 
+      if (this.newPothole.description == ""){
+        this.newPothole.description = "None provided.";
+      }
       PotholeService.createPothole(this.newPothole).catch(error => {
         alert(error.message)
         })
@@ -74,6 +77,9 @@ export default {
         state: this.newPothole.roadName,
       };
     this.newPothole = newPothole;
+    
+    this.$store.commit("SET_CURRENT_PIN", null)
+
     this.$router.push("/potholes")
   }
   },
