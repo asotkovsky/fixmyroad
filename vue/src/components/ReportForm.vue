@@ -83,7 +83,7 @@ export default {
         roadName : "", 
         neighborhood : "", 
         city: "", 
-        state : ""
+        state : "",
       },
     };
   },
