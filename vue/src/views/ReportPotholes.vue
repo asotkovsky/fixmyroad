@@ -1,5 +1,5 @@
 <template>
-<div class="report-form">
+<div id="report-form">
 
     <report-map/> 
     <report-form/>
@@ -18,29 +18,19 @@ export default {
 </script>
 
 <style>
-.report-form{
-  border: #737373;
+#report-form{
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-around;  
   animation-duration: 2s;
-  animation-name: slideIn;
-  animation-iteration-count: 1;
-   
-  
-    
-
+    animation-name: slideIn;
+    animation-iteration-count: 1;
  }
  
- form{
-  display: flex;
-  flex-direction: column;
-   
-  
-
-  
-    
+ form {
+   display: flex;
+    flex-direction: column;
  }
 
 

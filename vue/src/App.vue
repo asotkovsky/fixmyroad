@@ -1,19 +1,49 @@
 <template>
   <div id="app">
     <span id="nav">
-    
-      <img class='horizontal-logo'  @click="reDirect('/')" v-bind:src="require('@/assets/fixmyroad-horizontal-logo.png')"> 
-      <div class='links'>
-        <router-link class="button" v-show="$route.name !== 'home'" v-bind:to="{ name: 'home' }" tag="button">Home</router-link>
-        <router-link class="button" v-show="$route.name !== 'home'" v-bind:to="{ name: 'potholes-list' }" tag="button">Reported Potholes</router-link>
-        <router-link class="button" v-show="$route.name !== 'home'" v-bind:to="{ name: 'report-pothole' }" v-if="$store.state.token != ''" tag="button">Report A Pothole</router-link>
-        <router-link class="button" v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''" tag="button">Logout</router-link>
-        </div>
+      <img
+        class="horizontal-logo"
+        @click="reDirect('/')"
+        v-bind:src="require('@/assets/fixmyroad-horizontal-logo.png')"
+      />
+      <div class="links">
+        <router-link
+          class="button"
+          v-show="$route.name !== 'home' && $route.name !== 'login'"
+          v-bind:to="{ name: 'home' }"
+          tag="button"
+          >Home</router-link
+        >
+
+        <router-link
+          class="button"
+          v-show="$route.name !== 'home' && $route.name !== 'potholes-list'"
+          v-bind:to="{ name: 'potholes-list' }"
+          tag="button"
+          >Reported Potholes</router-link
+        >
+
+        <router-link
+          class="button"
+          v-show="$route.name !== 'home' && $route.name !== 'report-pothole'"
+          v-bind:to="{ name: 'report-pothole' }"
+          v-if="$store.state.token != ''"
+          tag="button"
+          >Report A Pothole</router-link
+        >
+
+        <router-link
+          class="button"
+          v-bind:to="{ name: 'logout' }"
+          v-if="$store.state.token != ''"
+          tag="button"
+          >Logout</router-link
+        >
+      </div>
     </span>
     <router-view />
   </div>
 </template>
-
 
 <script>
 export default {
@@ -22,20 +52,17 @@ export default {
       this.$router.push(path)
       console.log("this click")
     }
-
   }
 }
 </script>
 
 <style scoped>
-
 #nav {
   font-family: sans-serif;
   display: grid;
   grid-template-columns: 1fr 1fr;
   width: 100%;
   color: white;
-  
 }
 
 .links {
@@ -44,7 +71,6 @@ export default {
   justify-content: flex-end;
   align-items: center;
   gap: 5px;
-  
 }
 
 .button {
@@ -55,20 +81,17 @@ export default {
   color: white;
   padding: 10px;
   font-family: sans-serif;
-  font-weight:750
+  font-weight: 750;
 }
 
-.links :hover{
-  background-color:#FAD52F;
+.links :hover {
+  background-color: #fad52f;
   color: #737373;
-  border-color: #FAD52F;
-  
-  
-
+  border-color: #fad52f;
 }
 
 #nav img {
-  height: 100px
+  height: 100px;
 }
 .horizontal-logo {
   cursor: pointer;
@@ -76,4 +99,7 @@ export default {
 
 }
 
+.horizontal-logo {
+  cursor: pointer;
+}
 </style>

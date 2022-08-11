@@ -76,7 +76,7 @@ export default {
 <style>
 #map {
   position: relative;
-  height: 500px;
-  width: 500px;
+  height: 400px;
+  width: 800px;
 }
 </style>

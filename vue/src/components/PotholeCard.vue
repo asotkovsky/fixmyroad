@@ -4,7 +4,7 @@
     <img class='severity-icon' v-if="pothole.severity != 0" v-bind:src="require('../assets/severity-icon-' + pothole.severity + '.png')">
     <p>{{pothole.roadName}}</p>
     <p>{{pothole.neighborhood}}</p>
-    <p id="description" @mouseover.stop="descriptionHover = true" @mouseleave.stop="descriptionHover = false">{{pothole.description }}</p>
+    <p id="description1" @mouseover.stop="descriptionHover = true" @mouseleave.stop="descriptionHover = false">{{pothole.description }}</p>
     <img class='location-on-roadway-icon' v-bind:src="require('../assets/icon-' + pothole.locationOnRoadway + '.jpg')">
   </div>
 </div>
@@ -29,7 +29,7 @@ export default {
 
 <style>
 
-#description {
+#description1 {
   overflow: hidden;
   text-overflow: clip;
   max-height: 2.2em;
@@ -37,7 +37,7 @@ export default {
   margin-bottom: 1em;
 }
 
-#description:hover {
+#description1:hover {
   max-height: 100%;
   
 }

@@ -27,6 +27,10 @@ export default {
 
 <style scoped>
 
+.home-icon{
+  cursor: pointer;
+}
+
 .home {
   display: grid;
   grid-template-columns: 500px 500px;
