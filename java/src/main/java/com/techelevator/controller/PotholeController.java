@@ -3,6 +3,7 @@ package com.techelevator.controller;
 import com.techelevator.dao.LocationDao;
 import com.techelevator.dao.PotholeDao;
 import com.techelevator.model.Pothole;
+import com.techelevator.model.Status;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -29,6 +30,12 @@ public class PotholeController {
     public String getLocationInfo(@RequestParam double latitude, @RequestParam double longitude){
         return locationDao.getFromCoordinates(latitude, longitude);
     }
+
+    @RequestMapping(path = "/pothole/{id}/statuses", method = RequestMethod.GET)
+    public List<Status> getPotholeStatuses(@PathVariable("id") int potholeId){
+        return potholeDao.getPotholeStatuses(potholeId);
+    }
+
     @RequestMapping(path = "/potholes", method = RequestMethod.POST)
     public Pothole createPothole(@Valid @RequestBody Pothole pothole){
         return potholeDao.createPothole(pothole);

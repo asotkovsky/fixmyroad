@@ -87,7 +87,8 @@ export default {
     };
   },
   mounted() {
-    PotholeService.getPotholes().then((response) => {
+
+      PotholeService.getPotholes().then((response) => {
       this.potholes = response.data;
       this.potholes.sort((a, b) => {
         return new Date(b.datetimeReported) - new Date(a.datetimeReported);
@@ -96,6 +97,13 @@ export default {
       this.roadNames = [...new Set(roadNames)];
       let neighborhoods = this.potholes.map((pothole) => pothole.neighborhood);
       this.neighborhoods = [...new Set(neighborhoods)];
+
+      this.potholes.forEach(pothole => {
+        PotholeService.getPotholeStatuses(pothole.id).then((response) => {
+          pothole.statuses = response.data
+        })
+        
+      });
     });
   },
   unmounted() {
@@ -159,7 +167,7 @@ div.potholes-list {
 div.list-headers {
   display: grid;
   gap: 15px;
-  grid-template-columns: 0.7fr 1.5fr 1.5fr 2fr 0.7fr;
+  grid-template-columns: 0.7fr 1.5fr 1.5fr 2fr 1fr 0.7fr;
 }
 
 p {

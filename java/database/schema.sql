@@ -1,8 +1,5 @@
 BEGIN TRANSACTION;
 
-DROP TABLE IF EXISTS users;
-DROP SEQUENCE IF EXISTS seq_user_id;
-
 CREATE SEQUENCE seq_user_id
   INCREMENT BY 1
   NO MAXVALUE
@@ -10,32 +7,56 @@ CREATE SEQUENCE seq_user_id
   CACHE 1;
 
 
+CREATE TABLE "potholes" (
+  "id" serial NOT NULL,
+  "longitude" Decimal (9,6) NOT NULL,
+  "latitude" Decimal (8,6) NOT NULL,
+  "neighborhood" varchar (32),
+  "city" varchar (20),
+  "state" varchar (2),
+  "road_name" varchar (32),
+  "description" varchar (200),
+  "severity" int,
+  "location_on_roadway" varchar (10),
+  PRIMARY KEY ("id")
+);
+
+CREATE TABLE "status" (
+  "id" serial  NOT NULL,
+  "status_name" varchar (32),
+  PRIMARY KEY ("id")
+);
+
 CREATE TABLE users (
 	user_id int DEFAULT nextval('seq_user_id'::regclass) NOT NULL,
 	username varchar(50) NOT NULL UNIQUE,
 	password_hash varchar(200) NOT NULL,
 	role varchar(50) NOT NULL,
 	CONSTRAINT PK_user PRIMARY KEY (user_id)
+  );
+
+CREATE TABLE "pothole_status" (
+  "pothole_id" int NOT NULL,
+  "status_id" int NOT NULL,
+  "date" timestamp NOT NULL,
+  "user_id" int NOT NULL,
+  CONSTRAINT "FK_pothole_status.pothole_id"
+    FOREIGN KEY ("pothole_id")
+      REFERENCES "potholes"("id"),
+  CONSTRAINT "FK_pothole_status.status_id"
+    FOREIGN KEY ("status_id")
+      REFERENCES "status"("id"),
+  CONSTRAINT "FK_pothole_status.user_id"
+    FOREIGN KEY ("user_id")
+      REFERENCES "users"("user_id")
 );
+
+CREATE INDEX "PK FK" ON  "pothole_status" ("pothole_id", "status_id");
 
 INSERT INTO users (username,password_hash,role) VALUES ('user','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER');
 INSERT INTO users (username,password_hash,role) VALUES ('admin','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_ADMIN');
 
-CREATE TABLE potholes (
-  id serial NOT NULL,
-  datetime_reported timestamp DEFAULT now(),
-  longitude decimal (9,6) NOT NULL,
-  latitude decimal (8,6) NOT NULL,
-  description varchar (200),
-  severity int,
-  location_on_roadway varchar (10),
-  road_name varchar (32),
-  neighborhood varchar (32),
-  city varchar (20),
-  state varchar (2),
-
-  PRIMARY KEY (id)
-);
+INSERT INTO status (status_name) VALUES ('reported'), ('scheduled for inspection'), ('inspected'), ('scheduled for repair'), ('repaired');
 
 INSERT INTO potholes (longitude, latitude, description, severity, location_on_roadway, road_name, neighborhood, city, state) VALUES (-82.983330, 39.983334, 'pothole 1', 5, 'shoulder', 'Cleveland Ave', 'Linden', 'Columbus', 'OH');
 INSERT INTO potholes (longitude, latitude, description, severity, location_on_roadway, road_name, neighborhood, city, state) VALUES (-82.998790, 39.961180, 'pothole 2', 3, 'road', 'Cleveland Ave', 'Linden', 'Columbus', 'OH');
@@ -43,4 +64,8 @@ INSERT INTO potholes (longitude, latitude, description, severity, location_on_ro
 INSERT INTO potholes (longitude, latitude, description, severity, location_on_roadway, road_name, neighborhood, city, state) VALUES (-83.002533, 39.965521, 'pothole 4', 2, 'road', 'Cleveland Ave', 'Linden', 'Columbus', 'OH');
 INSERT INTO potholes (longitude, latitude, description, severity, location_on_roadway, road_name, neighborhood, city, state) VALUES (-83.014596, 39.960514, 'pothole 5', 4, 'shoulder', 'Cleveland Ave', 'Linden', 'Columbus', 'OH');
 
+INSERT INTO pothole_status (pothole_id, status_id, date, user_id) VALUES (1,1, CURRENT_TIMESTAMP, 1), (2,1, CURRENT_TIMESTAMP, 1),
+(3,1, CURRENT_TIMESTAMP, 1),
+(4,1, CURRENT_TIMESTAMP, 1),
+(5,1, CURRENT_TIMESTAMP, 1), (1,2, CURRENT_TIMESTAMP, 2), (1,3, CURRENT_TIMESTAMP, 2);
 COMMIT TRANSACTION;

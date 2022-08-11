@@ -1,6 +1,7 @@
 package com.techelevator.dao;
 
 import com.techelevator.model.Pothole;
+import com.techelevator.model.Status;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
@@ -19,7 +20,7 @@ public class JdbcPotholeDao implements PotholeDao {
     public List<Pothole> getAllPotholes() {
         List<Pothole> potholes = new ArrayList<Pothole>();
 
-        String sql = "SELECT potholes.id, potholes.datetime_reported, potholes.longitude, potholes.latitude, potholes.description, potholes.severity, potholes.location_on_roadway, potholes.road_name, potholes.neighborhood, potholes.city, potholes.state FROM potholes";
+        String sql = "SELECT potholes.id, potholes.longitude, potholes.latitude, potholes.description, potholes.severity, potholes.location_on_roadway, potholes.road_name, potholes.neighborhood, potholes.city, potholes.state FROM potholes";
 
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
 
@@ -38,14 +39,37 @@ public class JdbcPotholeDao implements PotholeDao {
         return pothole;
     }
 
+    @Override
+    public List<Status> getPotholeStatuses(int potholeId) {
 
+        List<Status> statuses = new ArrayList<Status>();
 
+        String sql = "SELECT s.status_name, ps.date " +
+                "FROM status s " +
+                "JOIN pothole_status ps ON s.id = ps.status_id " +
+                "JOIN potholes p ON ps.pothole_id = p.id " +
+                "WHERE p.id = ?";
+
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, potholeId);
+
+        while (results.next()) {
+            statuses.add (mapRowToStatus(results));
+        }
+        return statuses;
+    }
+
+    private Status mapRowToStatus(SqlRowSet results) {
+        Status status = new Status();
+
+        status.setName( results.getString("status_name"));
+        status.setDate( results.getDate("date"));
+        return status;
+    }
 
     private Pothole mapRowToPothole(SqlRowSet results) {
         Pothole pothole = new Pothole();
 
         pothole.setId( results.getInt("id"));
-        pothole.setDatetimeReported( results.getTimestamp("datetime_reported"));
         pothole.setLongitude( results.getDouble("longitude"));
         pothole.setLatitude( results.getDouble("latitude"));
         pothole.setDescription( results.getString("description"));
@@ -59,4 +83,6 @@ public class JdbcPotholeDao implements PotholeDao {
         return pothole;
 
     }
+
+
 }
