@@ -62,7 +62,7 @@ Please describe the pothole</textarea
       <input
         type="submit"
         value="Submit"
-        :disabled="!('lat' in $store.state.currentPin) && ('lng' in $store.state.currentPin) || newPothole.severity == 0"
+        :disabled="!submitEnabled"
       />
     </form>
   </div>
@@ -86,6 +86,11 @@ export default {
         state : ""
       },
     };
+  },
+  computed: {
+    submitEnabled() {
+      return (('lat' in this.$store.state.currentPin) && ('lng' in this.$store.state.currentPin) && (this.newPothole.severity > 0))
+    }
   },
   methods: {
     setSeverity(severitySelection) {
