@@ -94,6 +94,8 @@ export default {
       if (this.newPothole.description == "") {
         this.newPothole.description = "None provided.";
       }
+      this.newPothole.latitude = this.$store.state.currentPin.lat;
+      this.newPothole.longitude = this.$store.state.currentPin.lng;
       this.newPothole.city = this.$store.state.currentPin.city;
       this.newPothole.state = this.$store.state.currentPin.state;
       this.newPothole.neighborhood = this.$store.state.currentPin.neighborhood;
