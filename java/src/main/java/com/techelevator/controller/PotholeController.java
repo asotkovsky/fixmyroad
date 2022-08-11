@@ -7,6 +7,7 @@ import com.techelevator.model.Status;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.List;
 
 @CrossOrigin
@@ -40,6 +41,11 @@ public class PotholeController {
     public Pothole createPothole(@Valid @RequestBody Pothole pothole){
         return potholeDao.createPothole(pothole);
     }
+
+    @RequestMapping(path = "/pothole/{pothole_id}/statuses/{status_id}", method = RequestMethod.POST)
+    public void createStatus(@PathVariable("pothole_id") int potholeId, @PathVariable("status_id") int statusId, Principal principal)
+    {potholeDao.createStatus(potholeId, statusId, principal);}
+
 
 
 }
