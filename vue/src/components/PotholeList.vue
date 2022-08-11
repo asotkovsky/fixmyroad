@@ -40,6 +40,7 @@
         </datalist>
       </span>
       <p>Description</p>
+      <p>Status</p>
       <span>
         <p>Location On Roadway</p>
         <select
