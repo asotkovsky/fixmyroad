@@ -1,12 +1,5 @@
- <template>
+<template>
   <div class="report-attributes">
-    <div class="report">
-      <div>Road name: {{ newPothole.roadName }}</div>
-      <div>Neighborhood: {{ newPothole.neighborhood }}</div>
-      <div>City name: {{ newPothole.city }}</div>
-      <div>State: {{ newPothole.state }}</div>
-    </div>
-
     <div>Road name: {{ $store.state.currentPin.roadName }}</div>
     <div>Neighborhood: {{ $store.state.currentPin.neighborhood }}</div>
     <div>City name:{{ $store.state.currentPin.city }}</div>
@@ -86,10 +79,10 @@ export default {
         severity: "",
         description: "",
         locationOnRoadway: "",
-        roadName: "",
-        neighborhood: "",
-        city: "",
-        state: "",
+        roadName : "", 
+        neighborhood : "", 
+        city: "", 
+        state : ""
       },
     };
   },
@@ -98,11 +91,6 @@ export default {
       this.newPothole.severity = severitySelection;
     },
     handleSave() {
-
-      PotholeService.createPothole(this.newPothole).catch((error) => {
-        alert(error.message);
-      });
-
       if (this.newPothole.description == "") {
         this.newPothole.description = "None provided.";
       }
@@ -115,6 +103,7 @@ export default {
         .then(() => this.$router.push({ name: "potholes-list" }))
         .catch((error) => {
           alert(error.message);
+        });
 
       // Clear the form for the next addition (and prevents odd bugs in adding data multiple times)
       const newPothole = {
@@ -123,33 +112,12 @@ export default {
         severity: "",
         description: "",
         locationOnRoadway: "",
-        roadName: this.newPothole.roadName,
-        neighborhood: this.newPothole.neighborhood,
-        city: this.newPothole.city,
-        state: this.newPothole.roadName,
+        roadName: this.$store.state.currentPin.roadName,
+        neighborhood: this.$store.state.currentPin.neighborhood,
+        city: this.$store.state.currentPin.city,
+        state: this.$store.state.currentPin.roadName,
       };
       this.newPothole = newPothole;
-      this.$router.push("/potholes");
-       
-    }
-  
-    },
-  watch: {
-    "$store.state.currentPin": function () {
-      PotholeService.getLocation(
-        this.$store.state.currentPin.lat,
-        this.$store.state.currentPin.lng
-      )
-      .then((response) => {
-        this.newPothole.latitude = this.$store.state.currentPin.lat;
-        this.newPothole.longitude = this.$store.state.currentPin.lng;
-        roadName: this.$store.state.currentPin.roadName;
-        neighborhood: this.$store.state.currentPin.neighborhood;
-        city: this.$store.state.currentPin.city;
-        state: this.$store.state.currentPin.roadName;
-    };
-      this.newPothole = newPothole;
-
 
       this.$store.commit("SET_CURRENT_PIN", {});
     },
@@ -157,8 +125,6 @@ export default {
 };
 </script>
  
-
-
  <style>
 img.selected {
   border-style: solid;
@@ -170,16 +136,8 @@ img.selected {
   display: inline-block;
 }
 
-.report-attributes {
-  display: grid;
-  grid-template-columns: 1.7fr 2fr;
-  padding-top: 10px;
-}
-.report {
-  line-height: 26pt;
-  justify-content: space-between;
-}
 .report-form {
   display: flex;
+  flex-direction: column;
 }
 </style>
