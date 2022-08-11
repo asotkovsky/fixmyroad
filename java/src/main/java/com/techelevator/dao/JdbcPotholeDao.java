@@ -1,6 +1,7 @@
 package com.techelevator.dao;
 
 import com.techelevator.model.Pothole;
+import com.techelevator.model.Status;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
@@ -38,8 +39,32 @@ public class JdbcPotholeDao implements PotholeDao {
         return pothole;
     }
 
+    @Override
+    public List<Status> getPotholeStatuses(int potholeId) {
 
+        List<Status> statuses = new ArrayList<Status>();
 
+        String sql = "SELECT s.status_name, ps.date " +
+                "FROM status s " +
+                "JOIN pothole_status ps ON s.id = ps.status_id " +
+                "JOIN potholes p ON ps.pothole_id = p.id " +
+                "WHERE p.id = ?";
+
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, potholeId);
+
+        while (results.next()) {
+            statuses.add (mapRowToStatus(results));
+        }
+        return statuses;
+    }
+
+    private Status mapRowToStatus(SqlRowSet results) {
+        Status status = new Status();
+
+        status.setName( results.getString("status_name"));
+        status.setDate( results.getDate("date"));
+        return status;
+    }
 
     private Pothole mapRowToPothole(SqlRowSet results) {
         Pothole pothole = new Pothole();
@@ -58,4 +83,6 @@ public class JdbcPotholeDao implements PotholeDao {
         return pothole;
 
     }
+
+
 }
