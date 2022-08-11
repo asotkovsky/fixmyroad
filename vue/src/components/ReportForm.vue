@@ -1,4 +1,4 @@
- <template>
+<template>
   <div class="report-attributes">
     <div class="report">
       <div>Road name: {{ $store.state.currentPin.roadName }}</div>
@@ -83,7 +83,7 @@ export default {
         roadName : "", 
         neighborhood : "", 
         city: "", 
-        state : ""
+        state : "",
       },
     };
   },

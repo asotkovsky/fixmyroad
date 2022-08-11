@@ -93,6 +93,11 @@ export default {
 #nav img {
   height: 100px;
 }
+.horizontal-logo {
+  cursor: pointer;
+
+
+}
 
 .horizontal-logo {
   cursor: pointer;

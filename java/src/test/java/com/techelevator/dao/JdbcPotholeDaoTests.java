@@ -22,8 +22,8 @@ public class JdbcPotholeDaoTests extends BaseDaoTests {
         POTHOLE_1 = new Pothole();
         POTHOLE_2 = new Pothole();
         JdbcTemplate template = new JdbcTemplate(this.dataSource);
-
-        potholeDao = new JdbcPotholeDao(template);
+        UserDao userDao = new JdbcUserDao(template);
+        potholeDao = new JdbcPotholeDao(template, userDao);
         POTHOLE_1.setId(1);
         POTHOLE_1.setState("OH");
         POTHOLE_1.setCity("Columbus");
