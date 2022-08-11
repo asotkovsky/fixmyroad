@@ -31,6 +31,7 @@ public class PotholeController {
     }
     @RequestMapping(path = "/potholes", method = RequestMethod.POST)
     public Pothole createPothole(@Valid @RequestBody Pothole pothole){
+
         return potholeDao.createPothole(pothole);
     }
 

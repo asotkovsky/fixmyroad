@@ -100,6 +100,7 @@ export default {
       if (this.newPothole.description == "") {
         this.newPothole.description = "None provided.";
       }
+
       this.newPothole.city = this.$store.state.currentPin.city;
       this.newPothole.state = this.$store.state.currentPin.state;
       this.newPothole.neighborhood = this.$store.state.currentPin.neighborhood;
