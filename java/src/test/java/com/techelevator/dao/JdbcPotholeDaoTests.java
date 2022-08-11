@@ -29,7 +29,6 @@ public class JdbcPotholeDaoTests extends BaseDaoTests {
         POTHOLE_1.setCity("Columbus");
         POTHOLE_1.setNeighborhood("Linden");
         POTHOLE_1.setRoadName("Cleveland Ave");
-        POTHOLE_1.setDatetimeReported(Timestamp.valueOf("1999-12-31 00:00:00"));
         POTHOLE_1.setLocationOnRoadway("shoulder");
         POTHOLE_1.setSeverity(5);
         POTHOLE_1.setDescription("pothole 1");
@@ -41,7 +40,6 @@ public class JdbcPotholeDaoTests extends BaseDaoTests {
         POTHOLE_2.setCity("Columbus");
         POTHOLE_2.setNeighborhood("Linden");
         POTHOLE_2.setRoadName("Cleveland Ave");
-        POTHOLE_2.setDatetimeReported(Timestamp.valueOf("2000-01-01 00:00:00"));
         POTHOLE_2.setLocationOnRoadway("road");
         POTHOLE_2.setSeverity(3);
         POTHOLE_2.setDescription("pothole 2");
