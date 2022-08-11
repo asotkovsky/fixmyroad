@@ -1,10 +1,11 @@
  <template>
   <div class="report-attributes">
-    <div>Road name: {{ $store.state.currentPin.roadName }}</div>
-    <div>Neighborhood: {{ $store.state.currentPin.neighborhood }}</div>
-    <div>City name:{{ $store.state.currentPin.city }}</div>
-    <div>State: {{ $store.state.currentPin.state }}</div>
-
+    <div class="report">
+      <div>Road name: {{ $store.state.currentPin.roadName }}</div>
+      <div>Neighborhood: {{ $store.state.currentPin.neighborhood }}</div>
+      <div>City name:{{ $store.state.currentPin.city }}</div>
+      <div>State: {{ $store.state.currentPin.state }}</div>
+    </div>
     <form class="report-form" @submit.prevent="handleSave">
       <label id="severity" for="severity">Severity </label>
       <div id="severity-selection">
@@ -61,7 +62,7 @@ Please describe the pothole</textarea
       <input
         type="submit"
         value="Submit"
-        :disabled="$store.state.currentPin == null || newPothole.severity == 0"
+        :disabled="!('lat' in $store.state.currentPin) && ('lng' in $store.state.currentPin) || newPothole.severity == 0"
       />
     </form>
   </div>
@@ -126,6 +127,13 @@ export default {
 </script>
  
  <style>
+
+.report-attributes {
+  display: grid;
+  grid-template-columns: 1.7fr 2fr;
+  padding-top: 10px;
+}
+
 img.selected {
   border-style: solid;
   border-color: #737373;
@@ -140,4 +148,11 @@ img.selected {
   display: flex;
   flex-direction: column;
 }
+
+.report {
+  line-height: 26pt;
+  justify-content: space-between;
+}
+
+
 </style>
