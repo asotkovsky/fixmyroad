@@ -23,7 +23,7 @@ CREATE TABLE "potholes" (
 
 CREATE TABLE "status" (
   "id" serial  NOT NULL,
-  "status_name" varchar (10),
+  "status_name" varchar (32),
   PRIMARY KEY ("id")
 );
 
@@ -56,7 +56,7 @@ CREATE INDEX "PK FK" ON  "pothole_status" ("pothole_id", "status_id");
 INSERT INTO users (username,password_hash,role) VALUES ('user','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER');
 INSERT INTO users (username,password_hash,role) VALUES ('admin','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_ADMIN');
 
-INSERT INTO status (status_name) VALUES ('reported'), ('inspected'), ('repaired');
+INSERT INTO status (status_name) VALUES ('reported'), ('scheduled for inspection'), ('inspected'), ('scheduled for repair'), ('repaired');
 
 INSERT INTO potholes (longitude, latitude, description, severity, location_on_roadway, road_name, neighborhood, city, state) VALUES (-82.983330, 39.983334, 'pothole 1', 5, 'shoulder', 'Cleveland Ave', 'Linden', 'Columbus', 'OH');
 INSERT INTO potholes (longitude, latitude, description, severity, location_on_roadway, road_name, neighborhood, city, state) VALUES (-82.998790, 39.961180, 'pothole 2', 3, 'road', 'Cleveland Ave', 'Linden', 'Columbus', 'OH');

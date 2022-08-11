@@ -12,6 +12,10 @@ export default {
     },
     createPothole(pothole){
       return axios.post('/potholes', pothole)
+    },
+
+    getPotholeStatuses(potholeId) {
+      return axios.get(`/pothole/${potholeId}/statuses`, {params:{potholeId}})
     }
 
    

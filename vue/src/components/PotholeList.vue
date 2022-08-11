@@ -6,6 +6,7 @@
       <p>Road</p>
       <p>Neighborhood</p>
       <p>Description</p>
+      <p>Status</p>
       <p>Location On Roadway</p>
     </div>
     <div class="potholes-list">
@@ -34,10 +35,18 @@ export default {
     };
   },
   mounted() {
-    PotholeService.getPotholes().then((response) => {
+
+      PotholeService.getPotholes().then((response) => {
       this.potholes = response.data;
       this.potholes.sort((a, b) => {
         return new Date(b.datetimeReported) - new Date(a.datetimeReported);
+      });
+
+      this.potholes.forEach(pothole => {
+        PotholeService.getPotholeStatuses(pothole.id).then((response) => {
+          pothole.statuses = response.data
+        })
+        
       });
     });
   },
@@ -66,7 +75,7 @@ div.potholes-list {
 div.list-headers {
   display: grid;
   gap: 15px;
-  grid-template-columns: 0.7fr 1.5fr 1.5fr 2fr 0.7fr;
+  grid-template-columns: 0.7fr 1.5fr 1.5fr 2fr 1fr 0.7fr;
 }
 
 p {
