@@ -19,7 +19,7 @@ public class JdbcPotholeDao implements PotholeDao {
     public List<Pothole> getAllPotholes() {
         List<Pothole> potholes = new ArrayList<Pothole>();
 
-        String sql = "SELECT potholes.id, potholes.datetime_reported, potholes.longitude, potholes.latitude, potholes.description, potholes.severity, potholes.location_on_roadway, potholes.road_name, potholes.neighborhood, potholes.city, potholes.state FROM potholes";
+        String sql = "SELECT potholes.id, potholes.longitude, potholes.latitude, potholes.description, potholes.severity, potholes.location_on_roadway, potholes.road_name, potholes.neighborhood, potholes.city, potholes.state FROM potholes";
 
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
 
@@ -45,7 +45,6 @@ public class JdbcPotholeDao implements PotholeDao {
         Pothole pothole = new Pothole();
 
         pothole.setId( results.getInt("id"));
-        pothole.setDatetimeReported( results.getTimestamp("datetime_reported"));
         pothole.setLongitude( results.getDouble("longitude"));
         pothole.setLatitude( results.getDouble("latitude"));
         pothole.setDescription( results.getString("description"));
