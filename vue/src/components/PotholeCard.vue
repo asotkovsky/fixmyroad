@@ -7,31 +7,29 @@
     <p id="description1" @mouseover.stop="descriptionHover = true" @mouseleave.stop="descriptionHover = false">{{pothole.description }}</p>
     <p id="status" v-if="pothole.statuses">{{pothole.statuses[(pothole.statuses.length - 1)].name}}</p>
     <img class='location-on-roadway-icon' v-bind:src="require('../assets/icon-' + pothole.locationOnRoadway + '.jpg')">
-    <status-form :pothole="pothole"/>
-    <div @click="handleDelete()" class="delete-button"><span>x</span></div>
+    <img class='show-modal-icon' @click="showAdminModal = true" v-bind:src="require('../assets/plus-icon.png')">
+    <admin-modal :pothole="pothole" v-if="showAdminModal"/>
   </div>
 </div>
 
 </template>
 
 <script>
-import StatusForm from './StatusForm.vue';
 
 import PotholeService from "@/services/PotholeService.js";
+import AdminModal from '../views/AdminModal.vue';
 export default {
   props: {
     pothole: Object,
   },
-  methods: {
-    
-  },
   components: {
-    StatusForm
+    AdminModal
   },
   data() {
     return {
       center: { lat: this.pothole.latitude, lng: this.pothole.longitude },
       descriptionHover: false,
+      showAdminModal: false,
     };
   },
   methods:{

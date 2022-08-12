@@ -9,6 +9,7 @@
         <option value="4">Scheduled For Repair</option>
         <option value="5">Repaired</option>
       </select>
+      <br/>
       <input type="submit" value="Submit" :disabled="!submitEnabled" />
     </form>
   </div>
