@@ -10,6 +10,7 @@ public interface PotholeDao {
     List<Pothole> getAllPotholes();
 
     public Pothole createPothole (Pothole pothole);
+    public void deletePothole (int id);
 
     public List<Status> getPotholeStatuses(int potholeId);
     public void createStatus(int potholeId, int statusId, Principal principal);

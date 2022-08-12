@@ -7,13 +7,14 @@
     <p id="description1" @mouseover.stop="descriptionHover = true" @mouseleave.stop="descriptionHover = false">{{pothole.description }}</p>
     <p id="status" v-if="pothole.statuses">{{pothole.statuses[(pothole.statuses.length - 1)].name}}</p>
     <img class='location-on-roadway-icon' v-bind:src="require('../assets/icon-' + pothole.locationOnRoadway + '.jpg')">
+    <div @click="handleDelete()" class="delete-button"><span>x</span></div>
   </div>
 </div>
 
 </template>
 
 <script>
-
+import PotholeService from "@/services/PotholeService.js";
 export default {
   props: {
     pothole: Object,
@@ -25,6 +26,13 @@ export default {
       descriptionHover: false
     };
   },
+  methods:{
+    handleDelete(){
+      PotholeService.deletePothole(this.pothole.id)
+      .then(()=>location.reload())
+
+    }
+  }
 };
 </script>
 
@@ -47,7 +55,7 @@ export default {
 div.pothole-card {
   display: grid;
   gap: 15px;
-  grid-template-columns: .7fr 1.5fr 1.5fr 2fr 1fr .7fr;
+  grid-template-columns: .7fr 1.5fr 1.5fr 2fr 1fr .7fr .1fr;
   border-style: solid;
   border-width: 3px;
   border-color: #737373;
@@ -73,6 +81,18 @@ img.location-on-roadway-icon {
 img.severity-icon {
   width: 60px;
   height: 60px
+}
+div.delete-button{
+  font-family: sans-serif;
+  font-size: 1.5em;
+  background-color: red;
+  text-decoration: none;
+  border-radius: 5px;
+  display:flex; 
+  padding: .2em;
+  justify-content: center;
+  align-items: center;
+
 }
 </style>
 

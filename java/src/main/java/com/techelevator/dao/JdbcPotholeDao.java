@@ -94,6 +94,14 @@ public class JdbcPotholeDao implements PotholeDao {
         return pothole;
 
     }
+    public void deletePothole (int id) {
+        String sql = "DELETE from pothole_status WHERE pothole_id = ?";
+        jdbcTemplate.update(sql,id);
+        sql = "DELETE from potholes WHERE id = ?";
+        jdbcTemplate.update(sql,id);
+
+
+    }
 
 
 }
