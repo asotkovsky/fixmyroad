@@ -5,7 +5,7 @@
     <p>{{pothole.roadName}}</p>
     <p>{{pothole.neighborhood}}</p>
     <p id="description1" @mouseover.stop="descriptionHover = true" @mouseleave.stop="descriptionHover = false">{{pothole.description }}</p>
-    <p id="status">{{pothole.statuses[(pothole.statuses.length - 1)].name}}</p>
+    <p id="status" v-if="pothole.statuses">{{pothole.statuses[(pothole.statuses.length - 1)].name}}</p>
     <img class='location-on-roadway-icon' v-bind:src="require('../assets/icon-' + pothole.locationOnRoadway + '.jpg')">
   </div>
 </div>

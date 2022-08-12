@@ -2,10 +2,13 @@ package com.techelevator.dao;
 
 import com.techelevator.model.Pothole;
 import com.techelevator.model.Status;
+import com.techelevator.model.User;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
 
+import java.security.Principal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,8 +16,9 @@ import java.util.List;
 public class JdbcPotholeDao implements PotholeDao {
 
     private JdbcTemplate jdbcTemplate;
+    private UserDao userDao;
 
-    public JdbcPotholeDao(JdbcTemplate jdbcTemplate) {this.jdbcTemplate = jdbcTemplate; }
+    public JdbcPotholeDao(JdbcTemplate jdbcTemplate, UserDao userDao) {this.jdbcTemplate = jdbcTemplate; this.userDao = userDao;}
 
     @Override
     public List<Pothole> getAllPotholes() {
@@ -56,6 +60,13 @@ public class JdbcPotholeDao implements PotholeDao {
             statuses.add (mapRowToStatus(results));
         }
         return statuses;
+    }
+    @Override
+    public void createStatus(int potholeId, int statusId, Principal principal) {
+        String sql = "INSERT INTO pothole_status (pothole_id, status_id, date, user_id) " +
+                "VALUES(?, ?, ?, ?) RETURNING id";
+        int id = jdbcTemplate.queryForObject(sql,Integer.class, potholeId, statusId, LocalDateTime.now(), userDao.findIdByUsername(principal.getName()));
+
     }
 
     private Status mapRowToStatus(SqlRowSet results) {

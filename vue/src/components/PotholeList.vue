@@ -39,10 +39,25 @@
           </option>
         </datalist>
       </span>
-      <p>Description</p>
-      <p>Status</p>
       <span>
-        <p>Location On Roadway</p>
+        <p>Description</p>
+        <input type="text" v-model="filter.description" />
+      </span>
+      <span>
+        <p>Status</p>
+        <select name="filterStatus" v-model="filter.status">
+          <option value=""></option>
+          <option
+            v-for="status in availableStatus"
+            v-bind:key="status"
+            v-bind:value="status"
+          >
+            {{ status }}
+          </option>
+        </select>
+      </span>
+      <span>
+        <p>Road/Shoulder</p>
         <select
           name="filterLocationOnRoadway"
           v-model="filter.locationOnRoadway"
@@ -77,10 +92,15 @@ export default {
     return {
       potholes: [],
       roadNames: [],
+      availableStatus: [],
+      neighborhoods: [],
+      description: [],
       filter: {
         severity: "",
         roadName: "",
         neighborhood: "",
+        description: "",
+        status: "",
         locationOnRoadway: "",
         city: null,
         state: null,
@@ -88,8 +108,7 @@ export default {
     };
   },
   mounted() {
-
-      PotholeService.getPotholes().then((response) => {
+    PotholeService.getPotholes().then((response) => {
       this.potholes = response.data;
       this.potholes.sort((a, b) => {
         return new Date(b.datetimeReported) - new Date(a.datetimeReported);
@@ -99,12 +118,19 @@ export default {
       let neighborhoods = this.potholes.map((pothole) => pothole.neighborhood);
       this.neighborhoods = [...new Set(neighborhoods)];
 
-      this.potholes.forEach(pothole => {
+      this.potholes.forEach((pothole) => {
         PotholeService.getPotholeStatuses(pothole.id).then((response) => {
-          pothole.statuses = response.data
-        })
-        
+          pothole.statuses = response.data;
+          pothole.currentStatus =
+            pothole.statuses[pothole.statuses.length - 1].name;
+        });
       });
+      let availableStatus = this.potholes.map(
+        (pothole) =>  {return pothole.currentStatus}
+      );
+      console.log(this.potholes)
+      console.log(availableStatus);
+      this.availableStatus = [...new Set(availableStatus)];
     });
   },
   unmounted() {
@@ -130,21 +156,31 @@ export default {
           }
         })
         .filter((pothole) => {
-          if(this.filter.neighborhood == ""){
+          if (this.filter.neighborhood == "") {
             return true;
+          } else {
+            return pothole.neighborhood
+              .toLowerCase()
+              .includes(this.filter.neighborhood.toLowerCase());
           }
-          else{
-            return pothole.neighborhood.toLowerCase()
-            .includes(this.filter.neighborhood.toLowerCase());
+        })
+        .filter((pothole) => {
+          if (this.filter.locationOnRoadway == "") {
+            return true;
+          } else {
+            return pothole.locationOnRoadway == this.filter.locationOnRoadway;
           }
-        }
-        ).filter(pothole =>{ if(this.filter.locationOnRoadway == ""){
-          return true;
-        }
-        else{
-          return pothole.locationOnRoadway == this.filter.locationOnRoadway;
-        }
-        })}
+        })
+        .filter((pothole) => {
+          if (this.filter.description == "") {
+            return true;
+          } else {
+            return pothole.description
+              .toLowerCase()
+              .includes(this.filter.description.toLowerCase());
+          }
+        });
+    },
   },
 };
 </script>

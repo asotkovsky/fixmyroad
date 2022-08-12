@@ -70,4 +70,7 @@ a {
   margin-top: 15px;
 
 }
+.home-icon{
+  cursor: pointer;
+}
 </style>
