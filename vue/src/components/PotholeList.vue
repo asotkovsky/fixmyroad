@@ -226,12 +226,7 @@ div.list-headers {
   display: grid;
   justify-content: left;
   gap: 15px;
-<<<<<<< HEAD
-  margin-left: 5px;
-  grid-template-columns: 0.7fr .7fr 1.5fr 1.5fr 2fr 1fr 0.7fr 0.1fr;
-=======
   grid-template-columns: 0.7fr 1.5fr 1.5fr 2fr 1fr 0.7fr 1fr 0.1fr 0.2fr;
->>>>>>> 94ef6fa404267bbb33991c0f3d35aa5e1e958895
 }
 
 p {
