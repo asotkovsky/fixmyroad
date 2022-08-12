@@ -38,11 +38,8 @@ export default {
 
 #description1 {
   overflow: hidden;
-<<<<<<< HEAD
-=======
   white-space: nowrap;
   text-overflow: ellipsis;
->>>>>>> ebb3104f4e3a647716c43ad672c4860b1e1868d2
   max-height: 2.2em;
   margin-top: 1em;
   margin-bottom: 1em;
