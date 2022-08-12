@@ -46,14 +46,12 @@
       <span>
         <p>Status</p>
         <select name="filterStatus" v-model="filter.status">
-          <option value=""></option>
-          <option
-            v-for="status in availableStatus"
-            v-bind:key="status"
-            v-bind:value="status"
-          >
-            {{ status }}
-          </option>
+         <option value=""></option>
+         <option value = "reported">reported</option>
+         <option value = "scheduled for inspection">scheduled for inspection</option>
+         <option value = "inspected">inspected</option>
+         <option value = "scheduled for repair">scheduled for repair</option>
+         <option value = "repaired">repaired</option>
         </select>
       </span>
       <span>
@@ -125,12 +123,6 @@ export default {
             pothole.statuses[pothole.statuses.length - 1].name;
         });
       });
-      let availableStatus = this.potholes.map(
-        (pothole) =>  {return pothole.currentStatus}
-      );
-      console.log(this.potholes)
-      console.log(availableStatus);
-      this.availableStatus = [...new Set(availableStatus)];
     });
   },
   unmounted() {
@@ -178,6 +170,14 @@ export default {
             return pothole.description
               .toLowerCase()
               .includes(this.filter.description.toLowerCase());
+          }
+        })
+        .filter((pothole) => {
+          if(this.filter.status == ""){
+            return true;
+          }
+          else{
+            return pothole.currentStatus == this.filter.status
           }
         });
     },
