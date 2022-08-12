@@ -54,13 +54,15 @@
       </span>
       <span>
         <p>Status</p>
-        <select name="filterStatus" v-model="filter.date">
-         <option value=""></option>
-         <option value = "Reported">Reported</option>
-         <option value = "Scheduled For Inspection">Scheduled For Inspection</option>
-         <option value = "Inspected">Inspected</option>
-         <option value = "Scheduled For Repair">Scheduled For Repair</option>
-         <option value = "Repaired">Repaired</option>
+        <select name="filterStatus" v-model="filter.status">
+          <option value=""></option>
+          <option value="reported">reported</option>
+          <option value="scheduled for inspection">
+            scheduled for inspection
+          </option>
+          <option value="inspected">inspected</option>
+          <option value="scheduled for repair">scheduled for repair</option>
+          <option value="repaired">repaired</option>
         </select>
       </span>
       <span>
@@ -121,7 +123,7 @@ export default {
   methods: {
     getDate(dateRange) {
       var date = new Date();
-      date.setDate(date.getDate());
+      date.setDate(date.getDate() - dateRange);
       return date;
     },
   },
@@ -193,11 +195,10 @@ export default {
           }
         })
         .filter((pothole) => {
-          if(this.filter.status == ""){
+          if (this.filter.status == "") {
             return true;
-          }
-          else{
-            return pothole.currentStatus == this.filter.status
+          } else {
+            return pothole.currentStatus == this.filter.status;
           }
         });
     },
@@ -225,8 +226,12 @@ div.list-headers {
   display: grid;
   justify-content: left;
   gap: 15px;
+<<<<<<< HEAD
   margin-left: 5px;
   grid-template-columns: 0.7fr .7fr 1.5fr 1.5fr 2fr 1fr 0.7fr 0.1fr;
+=======
+  grid-template-columns: 0.7fr 1.5fr 1.5fr 2fr 1fr 0.7fr 1fr 0.1fr 0.2fr;
+>>>>>>> 94ef6fa404267bbb33991c0f3d35aa5e1e958895
 }
 
 p {

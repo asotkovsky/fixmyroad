@@ -8,6 +8,7 @@ import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
 
 import java.security.Principal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -68,12 +69,12 @@ public class JdbcPotholeDao implements PotholeDao {
         return statuses;
     }
     @Override
-    public void createStatus(int potholeId, int statusId, String username) {
-        String sql = "INSERT INTO pothole_status (pothole_id, status_id, user_id) " +
-                "VALUES(?, ?, ?)";
+    public void createStatus(int potholeId, int statusId, String username, LocalDate date) {
+        String sql = "INSERT INTO pothole_status (pothole_id, status_id, user_id, date) " +
+                "VALUES(?, ?, ?, ?)";
 
         int userId = userDao.findIdByUsername(username);
-        jdbcTemplate.update(sql, potholeId, statusId, userId);
+        jdbcTemplate.update(sql, potholeId, statusId, userId, date);
 
     }
 
@@ -81,7 +82,7 @@ public class JdbcPotholeDao implements PotholeDao {
         Status status = new Status();
 
         status.setName( results.getString("status_name"));
-        status.setDate( results.getDate("date"));
+        status.setDate( results.getDate("date").toLocalDate());
         return status;
     }
 
