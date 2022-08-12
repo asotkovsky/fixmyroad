@@ -2,7 +2,7 @@
 <div>
   <div :class="{'pothole-card-hover' : descriptionHover}" class="pothole-card">
     <img class='severity-icon' v-if="pothole.severity != 0" v-bind:src="require('../assets/severity-icon-' + pothole.severity + '.png')">
-    <p>{{pothole.statuses[0].date}}</p>
+    <p v-if="pothole.statuses">{{pothole.statuses[0].date}}</p>
     <p>{{pothole.roadName}}</p>
     <p>{{pothole.neighborhood}}</p>
     <p id="description1" @mouseover.stop="descriptionHover = true" @mouseleave.stop="descriptionHover = false">{{pothole.description }}</p>
@@ -22,7 +22,8 @@ import PotholeService from "@/services/PotholeService.js";
 import AdminModal from '../views/AdminModal.vue';
 export default {
   props: {
-    pothole: Object,
+
+pothole: Object,
   },
   components: {
     AdminModal

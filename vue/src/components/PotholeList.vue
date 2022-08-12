@@ -47,12 +47,14 @@
       <span>
         <p>Status</p>
         <select name="filterStatus" v-model="filter.status">
-         <option value=""></option>
-         <option value = "reported">reported</option>
-         <option value = "scheduled for inspection">scheduled for inspection</option>
-         <option value = "inspected">inspected</option>
-         <option value = "scheduled for repair">scheduled for repair</option>
-         <option value = "repaired">repaired</option>
+          <option value=""></option>
+          <option value="reported">reported</option>
+          <option value="scheduled for inspection">
+            scheduled for inspection
+          </option>
+          <option value="inspected">inspected</option>
+          <option value="scheduled for repair">scheduled for repair</option>
+          <option value="repaired">repaired</option>
         </select>
       </span>
       <span>
@@ -177,11 +179,10 @@ export default {
           }
         })
         .filter((pothole) => {
-          if(this.filter.status == ""){
+          if (this.filter.status == "") {
             return true;
-          }
-          else{
-            return pothole.currentStatus == this.filter.status
+          } else {
+            return pothole.currentStatus == this.filter.status;
           }
         });
     },
@@ -208,7 +209,7 @@ div.potholes-list {
 div.list-headers {
   display: grid;
   gap: 15px;
-  grid-template-columns: 0.7fr 1.5fr 1.5fr 2fr 1fr 0.7fr 0.2fr 0.2fr;
+  grid-template-columns: 0.7fr 1.5fr 1.5fr 2fr 1fr 0.7fr 1fr 0.1fr 0.2fr;
 }
 
 p {

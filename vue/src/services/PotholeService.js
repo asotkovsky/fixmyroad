@@ -20,9 +20,9 @@ export default {
     deletePothole(potholeId){
       return axios.delete(`/potholes/${potholeId}`)
     },
-    
-    createStatus(potholeId, statusId){
-      return axios.post(`/pothole/${potholeId}/statuses/${statusId}`, {params:{potholeId, statusId}})
+
+    createStatus(potholeId, statusId, date){
+      return axios.post(`/pothole/${potholeId}/statuses/${statusId}`, {params:{potholeId, statusId,date}})
     }
 
     
