@@ -66,7 +66,9 @@
           <option value="road">road</option>
           <option value="shoulder">shoulder</option>
         </select>
+
       </span>
+
     </div>
     <div class="potholes-list">
       <pothole-card
@@ -76,6 +78,7 @@
         :pothole="currentPothole"
       />
     </div>
+   
   </div>
 </template>
 
@@ -204,7 +207,7 @@ div.potholes-list {
 div.list-headers {
   display: grid;
   gap: 15px;
-  grid-template-columns: 0.7fr 1.5fr 1.5fr 2fr 1fr 0.7fr;
+  grid-template-columns: 0.7fr 1.5fr 1.5fr 2fr 1fr 0.7fr ;
 }
 
 p {
@@ -214,4 +217,6 @@ p {
 h1 {
   font-family: sans-serif;
 }
+
+
 </style>
