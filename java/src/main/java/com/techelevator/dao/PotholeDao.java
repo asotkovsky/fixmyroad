@@ -4,6 +4,7 @@ import com.techelevator.model.Pothole;
 import com.techelevator.model.Status;
 
 import java.security.Principal;
+import java.time.LocalDate;
 import java.util.List;
 
 public interface PotholeDao {
@@ -14,5 +15,5 @@ public interface PotholeDao {
     public void deletePothole (int id);
 
     public List<Status> getPotholeStatuses(int potholeId);
-    public void createStatus(int potholeId, int statusId, String username);
+    public void createStatus(int potholeId, int statusId, String username, LocalDate date);
 }

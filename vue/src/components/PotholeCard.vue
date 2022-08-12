@@ -22,7 +22,8 @@ import PotholeService from "@/services/PotholeService.js";
 import AdminModal from '../views/AdminModal.vue';
 export default {
   props: {
-    pothole: Object,
+
+pothole: Object,
   },
   components: {
     AdminModal
