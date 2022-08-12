@@ -44,8 +44,8 @@
         >Location On Roadway</label
       >
       <select id="location_on_roadway" v-model="newPothole.locationOnRoadway">
-        <option value="road">Road</option>
-        <option value="shoulder">Shoulder</option>
+        <option value="Road">Road</option>
+        <option value="Shoulder">Shoulder</option>
       </select>
 
       <label for="description">Description </label>

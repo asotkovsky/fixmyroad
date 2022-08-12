@@ -8,6 +8,7 @@
     
     <p id="status" v-if="pothole.statuses">{{pothole.statuses[(pothole.statuses.length - 1)].name}}</p>
     <img class='location-on-roadway-icon' v-bind:src="require('../assets/icon-' + pothole.locationOnRoadway + '.jpg')">
+    <status-form :pothole="pothole"/>
   </div>
  
 </div>
@@ -15,16 +16,19 @@
 </template>
 
 <script>
+import StatusForm from './StatusForm.vue';
 
 export default {
   props: {
     pothole: Object,
   },
-
+  components: {
+    StatusForm
+  },
   data() {
     return {
       center: { lat: this.pothole.latitude, lng: this.pothole.longitude },
-      descriptionHover: false
+      descriptionHover: false,
     };
   },
 };
@@ -34,6 +38,11 @@ export default {
 
 #description1 {
   overflow: hidden;
+<<<<<<< HEAD
+=======
+  white-space: nowrap;
+  text-overflow: ellipsis;
+>>>>>>> ebb3104f4e3a647716c43ad672c4860b1e1868d2
   max-height: 2.2em;
   margin-top: 1em;
   margin-bottom: 1em;
@@ -41,6 +50,8 @@ export default {
 
 #description1:hover {
   max-height: 100%;
+  overflow: visible;
+  white-space: normal;
   
   
 
@@ -52,7 +63,7 @@ export default {
 div.pothole-card {
   display: grid;
   gap: 15px;
-  grid-template-columns: .7fr 1.5fr 1.5fr 2fr 1fr .7fr;
+  grid-template-columns: .7fr 1.5fr 1.5fr 2fr 1fr .7fr 1fr;
   border-style: solid;
   border-width: 3px;
   border-color: #737373;

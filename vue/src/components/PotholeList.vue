@@ -63,8 +63,8 @@
           v-model="filter.locationOnRoadway"
         >
           <option value=""></option>
-          <option value="road">road</option>
-          <option value="shoulder">shoulder</option>
+          <option value="Road">Road</option>
+          <option value="Shoulder">Shoulder</option>
         </select>
 
       </span>
