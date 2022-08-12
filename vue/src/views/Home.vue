@@ -45,7 +45,7 @@ export default {
   width: 500px;
   flex-direction: column;
   align-items: center;
-  justify-content: end;
+  justify-content: flex-end;
 
 }
 
