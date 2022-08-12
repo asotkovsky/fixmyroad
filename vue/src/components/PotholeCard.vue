@@ -9,7 +9,7 @@
     <p id="status" v-if="pothole.statuses">{{pothole.statuses[(pothole.statuses.length - 1)].name}}</p>
     <img class='location-on-roadway-icon' v-bind:src="require('../assets/icon-' + pothole.locationOnRoadway + '.jpg')">
     <img class='show-modal-icon' @click="showAdminModal = true" v-bind:src="require('../assets/plus-icon.png')">
-    <admin-modal :pothole="pothole" v-if="showAdminModal"/>
+    <admin-modal :pothole="pothole" @close="showAdminModal = false" v-if="showAdminModal"/>
   </div>
 
 </div>
@@ -59,25 +59,21 @@ export default {
 #description1:hover {
   max-height: 100%;
   overflow: visible;
-  white-space: normal;
-  
-  
-
-
-  
+  white-space: normal; 
 }
 
 
 div.pothole-card {
   display: grid;
   gap: 15px;
-  grid-template-columns: .7fr 1.5fr 1.5fr 2fr 1fr .7fr 0.2fr;
+  grid-template-columns: 0.7fr .7fr 1.5fr 1.5fr 2fr 1fr 0.7fr 0.1fr;
 
   border-style: solid;
   border-width: 3px;
   border-color: #737373;
   border-radius:5px;
   align-items: center;
+  justify-content: left;
   min-height:4em;
 }
 

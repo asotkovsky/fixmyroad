@@ -13,7 +13,15 @@
           <option value="5">5</option>
         </select>
       </span>
-      <p>Date:</p>
+      <span>
+        <p>Date:</p>
+        <select name="filterDate" v-model="filter.severity">
+          <option value=""></option>
+          <option :value="getDate()">Last 7 Days</option>
+          <option value = "last-30-days">Last 30 Days</option>
+          <option value = "last-year">This Year</option>
+        </select>
+      </span>
       <span>
         
         <p>Road</p>
@@ -46,13 +54,13 @@
       </span>
       <span>
         <p>Status</p>
-        <select name="filterStatus" v-model="filter.status">
+        <select name="filterStatus" v-model="filter.date">
          <option value=""></option>
-         <option value = "reported">reported</option>
-         <option value = "scheduled for inspection">scheduled for inspection</option>
-         <option value = "inspected">inspected</option>
-         <option value = "scheduled for repair">scheduled for repair</option>
-         <option value = "repaired">repaired</option>
+         <option value = "Reported">Reported</option>
+         <option value = "Scheduled For Inspection">Scheduled For Inspection</option>
+         <option value = "Inspected">Inspected</option>
+         <option value = "Scheduled For Repair">Scheduled For Repair</option>
+         <option value = "Repaired">Repaired</option>
         </select>
       </span>
       <span>
@@ -106,8 +114,16 @@ export default {
         locationOnRoadway: "",
         city: null,
         state: null,
+        date: ""
       },
     };
+  },
+  methods: {
+    getDate(dateRange) {
+      var date = new Date();
+      date.setDate(date.getDate() - dateRange);
+      return date;
+    },
   },
   mounted() {
     PotholeService.getPotholes().then((response) => {
@@ -207,8 +223,10 @@ div.potholes-list {
 
 div.list-headers {
   display: grid;
+  justify-content: left;
   gap: 15px;
-  grid-template-columns: 0.7fr 1.5fr 1.5fr 2fr 1fr 0.7fr 0.2fr;
+  margin-left: 5px;
+  grid-template-columns: 0.7fr .7fr 1.5fr 1.5fr 2fr 1fr 0.7fr 0.1fr;
 }
 
 p {
