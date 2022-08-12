@@ -8,6 +8,7 @@ import store from '../store/index'
 import PotholeList from '../views/Potholes.vue'
 import ReportPotholes from '../views/ReportPotholes.vue'
 import PageNotFound from '../components/404.vue'
+import EmployeePotholeControls from '../components/EmployeePotholeControls.vue'
 
 Vue.use(Router)
 
@@ -85,6 +86,15 @@ const router = new Router({
     { 
       path: "*", 
       redirect: "/404" 
+    },
+    {
+      path: "/status",
+      name: "status",
+      component: EmployeePotholeControls,
+      meta: {
+        requiresAuth: false
+      }
+
     },
 
   ]

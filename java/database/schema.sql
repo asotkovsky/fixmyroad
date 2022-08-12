@@ -58,11 +58,11 @@ INSERT INTO users (username,password_hash,role) VALUES ('admin','$2a$08$UkVvwpUL
 
 INSERT INTO status (status_name) VALUES ('reported'), ('scheduled for inspection'), ('inspected'), ('scheduled for repair'), ('repaired');
 
-INSERT INTO potholes (longitude, latitude, description, severity, location_on_roadway, road_name, neighborhood, city, state) VALUES (-82.983330, 39.983334, 'pothole 1', 5, 'shoulder', 'Cleveland Ave', 'Linden', 'Columbus', 'OH');
-INSERT INTO potholes (longitude, latitude, description, severity, location_on_roadway, road_name, neighborhood, city, state) VALUES (-82.998790, 39.961180, 'pothole 2', 3, 'road', 'Cleveland Ave', 'Linden', 'Columbus', 'OH');
-INSERT INTO potholes (longitude, latitude, description, severity, location_on_roadway, road_name, neighborhood, city, state) VALUES (-83.042504, 39.997804, 'pothole 3', 1, 'shoulder', 'Cleveland Ave', 'Linden', 'Columbus', 'OH');
-INSERT INTO potholes (longitude, latitude, description, severity, location_on_roadway, road_name, neighborhood, city, state) VALUES (-83.002533, 39.965521, 'pothole 4', 2, 'road', 'Cleveland Ave', 'Linden', 'Columbus', 'OH');
-INSERT INTO potholes (longitude, latitude, description, severity, location_on_roadway, road_name, neighborhood, city, state) VALUES (-83.014596, 39.960514, 'pothole 5', 4, 'shoulder', 'Cleveland Ave', 'Linden', 'Columbus', 'OH');
+INSERT INTO potholes (longitude, latitude, description, severity, location_on_roadway, road_name, neighborhood, city, state) VALUES (-82.983330, 39.983334, 'pothole 1', 5, 'Shoulder', 'Cleveland Ave', 'Linden', 'Columbus', 'OH');
+INSERT INTO potholes (longitude, latitude, description, severity, location_on_roadway, road_name, neighborhood, city, state) VALUES (-82.998790, 39.961180, 'pothole 2', 3, 'Road', 'Cleveland Ave', 'Linden', 'Columbus', 'OH');
+INSERT INTO potholes (longitude, latitude, description, severity, location_on_roadway, road_name, neighborhood, city, state) VALUES (-83.042504, 39.997804, 'pothole 3', 1, 'Shoulder', 'Cleveland Ave', 'Linden', 'Columbus', 'OH');
+INSERT INTO potholes (longitude, latitude, description, severity, location_on_roadway, road_name, neighborhood, city, state) VALUES (-83.002533, 39.965521, 'pothole 4', 2, 'Road', 'Cleveland Ave', 'Linden', 'Columbus', 'OH');
+INSERT INTO potholes (longitude, latitude, description, severity, location_on_roadway, road_name, neighborhood, city, state) VALUES (-83.014596, 39.960514, 'pothole 5', 4, 'Shoulder', 'Cleveland Ave', 'Linden', 'Columbus', 'OH');
 
 INSERT INTO pothole_status (pothole_id, status_id, date, user_id) VALUES (1,1, CURRENT_TIMESTAMP, 1), (2,1, CURRENT_TIMESTAMP, 1),
 (3,1, CURRENT_TIMESTAMP, 1),
