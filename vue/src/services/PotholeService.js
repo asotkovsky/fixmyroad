@@ -17,9 +17,8 @@ export default {
     getPotholeStatuses(potholeId) {
       return axios.get(`/pothole/${potholeId}/statuses`, {params:{potholeId}})
     },
-
-    createStatus(potholeId, statusId){
-      return axios.post(`/pothole/${potholeId}/statuses/${statusId}`, {params:{potholeId, statusId}})
+    deletePothole(potholeId){
+      return axios.delete(`/potholes/${potholeId}`)
     }
 
 
