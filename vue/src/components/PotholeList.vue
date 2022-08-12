@@ -209,7 +209,7 @@ div.potholes-list {
 div.list-headers {
   display: grid;
   gap: 15px;
-  grid-template-columns: 0.7fr 1.5fr 1.5fr 2fr 1fr 0.7fr 1fr 0.1fr;
+  grid-template-columns: 0.7fr 1.5fr 1.5fr 2fr 1fr 0.7fr 1fr 0.1fr 0.2fr;
 }
 
 p {
