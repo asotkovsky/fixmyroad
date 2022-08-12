@@ -71,7 +71,7 @@ export default {
 div.pothole-card {
   display: grid;
   gap: 15px;
-  grid-template-columns: 1fr 1fr 1.5fr 2fr 1fr 1fr 1fr .1fr;
+  grid-template-columns: .7fr 1.5fr 1.5fr 2fr 1fr .7fr 0.2fr;
 
   border-style: solid;
   border-width: 3px;
