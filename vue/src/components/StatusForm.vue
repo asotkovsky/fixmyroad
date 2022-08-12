@@ -33,7 +33,8 @@ export default {
   },
   methods: {
     handleSave() {
-      PotholeService.createStatus(this.pothole.id, this.potholeStatus);
+      PotholeService.createStatus(this.pothole.id, this.potholeStatus)
+      .then(()=>this.$router.push('/potholes'));
       this.potholeStatus = "";
     },
   },
