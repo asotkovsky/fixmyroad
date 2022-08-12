@@ -2,21 +2,22 @@
 <div>
   <div :class="{'pothole-card-hover' : descriptionHover}" class="pothole-card">
     <img class='severity-icon' v-if="pothole.severity != 0" v-bind:src="require('../assets/severity-icon-' + pothole.severity + '.png')">
+    <p>{{pothole.statuses[0].date}}</p>
     <p>{{pothole.roadName}}</p>
     <p>{{pothole.neighborhood}}</p>
     <p id="description1" @mouseover.stop="descriptionHover = true" @mouseleave.stop="descriptionHover = false">{{pothole.description }}</p>
-    
     <p id="status" v-if="pothole.statuses">{{pothole.statuses[(pothole.statuses.length - 1)].name}}</p>
     <img class='location-on-roadway-icon' v-bind:src="require('../assets/icon-' + pothole.locationOnRoadway + '.jpg')">
     <status-form :pothole="pothole"/>
   </div>
- 
+
 </div>
 
 </template>
 
 <script>
 import StatusForm from './StatusForm.vue';
+
 
 export default {
   props: {
@@ -25,6 +26,7 @@ export default {
   components: {
     StatusForm
   },
+
   data() {
     return {
       center: { lat: this.pothole.latitude, lng: this.pothole.longitude },
@@ -60,7 +62,7 @@ export default {
 div.pothole-card {
   display: grid;
   gap: 15px;
-  grid-template-columns: .7fr 1.5fr 1.5fr 2fr 1fr .7fr 1fr;
+  grid-template-columns: .7fr .7fr 1.5fr 1.5fr 2fr 1fr .7fr 1fr;
   border-style: solid;
   border-width: 3px;
   border-color: #737373;

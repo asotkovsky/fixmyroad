@@ -13,9 +13,10 @@
           <option value="5">5</option>
         </select>
       </span>
+      <p>Date:</p>
       <span>
+        
         <p>Road</p>
-
         <input list="filteredRoadName" type="text" v-model="filter.roadName" />
         <datalist id="filteredRoadName">
           <option v-for="roadName in roadNames" v-bind:key="roadName">
@@ -207,7 +208,7 @@ div.potholes-list {
 div.list-headers {
   display: grid;
   gap: 15px;
-  grid-template-columns: 0.7fr 1.5fr 1.5fr 2fr 1fr 0.7fr ;
+  grid-template-columns: 0.7fr .7fr 1.5fr 1.5fr 2fr 1fr 0.7fr ;
 }
 
 p {
