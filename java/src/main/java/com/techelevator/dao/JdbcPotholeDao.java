@@ -35,11 +35,17 @@ public class JdbcPotholeDao implements PotholeDao {
     }
 
     @Override
-    public Pothole createPothole(Pothole pothole) {
+    public Pothole createPothole(Pothole pothole, String username) {
         String sql = "INSERT INTO potholes (longitude, latitude, description, severity, location_on_roadway, road_name, neighborhood, city, state) " +
                 "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) returning id";
         Integer id = jdbcTemplate.queryForObject(sql, Integer.class, pothole.getLongitude(), pothole.getLatitude(), pothole.getDescription(), pothole.getSeverity(), pothole.getLocationOnRoadway(), pothole.getRoadName(), pothole.getNeighborhood(), pothole.getCity(), pothole.getState());
         pothole .setId(id);
+
+        int userId = userDao.findIdByUsername(username);
+        sql = "INSERT INTO pothole_status (pothole_id, status_id, user_id) VALUES " +
+                "(?,1,?)";
+        jdbcTemplate.update(sql, pothole.getId(),userId);
+
         return pothole;
     }
 
@@ -62,10 +68,12 @@ public class JdbcPotholeDao implements PotholeDao {
         return statuses;
     }
     @Override
-    public void createStatus(int potholeId, int statusId, Principal principal) {
-        String sql = "INSERT INTO pothole_status (pothole_id, status_id, date, user_id) " +
-                "VALUES(?, ?, ?, ?) RETURNING id";
-        int id = jdbcTemplate.queryForObject(sql,Integer.class, potholeId, statusId, LocalDateTime.now(), userDao.findIdByUsername(principal.getName()));
+    public void createStatus(int potholeId, int statusId, String username) {
+        String sql = "INSERT INTO pothole_status (pothole_id, status_id, user_id) " +
+                "VALUES(?, ?, ?)";
+
+        int userId = userDao.findIdByUsername(username);
+        jdbcTemplate.update(sql, potholeId, statusId, userId);
 
     }
 

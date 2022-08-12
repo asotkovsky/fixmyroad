@@ -38,13 +38,13 @@ public class PotholeController {
     }
 
     @RequestMapping(path = "/potholes", method = RequestMethod.POST)
-    public Pothole createPothole(@Valid @RequestBody Pothole pothole){
-        return potholeDao.createPothole(pothole);
+    public Pothole createPothole(@Valid @RequestBody Pothole pothole, Principal principal){
+        return potholeDao.createPothole(pothole, principal.getName());
     }
 
     @RequestMapping(path = "/pothole/{pothole_id}/statuses/{status_id}", method = RequestMethod.POST)
     public void createStatus(@PathVariable("pothole_id") int potholeId, @PathVariable("status_id") int statusId, Principal principal)
-    {potholeDao.createStatus(potholeId, statusId, principal);}
+    {potholeDao.createStatus(potholeId, statusId, principal.getName());}
 
 
 

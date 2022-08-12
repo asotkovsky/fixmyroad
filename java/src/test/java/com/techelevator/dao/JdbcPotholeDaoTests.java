@@ -60,8 +60,9 @@ public class JdbcPotholeDaoTests extends BaseDaoTests {
     @Test
     public void addPotholeReturnsNewPothole(){
        Pothole pothole = new Pothole();
+       String username = "user1";
        pothole.setState("ZZ");
-       Pothole createdPothole = potholeDao.createPothole(pothole);
+       Pothole createdPothole = potholeDao.createPothole(pothole, username);
        Assert.assertEquals(createdPothole.getId(),3);
        Assert.assertEquals(pothole, createdPothole);
 
@@ -69,7 +70,8 @@ public class JdbcPotholeDaoTests extends BaseDaoTests {
     @Test
     public void addPotholeCreatesInDataBase(){
         Pothole pothole = new Pothole();
-        potholeDao.createPothole(pothole);
+        String username = "user1";
+        potholeDao.createPothole(pothole, username);
         List<Pothole> potholeList = potholeDao.getAllPotholes();
         Assert.assertEquals(potholeList.size(),3);
     }

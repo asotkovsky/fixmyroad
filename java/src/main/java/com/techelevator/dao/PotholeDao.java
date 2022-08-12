@@ -9,8 +9,8 @@ import java.util.List;
 public interface PotholeDao {
     List<Pothole> getAllPotholes();
 
-    public Pothole createPothole (Pothole pothole);
+    public Pothole createPothole (Pothole pothole, String username);
 
     public List<Status> getPotholeStatuses(int potholeId);
-    public void createStatus(int potholeId, int statusId, Principal principal);
+    public void createStatus(int potholeId, int statusId, String username);
 }

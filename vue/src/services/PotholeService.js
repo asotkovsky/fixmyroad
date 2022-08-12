@@ -19,7 +19,7 @@ export default {
     },
 
     createStatus(potholeId, statusId){
-      return axios.post(`/pothole/${potholeId}/status/`)
+      return axios.post(`/pothole/${potholeId}/statuses/${statusId}`, {params:{potholeId, statusId}})
     }
 
 
