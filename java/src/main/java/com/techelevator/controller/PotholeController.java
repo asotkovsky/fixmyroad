@@ -42,9 +42,9 @@ public class PotholeController {
         return potholeDao.createPothole(pothole, principal.getName());
     }
 
-    @RequestMapping(path = "/pothole/{pothole_id}/statuses/{status_id}", method = RequestMethod.POST)
-    public void createStatus(@PathVariable("pothole_id") int potholeId, @PathVariable("status_id") int statusId, Principal principal) {
-        potholeDao.createStatus(potholeId, statusId, principal.getName(), null);
+    @RequestMapping(path = "/pothole/{pothole_id}/statuses", method = RequestMethod.POST)
+    public void createStatus(@PathVariable("pothole_id") int potholeId, @RequestBody Status status, Principal principal) {
+        potholeDao.createStatus(potholeId, status.getId(), principal.getName(), null);
     }
 
     @RequestMapping(path = "/potholes/{id}", method = RequestMethod.DELETE)

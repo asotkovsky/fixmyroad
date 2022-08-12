@@ -71,10 +71,10 @@ public class JdbcPotholeDao implements PotholeDao {
     @Override
     public void createStatus(int potholeId, int statusId, String username, LocalDate date) {
         String sql = "INSERT INTO pothole_status (pothole_id, status_id, user_id, date) " +
-                "VALUES(?, ?, ?)";
+                "VALUES(?, ?, ?, ?)";
 
         int userId = userDao.findIdByUsername(username);
-        jdbcTemplate.update(sql, potholeId, statusId, userId);
+        jdbcTemplate.update(sql, potholeId, statusId, userId, date);
 
     }
 
@@ -82,7 +82,7 @@ public class JdbcPotholeDao implements PotholeDao {
         Status status = new Status();
 
         status.setName( results.getString("status_name"));
-        status.setDate( results.getDate("date"));
+        status.setDate( results.getDate("date").toLocalDate());
         return status;
     }
 
