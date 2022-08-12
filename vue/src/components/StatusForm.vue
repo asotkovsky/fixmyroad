@@ -9,6 +9,7 @@
         <option value="4">Scheduled For Repair</option>
         <option value="5">Repaired</option>
       </select>
+      <br/>
       <input type="submit" value="Submit" :disabled="!submitEnabled" />
     </form>
   </div>
@@ -32,7 +33,8 @@ export default {
   },
   methods: {
     handleSave() {
-      PotholeService.createStatus(this.pothole.id, this.potholeStatus);
+      PotholeService.createStatus(this.pothole.id, this.potholeStatus)
+      .then(()=>location.reload());
       this.potholeStatus = "";
     },
   },

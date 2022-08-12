@@ -3,7 +3,7 @@
     <div class="modal">
       <header class="modal-header">
         <slot name="header">
-          This is the default title!
+          Update Pothole ID: 
         </slot>
         <button
           type="button"
@@ -16,32 +16,24 @@
 
       <section class="modal-body">
         <slot name="body">
+            <p>Update Status:</p>
             <status-form :pothole="pothole"/>
+            <br/>
+            <br/>
+            <delete-pothole :pothole="pothole"/>
         </slot>
        </section>
-
-      <footer class="modal-footer">
-        <slot name="footer">
-          This is the default footer!
-        </slot>
-        <button
-          type="button"
-          class="btn-green"
-          @click="close"
-        >
-          Close Modal
-        </button>
-      </footer>
     </div>
   </div>
 </template>
 
 <script>
+import DeletePothole from '../components/DeletePothole.vue';
 import StatusForm from '../components/StatusForm.vue'
 
 export default {
     name: 'Modal',
-    components: { StatusForm },
+    components: { StatusForm, DeletePothole },
     props: ["pothole"],
     methods: {
       close() {
@@ -82,7 +74,7 @@ export default {
   .modal-header {
     position: relative;
     border-bottom: 1px solid #eeeeee;
-    color: #4AAE9B;
+    color: #737373;
     justify-content: space-between;
   }
 
@@ -95,6 +87,9 @@ export default {
   .modal-body {
     position: relative;
     padding: 20px 10px;
+    color: #737373;
+    font-family: sans-serif;
+    font-size: 0.75em;
   }
 
   .btn-close {
@@ -106,7 +101,7 @@ export default {
     padding: 10px;
     cursor: pointer;
     font-weight: bold;
-    color: #4AAE9B;
+    color: #737373;
     background: transparent;
   }
 
