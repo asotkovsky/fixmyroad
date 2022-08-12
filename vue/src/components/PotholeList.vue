@@ -121,7 +121,7 @@ export default {
   methods: {
     getDate(dateRange) {
       var date = new Date();
-      date.setDate(date.getDate() - dateRange);
+      date.setDate(date.getDate());
       return date;
     },
   },
