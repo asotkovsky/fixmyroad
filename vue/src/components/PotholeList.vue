@@ -13,9 +13,10 @@
           <option value="5">5</option>
         </select>
       </span>
+      <p>Date:</p>
       <span>
+        
         <p>Road</p>
-
         <input list="filteredRoadName" type="text" v-model="filter.roadName" />
         <datalist id="filteredRoadName">
           <option v-for="roadName in roadNames" v-bind:key="roadName">
@@ -64,7 +65,9 @@
           <option value="Road">Road</option>
           <option value="Shoulder">Shoulder</option>
         </select>
+
       </span>
+
     </div>
     <div class="potholes-list">
       <pothole-card
@@ -74,6 +77,7 @@
         :pothole="currentPothole"
       />
     </div>
+   
   </div>
 </template>
 
@@ -214,4 +218,6 @@ p {
 h1 {
   font-family: sans-serif;
 }
+
+
 </style>

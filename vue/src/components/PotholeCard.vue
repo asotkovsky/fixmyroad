@@ -2,6 +2,7 @@
 <div>
   <div :class="{'pothole-card-hover' : descriptionHover}" class="pothole-card">
     <img class='severity-icon' v-if="pothole.severity != 0" v-bind:src="require('../assets/severity-icon-' + pothole.severity + '.png')">
+    <p>{{pothole.statuses[0].date}}</p>
     <p>{{pothole.roadName}}</p>
     <p>{{pothole.neighborhood}}</p>
     <p id="description1" @mouseover.stop="descriptionHover = true" @mouseleave.stop="descriptionHover = false">{{pothole.description }}</p>
@@ -10,6 +11,7 @@
     <img class='show-modal-icon' @click="showAdminModal = true" v-bind:src="require('../assets/plus-icon.png')">
     <admin-modal :pothole="pothole" v-if="showAdminModal"/>
   </div>
+
 </div>
 
 </template>
@@ -25,6 +27,7 @@ export default {
   components: {
     AdminModal
   },
+
   data() {
     return {
       center: { lat: this.pothole.latitude, lng: this.pothole.longitude },
@@ -57,6 +60,10 @@ export default {
   max-height: 100%;
   overflow: visible;
   white-space: normal;
+  
+  
+
+
   
 }
 
