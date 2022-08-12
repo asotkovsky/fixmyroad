@@ -22,9 +22,7 @@ export default {
   props: {
     pothole: Object,
   },
-  methods: {
-    
-  },
+
   components: {
     StatusForm
   },
