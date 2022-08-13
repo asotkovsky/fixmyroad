@@ -2,15 +2,17 @@
 <div class="modal-backdrop">
     <div class="modal">
       <header class="modal-header">
-        <slot name="header">
+        <!-- <slot name="header"> -->
+          <span>
           Update Pothole ID: {{pothole.id}}
-        </slot>
+          </span>
+        <!-- </slot> -->
         <button
           type="button"
           class="btn-close"
           @click="close()"
         >
-          X
+          x
         </button>
       </header>
 
@@ -64,6 +66,7 @@ export default {
     display: flex;
     flex-direction: column;
     font-family: sans-serif;
+    min-width: 300px;
 
   }
 
@@ -71,6 +74,7 @@ export default {
   .modal-footer {
     padding: 15px;
     display: flex;
+    align-items: center;
   }
 
   .modal-header {
@@ -95,16 +99,18 @@ export default {
   }
 
   .btn-close {
-    position: absolute;
-    top: 0;
-    right: 0;
+    /* position: absolute; */
+    /* top: 0; */
+    /* right: 0; */
     border: none;
-    font-size: 20px;
-    padding: 10px;
+    font-size: 15px;
+    padding: 5px;
     cursor: pointer;
     font-weight: bold;
     color: #737373;
-    background: transparent;
+    background: red;
+    border-radius: 5px;
+    height:25px
   }
 
 </style>
