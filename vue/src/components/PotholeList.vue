@@ -226,7 +226,7 @@ div.list-headers {
   display: grid;
   justify-content: left;
   gap: 15px;
-  grid-template-columns: 0.7fr 1.5fr 1.5fr 2fr 1fr 0.7fr 1fr 0.1fr 0.2fr;
+  grid-template-columns: .7fr .5fr 1.5fr 1fr 2fr .7fr 0.2fr 0.2fr;
 }
 
 p {
