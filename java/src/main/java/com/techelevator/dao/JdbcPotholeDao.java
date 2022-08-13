@@ -82,8 +82,11 @@ public class JdbcPotholeDao implements PotholeDao {
     private Status mapRowToStatus(SqlRowSet results) {
         Status status = new Status();
 
-        status.setName( results.getString("status_name"));
-        status.setDate( results.getDate("date").toLocalDate());
+        status.setName(results.getString("status_name"));
+        Date date = results.getDate("date");
+        if (date != null) {
+            status.setDate(date.toLocalDate());
+        }
         return status;
     }
 
