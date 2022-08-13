@@ -4,7 +4,7 @@
     <div class="list-headers">
       <span>
         <p>Severity</p>
-        <select name="filterSeverity" v-model="filter.severity">
+        <select name="filterSeverity" v-model.number="filter.severity">
           <option value=""></option>
           <option value="1">1</option>
           <option value="2">2</option>
@@ -15,7 +15,7 @@
       </span>
       <span>
         <p>Date:</p>
-        <select name="filterDate" v-model="filter.severity">
+        <select name="filterDate" v-model="filter.date">
           <option value=""></option>
           <option :value="getDate()">Last 7 Days</option>
           <option value = "last-30-days">Last 30 Days</option>
@@ -56,13 +56,13 @@
         <p>Status</p>
         <select name="filterStatus" v-model="filter.status">
           <option value=""></option>
-          <option value="reported">reported</option>
-          <option value="scheduled for inspection">
+          <option value="Reported">reported</option>
+          <option value="Scheduled For Inspection">
             scheduled for inspection
           </option>
-          <option value="inspected">inspected</option>
-          <option value="scheduled for repair">scheduled for repair</option>
-          <option value="repaired">repaired</option>
+          <option value="Inspected">inspected</option>
+          <option value="Scheduled For Repair">scheduled for repair</option>
+          <option value="Repaired">repaired</option>
         </select>
       </span>
       <span>
