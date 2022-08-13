@@ -69,12 +69,13 @@ public class JdbcPotholeDao implements PotholeDao {
         return statuses;
     }
     @Override
-    public void createStatus(int potholeId, int statusId, String username, LocalDate date) {
-        String sql = "INSERT INTO pothole_status (pothole_id, status_id, user_id, date) " +
+    public void createStatus(int potholeId, Status status, String username) {
+        String sql =
+                "INSERT INTO pothole_status (pothole_id, status_id, user_id, date) " +
                 "VALUES(?, ?, ?, ?)";
 
         int userId = userDao.findIdByUsername(username);
-        jdbcTemplate.update(sql, potholeId, statusId, userId, date);
+        jdbcTemplate.update(sql, potholeId, status.getId(), userId, status.getDate());
 
     }
 

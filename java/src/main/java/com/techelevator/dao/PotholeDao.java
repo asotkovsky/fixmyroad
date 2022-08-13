@@ -15,5 +15,5 @@ public interface PotholeDao {
     public void deletePothole (int id);
 
     public List<Status> getPotholeStatuses(int potholeId);
-    public void createStatus(int potholeId, int statusId, String username, LocalDate date);
+    public void createStatus(int potholeId, Status status, String username);
 }
