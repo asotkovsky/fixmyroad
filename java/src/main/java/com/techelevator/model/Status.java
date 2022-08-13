@@ -1,11 +1,21 @@
 package com.techelevator.model;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Status {
 
     private String name;
-    private Date date;
+    private LocalDate date;
+    private int id;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -15,11 +25,11 @@ public class Status {
         this.name = name;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 }

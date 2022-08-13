@@ -28,29 +28,28 @@ public class PotholeController {
     }
 
     @RequestMapping(path = "/location", method = RequestMethod.GET)
-    public String getLocationInfo(@RequestParam double latitude, @RequestParam double longitude){
+    public String getLocationInfo(@RequestParam double latitude, @RequestParam double longitude) {
         return locationDao.getFromCoordinates(latitude, longitude);
     }
 
     @RequestMapping(path = "/pothole/{id}/statuses", method = RequestMethod.GET)
-    public List<Status> getPotholeStatuses(@PathVariable("id") int potholeId){
+    public List<Status> getPotholeStatuses(@PathVariable("id") int potholeId) {
         return potholeDao.getPotholeStatuses(potholeId);
     }
 
     @RequestMapping(path = "/potholes", method = RequestMethod.POST)
-    public Pothole createPothole(@Valid @RequestBody Pothole pothole, Principal principal){
+    public Pothole createPothole(@Valid @RequestBody Pothole pothole, Principal principal) {
         return potholeDao.createPothole(pothole, principal.getName());
     }
 
-    @RequestMapping(path = "/pothole/{pothole_id}/statuses/{status_id}", method = RequestMethod.POST)
-    public void createStatus(@PathVariable("pothole_id") int potholeId, @PathVariable("status_id") int statusId, Principal principal)
-    {potholeDao.createStatus(potholeId, statusId, principal.getName());}
-
-    @RequestMapping(path = "/potholes/{id}", method = RequestMethod.DELETE)
-    public void deletePothole(@PathVariable("id") int id){
-    potholeDao.deletePothole(id);
+    @RequestMapping(path = "/pothole/{pothole_id}/statuses", method = RequestMethod.POST)
+    public void createStatus(@PathVariable("pothole_id") int potholeId, @RequestBody Status status, Principal principal) {
+        potholeDao.createStatus(potholeId, status.getId(), principal.getName(), null);
     }
 
-
+    @RequestMapping(path = "/potholes/{id}", method = RequestMethod.DELETE)
+    public void deletePothole(@PathVariable("id") int id) {
+        potholeDao.deletePothole(id);
+    }
 
 }

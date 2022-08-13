@@ -3,14 +3,14 @@
     <div class="modal">
       <header class="modal-header">
         <slot name="header">
-          Update Pothole ID: 
+          Update Pothole ID: {{pothole.id}}
         </slot>
         <button
           type="button"
           class="btn-close"
-          @click="close"
+          @click="close()"
         >
-          x
+          X
         </button>
       </header>
 
@@ -38,7 +38,7 @@ export default {
     methods: {
       close() {
         this.$emit('close');
-      },
+      }
     },
   };
 
@@ -63,6 +63,8 @@ export default {
     overflow-x: auto;
     display: flex;
     flex-direction: column;
+    font-family: sans-serif;
+
   }
 
   .modal-header,
@@ -105,10 +107,4 @@ export default {
     background: transparent;
   }
 
-  .btn-green {
-    color: white;
-    background: #4AAE9B;
-    border: 1px solid #4AAE9B;
-    border-radius: 2px;
-  }
 </style>
