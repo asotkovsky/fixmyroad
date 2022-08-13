@@ -14,12 +14,12 @@
         </select>
       </span>
       <span>
-        <p>Date:</p>
-        <select name="filterDate" v-model="filter.severity">
+        <p>Date Reported:</p>
+        <select name="filterDate" v-model.number="filter.numberOfDays">
           <option value=""></option>
-          <option :value="getDate()">Last 7 Days</option>
-          <option value = "last-30-days">Last 30 Days</option>
-          <option value = "last-year">This Year</option>
+          <option value="7">Last 7 Days</option>
+          <option value="30">Last 30 Days</option>
+          <option value="365">This Year</option>
         </select>
       </span>
       <span>
@@ -56,13 +56,13 @@
         <p>Status</p>
         <select name="filterStatus" v-model="filter.status">
           <option value=""></option>
-          <option value="reported">reported</option>
-          <option value="scheduled for inspection">
-            scheduled for inspection
+          <option value="Reported">Reported</option>
+          <option value="Scheduled For Inspection">
+            Scheduled For Inspection
           </option>
-          <option value="inspected">inspected</option>
-          <option value="scheduled for repair">scheduled for repair</option>
-          <option value="repaired">repaired</option>
+          <option value="Inspected">Inspected</option>
+          <option value="Scheduled For Repair">Scheduled For Repair</option>
+          <option value="Repaired">Repaired</option>
         </select>
       </span>
       <span>
@@ -116,16 +116,9 @@ export default {
         locationOnRoadway: "",
         city: null,
         state: null,
-        date: ""
+        numberOfDays: ""
       },
     };
-  },
-  methods: {
-    getDate(dateRange) {
-      var date = new Date();
-      date.setDate(date.getDate() - dateRange);
-      return date;
-    },
   },
   mounted() {
     PotholeService.getPotholes().then((response) => {
@@ -151,6 +144,11 @@ export default {
     console.log("pothole list unmounted");
   },
   computed: {
+    startDate(){
+    const startDate = new Date();
+    startDate.setDate(startDate.getDate() - this.filter.numberOfDays)
+    return startDate;
+    },
     filteredPotholes() {
       return this.potholes
         .filter((pothole) => {
@@ -199,6 +197,13 @@ export default {
             return true;
           } else {
             return pothole.currentStatus == this.filter.status;
+          }
+        })
+        .filter((pothole) => {
+          if (this.filter.numberOfDays == "") {
+            return true;
+          } else {
+            return new Date(pothole.statuses[0].date) >= this.startDate;
           }
         });
     },
