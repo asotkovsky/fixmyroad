@@ -4,7 +4,7 @@
     <div class="list-headers">
       <span>
         <p>Severity</p>
-        <select name="filterSeverity" v-model="filter.severity">
+        <select name="filterSeverity" v-model.number="filter.severity">
           <option value=""></option>
           <option value="1">1</option>
           <option value="2">2</option>
@@ -56,13 +56,13 @@
         <p>Status</p>
         <select name="filterStatus" v-model="filter.status">
           <option value=""></option>
-          <option value="Reported">Reported</option>
+          <option value="Reported">reported</option>
           <option value="Scheduled For Inspection">
-            Scheduled For Inspection
+            scheduled for inspection
           </option>
-          <option value="Inspected">Inspected</option>
-          <option value="Scheduled For Repair">Scheduled For Repair</option>
-          <option value="Repaired">Repaired</option>
+          <option value="Inspected">inspected</option>
+          <option value="Scheduled For Repair">scheduled for repair</option>
+          <option value="Repaired">repaired</option>
         </select>
       </span>
       <span>
@@ -231,7 +231,7 @@ div.list-headers {
   display: grid;
   justify-content: left;
   gap: 15px;
-  grid-template-columns: 0.7fr 1.5fr 1.5fr 2fr 1fr 0.7fr 1fr 0.1fr 0.2fr;
+  grid-template-columns: .7fr .5fr 1.5fr 1fr 2fr .7fr 0.2fr 0.2fr;
 }
 
 p {

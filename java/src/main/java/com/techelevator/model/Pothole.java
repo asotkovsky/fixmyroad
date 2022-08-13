@@ -21,24 +21,24 @@ public class Pothole {
 
 
     @AssertTrue(message = "Latitude and Longitude must be provided")
-    public boolean hasValidLatLng(){
-        return (this.latitude!=0)&&(this.longitude!=0);
+    public boolean hasValidLatLng() {
+        return (this.latitude != 0) && (this.longitude != 0);
     }
 
     @Override
     public String toString() {
         return "Pothole{" +
-                "id=" + id +
-                ", longitude=" + longitude +
-                ", latitude=" + latitude +
-                ", description='" + description + '\'' +
-                ", severity=" + severity +
-                ", locationOnRoadway='" + locationOnRoadway + '\'' +
-                ", roadName='" + roadName + '\'' +
-                ", neighborhood='" + neighborhood + '\'' +
-                ", city='" + city + '\'' +
-                ", state='" + state + '\'' +
-                '}';
+               "id=" + id +
+               ", longitude=" + longitude +
+               ", latitude=" + latitude +
+               ", description='" + description + '\'' +
+               ", severity=" + severity +
+               ", locationOnRoadway='" + locationOnRoadway + '\'' +
+               ", roadName='" + roadName + '\'' +
+               ", neighborhood='" + neighborhood + '\'' +
+               ", city='" + city + '\'' +
+               ", state='" + state + '\'' +
+               '}';
     }
 
     @Override
@@ -46,12 +46,32 @@ public class Pothole {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Pothole pothole = (Pothole) o;
-        return id == pothole.id && Double.compare(pothole.longitude, longitude) == 0 && Double.compare(pothole.latitude, latitude) == 0 && severity == pothole.severity && Objects.equals(description, pothole.description) && Objects.equals(locationOnRoadway, pothole.locationOnRoadway) && Objects.equals(roadName, pothole.roadName) && Objects.equals(neighborhood, pothole.neighborhood) && Objects.equals(city, pothole.city) && Objects.equals(state, pothole.state);
+        return id == pothole.id &&
+               Double.compare(pothole.longitude, longitude) == 0 &&
+               Double.compare(pothole.latitude, latitude) == 0 &&
+               severity == pothole.severity &&
+               Objects.equals(description, pothole.description) &&
+               Objects.equals(locationOnRoadway, pothole.locationOnRoadway) &&
+               Objects.equals(roadName, pothole.roadName) &&
+               Objects.equals(neighborhood, pothole.neighborhood) &&
+               Objects.equals(city, pothole.city) &&
+               Objects.equals(state, pothole.state);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, longitude, latitude, description, severity, locationOnRoadway, roadName, neighborhood, city, state);
+        return Objects.hash(
+                id,
+                longitude,
+                latitude,
+                description,
+                severity,
+                locationOnRoadway,
+                roadName,
+                neighborhood,
+                city,
+                state
+                           );
     }
 
     public String getRoadName() {
@@ -115,13 +135,14 @@ public class Pothole {
     }
 
     public void setDescription(String description) {
-        if(description == null){
+        if (description == null) {
+            this.description = description;
+        } else if (description.length() > 200) {
+            this.description = description.substring(0, 200);
+        } else {
             this.description = description;
         }
-      else if(description.length() > 200){
-           this.description = description.substring(0,200);
-       }
-       else {this.description = description;};
+        ;
 
     }
 

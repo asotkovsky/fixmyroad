@@ -44,7 +44,7 @@ public class PotholeController {
 
     @RequestMapping(path = "/pothole/{pothole_id}/statuses", method = RequestMethod.POST)
     public void createStatus(@PathVariable("pothole_id") int potholeId, @RequestBody Status status, Principal principal) {
-        potholeDao.createStatus(potholeId, status.getId(), principal.getName(), null);
+        potholeDao.createStatus(potholeId, status, principal.getName());
     }
 
     @RequestMapping(path = "/potholes/{id}", method = RequestMethod.DELETE)
