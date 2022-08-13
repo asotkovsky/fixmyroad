@@ -4,7 +4,9 @@
       <img
         class="horizontal-logo"
         @click="reDirect('/')"
+        v-show="$route.name !== 'login' && $route.name !== 'register'"
         v-bind:src="require('@/assets/fixmyroad-horizontal-logo.png')"
+        
       />
       <div class="links">
         <router-link
@@ -101,5 +103,9 @@ export default {
 
 .horizontal-logo {
   cursor: pointer;
+}
+#nav{
+  display: flex;
+  justify-content: flex-end;
 }
 </style>

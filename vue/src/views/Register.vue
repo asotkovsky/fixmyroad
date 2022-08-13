@@ -1,6 +1,13 @@
 <template>
   <div id="register" class="text-center">
+     
+        
+    
     <form class="form-register" @submit.prevent="register">
+      <img
+        class="horizontal-logo1"
+        v-bind:src="require('@/assets/fixmyroad-horizontal-logo.png')"/>
+      
       <h1 class="h3 mb-3 font-weight-normal">Create Account</h1>
       <div class="alert alert-danger" role="alert" v-if="registrationErrors">
         {{ registrationErrorMsg }}
@@ -33,6 +40,7 @@
         required
       />
       <router-link :to="{ name: 'login' }">Have an account?</router-link>
+      
       <button class="btn btn-lg btn-primary btn-block" type="submit">
         Create Account
       </button>
@@ -90,4 +98,18 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.form-register{
+  display: grid;
+    color: #FAD52F;
+    justify-content: center;
+    padding: 5px;
+
+}
+.horizontal-logo1{
+   
+   height: 50px;
+   
+
+}
+</style>
