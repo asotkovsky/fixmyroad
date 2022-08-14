@@ -23,8 +23,8 @@ public class PotholeController {
     }
 
     @RequestMapping(path = "/potholes", method = RequestMethod.GET)
-    public List<Pothole> getAllPotholes() {
-        return potholeDao.getAllPotholes();
+    public List<Pothole> getAllPotholes(Principal principal) {
+        return potholeDao.getAllPotholes(principal.getName());
     }
 
     @RequestMapping(path = "/location", method = RequestMethod.GET)

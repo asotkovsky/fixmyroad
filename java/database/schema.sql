@@ -36,9 +36,10 @@ CREATE TABLE users (
   );
 
 CREATE TABLE "pothole_status" (
+	"id" serial NOT NULL,
   "pothole_id" int NOT NULL,
   "status_id" int NOT NULL,
-  "date" timestamp DEFAULT now(),
+  "date" timestamp DEFAULT now() NOT NULL,
   "user_id" int NOT NULL,
   CONSTRAINT "FK_pothole_status.pothole_id"
     FOREIGN KEY ("pothole_id")
@@ -48,7 +49,8 @@ CREATE TABLE "pothole_status" (
       REFERENCES "status"("id"),
   CONSTRAINT "FK_pothole_status.user_id"
     FOREIGN KEY ("user_id")
-      REFERENCES "users"("user_id")
+      REFERENCES "users"("user_id"),
+	primary key ("id")
 );
 
 CREATE INDEX "PK FK" ON  "pothole_status" ("pothole_id", "status_id");
@@ -56,7 +58,7 @@ CREATE INDEX "PK FK" ON  "pothole_status" ("pothole_id", "status_id");
 INSERT INTO users (username,password_hash,role) VALUES ('user','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER');
 INSERT INTO users (username,password_hash,role) VALUES ('admin','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_ADMIN');
 
-INSERT INTO status (status_name) VALUES ('Reported'), ('Scheduled For Inspection'), ('Inspected'), ('Scheduled For Repair'), ('Repaired');
+INSERT INTO status (status_name) VALUES ('Reported'), ('Scheduled For Inspection'), ('Inspected'), ('Scheduled For Repair'), ('Repaired'), ('Noticed');
 
 INSERT INTO potholes (longitude, latitude, description, severity, location_on_roadway, road_name, neighborhood, city, state) VALUES (-82.983330, 39.983334, 'pothole 1', 5, 'Shoulder', 'Cleveland Ave', 'Linden', 'Columbus', 'OH');
 INSERT INTO potholes (longitude, latitude, description, severity, location_on_roadway, road_name, neighborhood, city, state) VALUES (-82.998790, 39.961180, 'pothole 2', 3, 'Road', 'Cleveland Ave', 'Linden', 'Columbus', 'OH');

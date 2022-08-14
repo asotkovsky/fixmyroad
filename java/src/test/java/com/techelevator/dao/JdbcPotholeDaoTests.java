@@ -53,7 +53,7 @@ public class JdbcPotholeDaoTests extends BaseDaoTests {
         List<Pothole> expected = new ArrayList<>();
         expected.add(POTHOLE_1);
         expected.add(POTHOLE_2);
-        List<Pothole> actual = potholeDao.getAllPotholes();
+        List<Pothole> actual = potholeDao.getAllPotholes("user1");
         Assert.assertEquals(expected,actual);
 
     }
@@ -72,7 +72,7 @@ public class JdbcPotholeDaoTests extends BaseDaoTests {
         Pothole pothole = new Pothole();
         String username = "user1";
         potholeDao.createPothole(pothole, username);
-        List<Pothole> potholeList = potholeDao.getAllPotholes();
+        List<Pothole> potholeList = potholeDao.getAllPotholes("user1");
         Assert.assertEquals(potholeList.size(),3);
     }
 

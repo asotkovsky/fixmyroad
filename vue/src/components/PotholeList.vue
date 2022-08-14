@@ -138,13 +138,7 @@ export default {
       let neighborhoods = this.potholes.map((pothole) => pothole.neighborhood);
       this.neighborhoods = [...new Set(neighborhoods)];
 
-      this.potholes.forEach((pothole) => {
-        PotholeService.getPotholeStatuses(pothole.id).then((response) => {
-          pothole.statuses = response.data;
-          pothole.currentStatus =
-            pothole.statuses[pothole.statuses.length - 1].name;
-        });
-      });
+    
     });
   },
   unmounted() {
@@ -198,7 +192,7 @@ export default {
           if (this.filter.status == "") {
             return true;
           } else {
-            return pothole.currentStatus == this.filter.status;
+            return pothole.currentStatus.name == this.filter.status;
           }
         });
     },
