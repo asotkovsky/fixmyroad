@@ -14,12 +14,12 @@
         </select>
       </span>
       <span>
-        <p>Date:</p>
-        <select name="filterDate" v-model="filter.date">
+        <p>Date Reported:</p>
+        <select name="filterDate" v-model.number="filter.numberOfDays">
           <option value=""></option>
-          <option :value="getDate()">Last 7 Days</option>
-          <option value = "last-30-days">Last 30 Days</option>
-          <option value = "last-year">This Year</option>
+          <option value="7">Last 7 Days</option>
+          <option value="30">Last 30 Days</option>
+          <option value="365">This Year</option>
         </select>
       </span>
       <span>
@@ -116,16 +116,9 @@ export default {
         locationOnRoadway: "",
         city: null,
         state: null,
-        date: ""
+        numberOfDays: ""
       },
     };
-  },
-  methods: {
-    getDate(dateRange) {
-      var date = new Date();
-      date.setDate(date.getDate() - dateRange);
-      return date;
-    },
   },
   mounted() {
     PotholeService.getPotholes().then((response) => {
@@ -145,6 +138,11 @@ export default {
     console.log("pothole list unmounted");
   },
   computed: {
+    startDate(){
+    const startDate = new Date();
+    startDate.setDate(startDate.getDate() - this.filter.numberOfDays)
+    return startDate;
+    },
     filteredPotholes() {
       return this.potholes
         .filter((pothole) => {
@@ -194,6 +192,13 @@ export default {
           } else {
             return pothole.currentStatus.name == this.filter.status;
           }
+        })
+        .filter((pothole) => {
+          if (this.filter.numberOfDays == "") {
+            return true;
+          } else {
+            return new Date(pothole.statuses[0].date) >= this.startDate;
+          }
         });
     },
   },
@@ -220,19 +225,19 @@ div.list-headers {
   display: grid;
   justify-content: left;
   gap: 15px;
-  grid-template-columns: .7fr .5fr 1.5fr 1fr 2fr .7fr 0.2fr 0.2fr;
+  grid-template-columns: .7fr .7fr 1.5fr 1fr 2fr .7fr 0.2fr 0.2fr;
 }
 
-p {
-  font-family: sans-serif;
-}
 
+<<<<<<< HEAD
 h1 {
   font-family: sans-serif;
 }
 ::-webkit-scrollbar {
   width: 20px;
 }
+=======
+>>>>>>> 07d21c3428083cc00282161a26aa5618ffa51d83
 
 /* Track */
 ::-webkit-scrollbar-track {

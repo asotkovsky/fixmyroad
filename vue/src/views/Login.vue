@@ -9,7 +9,7 @@
       
       
         
-      <h1 class="h3 mb-3 font-weight-normal">Sign In</h1>
+      <h1 id="sign-in">Sign In</h1>
       <div
         class="alert alert-danger"
         role="alert"
@@ -20,12 +20,12 @@
         role="alert"
         v-if="this.$route.query.registration"
       >Thank you for registering, please sign in.</div>
-      <label for="username" class="sr-only">Username</label>
+      <label for="email" class="sr-only">Email</label>
       <input
-        type="text"
-        id="username"
+        type="email"
+        id="email"
         class="form-control"
-        placeholder="Username"
+        placeholder="Email"
         v-model="user.username"
         required
         autofocus
@@ -40,7 +40,7 @@
         required
       />
       <router-link class="need" :to="{ name: 'register' }">Need an account?</router-link>
-      <button type="submit">Sign in</button>
+      <button id="submit" type="submit">Sign in</button>
     </form>
   <div class="loop-wrapper">
   <div class="mountain"></div>
@@ -78,6 +78,7 @@ export default {
           if (response.status == 200) {
             this.$store.commit("SET_AUTH_TOKEN", response.data.token);
             this.$store.commit("SET_USER", response.data.user);
+            this.$store.commit("SET_USER_AUTHORITIES", response.data.user.authorities)
             this.$router.push("/");
           }
         })
@@ -94,8 +95,17 @@ export default {
 </script>
 <style >
 
+#login {
+  display: flex;
+  flex-direction: column;
+  height: 90vh;
+justify-content: center;
+
+justify-items: center
+}
 .loop-wrapper {
   margin: 0 auto;
+  max-height: 150px;
   position: relative;
   display: block;
   width: 650px;
@@ -163,7 +173,7 @@ export default {
   position: absolute;
 }
 .truck {
-  background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/130015/truck.svg) no-repeat;
+  background: url(../assets/truck.svg) no-repeat;
   background-size: contain;
   height: 60px;
 }
@@ -239,22 +249,27 @@ export default {
    display: grid;
     color: #FAD52F;
     justify-content: center;
-    padding: 5px;
 
-  
- 
 }
 
+input {
+margin-bottom: 10px;
+margin-top: 10px;
+}
 
 .need{
   color: #FAD52F;
 }
 .horizontal-logo{
-  height: 50px;
-  
-  
-
+  height: 100px;
 }
 
+#submit {
+  margin-top: 10px;
+}
+
+#sign-in {
+  text-align: center;
+}
 
 </style>

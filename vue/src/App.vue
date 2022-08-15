@@ -58,7 +58,13 @@ export default {
 }
 </script>
 
+
 <style scoped>
+
+#app {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
 #nav {
   font-family: sans-serif;
   display: grid;
@@ -105,6 +111,7 @@ export default {
 
 .horizontal-logo {
   cursor: pointer;
+
 }
 #nav{
   display: flex;

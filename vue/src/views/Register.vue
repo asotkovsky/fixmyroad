@@ -12,12 +12,12 @@
       <div class="alert alert-danger" role="alert" v-if="registrationErrors">
         {{ registrationErrorMsg }}
       </div>
-      <label for="username" class="sr-only">Username</label>
+      <label for="email" class="sr-only">Email</label>
       <input
-        type="text"
-        id="username"
+        type="email"
+        id="email"
         class="form-control"
-        placeholder="Username"
+        placeholder="Email"
         v-model="user.username"
         required
         autofocus

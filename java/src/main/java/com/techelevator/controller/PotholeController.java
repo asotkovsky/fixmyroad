@@ -4,6 +4,7 @@ import com.techelevator.dao.LocationDao;
 import com.techelevator.dao.PotholeDao;
 import com.techelevator.model.Pothole;
 import com.techelevator.model.Status;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -37,19 +38,23 @@ public class PotholeController {
         return potholeDao.getPotholeStatuses(potholeId);
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @RequestMapping(path = "/potholes", method = RequestMethod.POST)
     public Pothole createPothole(@Valid @RequestBody Pothole pothole, Principal principal) {
         return potholeDao.createPothole(pothole, principal.getName());
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping(path = "/pothole/{pothole_id}/statuses", method = RequestMethod.POST)
     public void createStatus(@PathVariable("pothole_id") int potholeId, @RequestBody Status status, Principal principal) {
         potholeDao.createStatus(potholeId, status, principal.getName());
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping(path = "/potholes/{id}", method = RequestMethod.DELETE)
     public void deletePothole(@PathVariable("id") int id) {
         potholeDao.deletePothole(id);
     }
+
 
 }

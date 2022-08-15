@@ -15,11 +15,12 @@ methods:{
      if (confirm("Are you sure you want to delete this pothole?")) {
     PotholeService.deletePothole(this.pothole.id)
       .then(()=>location.reload())
-    }
-
+      .catch((error) => {
+          alert(error.message);
+    })
     }
   }
-}
+}}
 </script>
 
 <style>

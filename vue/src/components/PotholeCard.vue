@@ -8,7 +8,7 @@
     <p id="description1" @mouseover.stop="descriptionHover = true" @mouseleave.stop="descriptionHover = false">{{pothole.description }}</p>
     <p id="status" v-if="pothole.statuses">{{pothole.statuses[(pothole.statuses.length - 1)].name}}</p>
     <img class='location-on-roadway-icon' v-bind:src="require('../assets/icon-' + pothole.locationOnRoadway + '.jpg')">
-    <img class='show-modal-icon' @click="showAdminModal = true" v-bind:src="require('../assets/plus-icon.png')">
+    <img class='show-modal-icon' v-if="checkIfAdmin" @click="showAdminModal = true" v-bind:src="require('../assets/plus-icon.png')">
     <admin-modal :pothole="pothole" @close="showAdminModal = false" v-if="showAdminModal"/>
   </div>
 
@@ -33,8 +33,20 @@ pothole: Object,
     return {
       center: { lat: this.pothole.latitude, lng: this.pothole.longitude },
       descriptionHover: false,
-      showAdminModal: false,
+      showAdminModal: false
     };
+  },
+  computed: {
+    checkIfAdmin(){
+    let roleIsAdmin = false;
+    this.$store.state.currentUserAuthorities.forEach(authority => {
+      console.log(authority.name)
+      if (authority.name == 'ROLE_ADMIN') {
+        roleIsAdmin =  true;
+      }
+    });
+    return roleIsAdmin;
+    }
   },
   methods:{
     handleDelete(){
@@ -42,8 +54,9 @@ pothole: Object,
       .then(()=>location.reload())
 
     }
-  }
+  },
 };
+
 </script>
 
 <style>
@@ -67,7 +80,7 @@ pothole: Object,
 div.pothole-card {
   display: grid;
   gap: 15px;
-  grid-template-columns: .7fr .5fr 1.5fr 1fr 2fr .7fr 0.2fr 0.2fr;
+  grid-template-columns: .7fr .7fr 1.5fr 1fr 2fr .7fr 0.2fr 0.2fr;
 
   border-style: solid;
   border-width: 3px;

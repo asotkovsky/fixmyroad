@@ -43,7 +43,8 @@ export default {
     handleSave() {
       PotholeService.createStatus(this.pothole.id, this.status).then(() =>
         location.reload()
-      );
+      ).catch((error) => {
+          alert(error.message);})
       this.status = { id: null, date: new Date().toISOString().slice(0, 10) };
     },
   },
