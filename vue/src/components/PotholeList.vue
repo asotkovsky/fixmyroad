@@ -1,8 +1,10 @@
 <template>
   <div>
     <h1>Reported Potholes: {{ potholes.length }}</h1>
-    <button id="toggle-user-filter" class="button" v-on:click ="flipShowMyPotholes()">{{toggleUserFilterText}}</button>
+    <button v-show="this.$store.state.user" id="toggle-user-filter" class="button" v-on:click ="flipShowMyPotholes()">{{toggleUserFilterText}}</button>
     <button id="show-filters" class="button" v-on:click="flipShowFilters()">{{toggleFilterText}}</button>
+    <button id="show-map" class="button" v-on:click="flipShowMap()">{{toggleMapText}}</button>
+
     <div class="list-headers" >
 
       <span>
@@ -114,6 +116,8 @@ export default {
       toggleFilterText: "Show Filters",
       filterUserFavorite: false,
       toggleUserFilterText: "Show My Potholes",
+      showMap: true,
+      toggleMapText: "Hide Map",
       filter: {
         severity: "",
         roadName: "",
@@ -145,6 +149,15 @@ export default {
       }
       else{
         this.toggleUserFilterText = "Show My Potholes"
+      }
+    },
+    flipShowMap(){
+      this.showMap = !this.showMap
+      if(this.showMap){
+        this.toggleMapText = "Hide Map"
+      }
+      else{
+        this.toggleMapText = "Show Map"
       }
     }
   },
@@ -288,6 +301,7 @@ div.list-headers {
 
 #show-filters{
   margin-left: 10px;
+  margin-right: 10px;
 }
 
 
