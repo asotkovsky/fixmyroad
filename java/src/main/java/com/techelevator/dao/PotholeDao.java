@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface PotholeDao {
-    List<Pothole> getAllPotholes(String username);
+    List<Pothole> getAllPotholes();
 
     public Pothole createPothole (Pothole pothole, String username);
 
