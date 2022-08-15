@@ -107,6 +107,7 @@ export default {
       availableStatus: [],
       neighborhoods: [],
       description: [],
+      filterUserFavorite: true,
       filter: {
         severity: "",
         roadName: "",
@@ -199,7 +200,18 @@ export default {
           } else {
             return new Date(pothole.statuses[0].date) >= this.startDate;
           }
-        });
+        })
+      .filter((pothole)=> {
+        if(this.filterUserFavorite && this.$store.state.user.username)
+        {
+          let statusFound = pothole.statuses.find (status => status.email == this.$store.state.user.username)
+          return statusFound;
+        }else{
+          return true;
+          
+        }
+      });
+
     },
   },
 };
@@ -229,15 +241,6 @@ div.list-headers {
 }
 
 
-<<<<<<< HEAD
-h1 {
-  font-family: sans-serif;
-}
-::-webkit-scrollbar {
-  width: 20px;
-}
-=======
->>>>>>> 07d21c3428083cc00282161a26aa5618ffa51d83
 
 /* Track */
 ::-webkit-scrollbar-track {

@@ -22,16 +22,16 @@ public class JdbcPotholeDao implements PotholeDao {
     }
 
     @Override
-    public List<Pothole> getAllPotholes(String username ) {
-        int id = userDao.findIdByUsername(username);
+    public List<Pothole> getAllPotholes() {
+
         List<Pothole> potholes = new ArrayList<Pothole>();
 
         String sql =
                 "SELECT potholes.id, potholes.longitude,potholes.latitude, potholes.description, potholes.severity, potholes.location_on_roadway, " +
-                        "potholes.road_name, potholes.neighborhood, potholes.city, potholes.state, (select exists (select pothole_id from pothole_status where user_id = ? and pothole_id = potholes.id )) as favorite " +
+                        "potholes.road_name, potholes.neighborhood, potholes.city, potholes.state " +
                         "FROM potholes";
 
-        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, id);
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
 
         while (results.next()) {
             potholes.add(mapRowToPothole(results));
@@ -135,7 +135,6 @@ public class JdbcPotholeDao implements PotholeDao {
         List<Status> potholeStatus = getPotholeStatuses(pothole.getId());
         pothole.setStatuses(potholeStatus);
         pothole.setCurrentStatus(potholeStatus.get(potholeStatus.size()-1));
-        pothole.setUserFavorite(results.getBoolean("favorite"));
         return pothole;
 
     }
