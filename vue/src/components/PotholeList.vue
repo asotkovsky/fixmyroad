@@ -234,13 +234,7 @@ div.list-headers {
   grid-template-columns: .7fr .7fr 1.5fr 1fr 2fr .7fr 0.2fr 0.2fr;
 }
 
-p {
-  font-family: sans-serif;
-}
 
-h1 {
-  font-family: sans-serif;
-}
 
 
 </style>

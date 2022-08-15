@@ -1,10 +1,15 @@
 <template>
   <div class="report-attributes">
     <div class="report">
-      <div>Road name: {{ $store.state.currentPin.roadName }}</div>
-      <div>Neighborhood: {{ $store.state.currentPin.neighborhood }}</div>
-      <div>City name:{{ $store.state.currentPin.city }}</div>
-      <div>State: {{ $store.state.currentPin.state }}</div>
+      <img
+          class="map-pin-icon"
+          v-bind:src="require('../assets/blue-map-pin-icon.png')"
+        />
+      <div id="selected-location">Your selected location</div>
+      <div id="road-name" >Road name: {{ $store.state.currentPin.roadName }}</div>
+      <div id="neighborhood" >Neighborhood: {{ $store.state.currentPin.neighborhood }}</div>
+      <div id="city">City name: {{ $store.state.currentPin.city }}</div>
+      <div id="state">State: {{ $store.state.currentPin.state }}</div>
     </div>
     <form class="report-form" @submit.prevent="handleSave">
       <label id="severity" for="severity">Severity </label>
@@ -59,7 +64,7 @@
 Please describe the pothole</textarea
       >
 
-      <input
+      <input id="submit"
         type="submit"
         value="Submit"
         :disabled="!submitEnabled"
@@ -148,19 +153,77 @@ img.selected {
 }
 
 #severity-selection {
-  display: inline-block;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
 }
 
 .report-form {
   display: flex;
   flex-direction: column;
+  color: black;
 }
 
 .report {
+  display: grid;
+  gap: 5px;
+  align-content: center;
+  grid-template-areas: "map-pin-icon selected-location "
+                       ". road-name"
+                       ". neighborhood"
+                       ". city"
+                       ". state";
+  grid-template-columns: .1fr .9fr;                    
   line-height: 26pt;
   justify-content: space-between;
+  color: black;
+
 }
 
+textarea {
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+select{
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+#severity{
+margin-top: 10px;
+}
+
+#road-name {
+  grid-area: road-name;
+}
+
+#neighborhood {
+  grid-area: neighborhood;
+}
+
+#city {
+  grid-area: city;
+}
+
+#state {
+  grid-area: state;
+}
+
+.map-pin-icon{
+  grid-area: map-pin-icon;
+  height: 35px;
+  width: 35px;
+  padding-left: 15px;
+}
+
+#selected-location {
+  grid-area: selected-location;
+}
+
+#submit {
+  margin-bottom: 10px;
+}
 
 
 </style>
