@@ -25,13 +25,13 @@ methods:{
 <style>
 div.delete-button{
   font-family: sans-serif;
-  font-size: 1em;
-  background-color:#E74C3C;
-  color: white;
+  font-size: 1.5em;
+  background-color: #737373;
+  color: #FAD52F;
   text-decoration: none;
   border-radius: 5px;
   display:flex; 
-  padding: .2em;
+  padding: .1em;
   justify-content: center;
   align-items: center;
 

@@ -97,6 +97,8 @@ export default {
 }
 .horizontal-logo {
   cursor: pointer;
+  
+  
 
 
 }
@@ -106,6 +108,9 @@ export default {
 }
 #nav{
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
 }
+
+
+
 </style>

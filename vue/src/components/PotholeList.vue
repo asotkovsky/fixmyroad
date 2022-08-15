@@ -230,6 +230,24 @@ p {
 h1 {
   font-family: sans-serif;
 }
+::-webkit-scrollbar {
+  width: 20px;
+}
 
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey; 
+  border-radius: 10px;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background:#737373; 
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #fad52f; 
+}
 
 </style>

@@ -53,14 +53,15 @@ export default {
     bottom: 0;
     left: 0;
     right: 0;
-    background-color: rgba(0, 0, 0, 0.3);
+    background-color: rgba(0, 0, 0, 0);
     display: flex;
     justify-content: center;
     align-items: center;
   }
 
   .modal {
-    background: #FFFFFF;
+    transition: color .2s ease-in-out, box-shadow .2s ease-in-out;
+
     box-shadow: 2px 2px 20px 1px;
     overflow-x: auto;
     display: flex;
@@ -75,6 +76,7 @@ export default {
     padding: 15px;
     display: flex;
     align-items: center;
+    
   }
 
   .modal-header {
@@ -82,6 +84,8 @@ export default {
     border-bottom: 1px solid #eeeeee;
     color: #737373;
     justify-content: space-between;
+    font-size: 30px;
+    font-weight: bolder;
   }
 
   .modal-footer {
@@ -96,6 +100,7 @@ export default {
     color: #737373;
     font-family: sans-serif;
     font-size: 0.75em;
+    background-color: whitesmoke;
   }
 
   .btn-close {
@@ -107,10 +112,11 @@ export default {
     padding: 5px;
     cursor: pointer;
     font-weight: bold;
-    color: #737373;
-    background: red;
+    color: #FAD52F;
+    background: #737373;
     border-radius: 5px;
     height:25px
+    
   }
 
 </style>

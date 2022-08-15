@@ -96,18 +96,7 @@ img.severity-icon {
   width: 60px;
   height: 60px
 }
-div.delete-button{
-  font-family: sans-serif;
-  font-size: 1.5em;
-  background-color: red;
-  text-decoration: none;
-  border-radius: 5px;
-  display:flex; 
-  padding: .2em;
-  justify-content: center;
-  align-items: center;
 
-}
 </style>
 
 
