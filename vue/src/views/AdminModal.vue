@@ -53,14 +53,13 @@ export default {
     bottom: 0;
     left: 0;
     right: 0;
-    background-color: rgba(0, 0, 0, 0);
+    background-color: rgba(236, 227, 227, 0);
     display: flex;
     justify-content: center;
     align-items: center;
   }
 
   .modal {
-    transition: color .2s ease-in-out, box-shadow .2s ease-in-out;
 
     box-shadow: 2px 2px 20px 1px;
     overflow-x: auto;
@@ -68,6 +67,7 @@ export default {
     flex-direction: column;
     font-family: sans-serif;
     min-width: 300px;
+    border-radius: 5px;
 
   }
 
@@ -80,6 +80,7 @@ export default {
   }
 
   .modal-header {
+    background-color: blanchedalmond;
     position: relative;
     border-bottom: 1px solid #eeeeee;
     color: #737373;

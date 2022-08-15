@@ -1,13 +1,13 @@
 <template>
   <div>
     <h1>Reported Potholes: {{ potholes.length }}</h1>
-    <button id="toggle-user-filter" class="button">Show My Potholes</button>
-    <button id="show-filters" class="button" v-on:click="flipShowFilters()">Show Filters</button>
-    <div class="list-headers" v-show="showFilters">
+    <button id="toggle-user-filter" class="button" v-on:click ="flipShowMyPotholes()">{{toggleUserFilterText}}</button>
+    <button id="show-filters" class="button" v-on:click="flipShowFilters()">{{toggleFilterText}}</button>
+    <div class="list-headers" >
 
       <span>
         <p>Severity</p>
-        <select name="filterSeverity" v-model.number="filter.severity">
+        <select v-show="showFilters" name="filterSeverity" v-model.number="filter.severity">
           <option value=""></option>
           <option value="1">1</option>
           <option value="2">2</option>
@@ -18,7 +18,7 @@
       </span>
       <span>
         <p>Date Reported:</p>
-        <select name="filterDate" v-model.number="filter.numberOfDays">
+        <select v-show="showFilters" name="filterDate" v-model.number="filter.numberOfDays">
           <option value=""></option>
           <option value="7">Last 7 Days</option>
           <option value="30">Last 30 Days</option>
@@ -28,7 +28,7 @@
       <span>
         
         <p>Road</p>
-        <input list="filteredRoadName" type="text" v-model="filter.roadName" />
+        <input v-show="showFilters" list="filteredRoadName" type="text" v-model="filter.roadName" />
         <datalist id="filteredRoadName">
           <option v-for="roadName in roadNames" v-bind:key="roadName">
             {{ roadName }}
@@ -37,7 +37,7 @@
       </span>
       <span>
         <p>Neighborhood</p>
-        <input
+        <input v-show="showFilters"
           list="filterNeighborhood"
           type="text"
           v-model="filter.neighborhood"
@@ -53,11 +53,11 @@
       </span>
       <span>
         <p>Description</p>
-        <input type="text" v-model="filter.description" />
+        <input v-show="showFilters" type="text" v-model="filter.description" />
       </span>
       <span>
         <p>Status</p>
-        <select name="filterStatus" v-model="filter.status">
+        <select v-show="showFilters" name="filterStatus" v-model="filter.status">
           <option value=""></option>
           <option value="Reported">reported</option>
           <option value="Scheduled For Inspection">
@@ -70,7 +70,7 @@
       </span>
       <span>
         <p>Road/Shoulder</p>
-        <select
+        <select v-show="showFilters"
           name="filterLocationOnRoadway"
           v-model="filter.locationOnRoadway"
         >
@@ -111,7 +111,9 @@ export default {
       neighborhoods: [],
       description: [],
       showFilters: false,
-      filterUserFavorite: true,
+      toggleFilterText: "Show Filters",
+      filterUserFavorite: false,
+      toggleUserFilterText: "Show My Potholes",
       filter: {
         severity: "",
         roadName: "",
@@ -127,14 +129,26 @@ export default {
   },
   methods:{
     flipShowFilters(){
-      console.log("flipShowFilters was called")
-      if(this.showFilters == false){
-        this.showFilters = true;
+     this.showFilters = !this.showFilters
+      if(this.showFilters){
+        this.toggleFilterText = "Hide Filters"
       }
-        this.showFilters = false;
-      
+      else{
+        this.toggleFilterText = "Show Filters"
+      }
+    },
+    flipShowMyPotholes(){
+
+      this.filterUserFavorite =!this.filterUserFavorite
+      if(this.filterUserFavorite){
+        this.toggleUserFilterText = "Show All Potholes"
+      }
+      else{
+        this.toggleUserFilterText = "Show My Potholes"
+      }
     }
   },
+
   mounted() {
     PotholeService.getPotholes().then((response) => {
       this.potholes = response.data;
@@ -263,7 +277,15 @@ div.list-headers {
   padding: 10px;
   font-family: sans-serif;
   font-weight: 750;
+  margin-bottom: 10px;
 }
+
+.button:hover {
+  background-color: #fad52f;
+  color: #737373;
+  border-color: #fad52f;
+}
+
 #show-filters{
   margin-left: 10px;
 }

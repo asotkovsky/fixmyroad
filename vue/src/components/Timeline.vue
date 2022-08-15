@@ -82,13 +82,19 @@ export default {
   content: attr(data-text);
   position: absolute;
   left: 50%;
+  transform: translateX(-65%);
   font-size: 15px;
+  margin-left: 35px;
+  margin-right: 35px;
+
+
 }
 
 .timeline li:nth-child(odd):after {
   bottom: 0;
   margin-bottom: -10px;
   transform: translate(-65%, 100%);
+
 }
 .timeline li:nth-child(even):after {
   top: 0;
