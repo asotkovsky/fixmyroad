@@ -1,7 +1,10 @@
 <template>
   <div>
     <h1>Reported Potholes: {{ potholes.length }}</h1>
-    <div class="list-headers">
+    <button id="toggle-user-filter" class="button">Show My Potholes</button>
+    <button id="show-filters" class="button" v-on:click="flipShowFilters()">Show Filters</button>
+    <div class="list-headers" v-show="showFilters">
+
       <span>
         <p>Severity</p>
         <select name="filterSeverity" v-model.number="filter.severity">
@@ -107,6 +110,7 @@ export default {
       availableStatus: [],
       neighborhoods: [],
       description: [],
+      showFilters: false,
       filterUserFavorite: true,
       filter: {
         severity: "",
@@ -120,6 +124,16 @@ export default {
         numberOfDays: ""
       },
     };
+  },
+  methods:{
+    flipShowFilters(){
+      console.log("flipShowFilters was called")
+      if(this.showFilters == false){
+        this.showFilters = true;
+      }
+        this.showFilters = false;
+      
+    }
   },
   mounted() {
     PotholeService.getPotholes().then((response) => {
@@ -238,6 +252,20 @@ div.list-headers {
   justify-content: left;
   gap: 15px;
   grid-template-columns: .7fr .7fr 1.5fr 1fr 2fr .7fr 0.2fr 0.2fr;
+}
+
+.button {
+  border-style: solid;
+  border-color: #737373;
+  border-radius: 5px;
+  background-color: #737373;
+  color: white;
+  padding: 10px;
+  font-family: sans-serif;
+  font-weight: 750;
+}
+#show-filters{
+  margin-left: 10px;
 }
 
 
