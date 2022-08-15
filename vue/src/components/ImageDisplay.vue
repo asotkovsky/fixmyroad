@@ -12,8 +12,22 @@
 </template>
 
 <script>
+import { uploadBytes } from "firebase/storage";
 import { initializeApp } from "firebase/app";
-import { getStorage, ref, uploadBytes } from "firebase/storage";
+import { getStorage, ref } from "firebase/storage";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyACfSa2Z-kX1aazaVW76X-lDXRMFTnbRHI",
+  authDomain: "te-vue-image-example.firebaseapp.com",
+  projectId: "te-vue-image-example",
+  storageBucket: "te-vue-image-example.appspot.com",
+  messagingSenderId: "405746080437",
+  appId: "1:405746080437:web:0e080d6c65345546d57cfc",
+  measurementId: "G-YD808HPXYY"
+  };
+  const app = initializeApp(firebaseConfig);
+  const storage = getStorage(app);
+  const storageRef = ref(storage, 'images');
 
 export default {
     name: 'image-display',
@@ -31,20 +45,8 @@ export default {
             console.log(this.imageData)
             this.uploadImage()
         },
-        uploadImage() {
 
-            const firebaseConfig = {
-            apiKey: "AIzaSyACfSa2Z-kX1aazaVW76X-lDXRMFTnbRHI",
-            authDomain: "te-vue-image-example.firebaseapp.com",
-            projectId: "te-vue-image-example",
-            storageBucket: "te-vue-image-example.appspot.com",
-            messagingSenderId: "405746080437",
-            appId: "1:405746080437:web:0e080d6c65345546d57cfc",
-            measurementId: "G-YD808HPXYY"
-            };
-            const app = initializeApp(firebaseConfig);
-            const storage = getStorage(app);
-            const storageRef = ref(storage, 'images');
+        uploadImage() {
             uploadBytes(storageRef, this.imageData).then((snapshot) => {
                 console.log(snapshot)
                 console.log('Uploaded a blob or file!');

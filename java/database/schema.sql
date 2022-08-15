@@ -34,6 +34,14 @@ CREATE TABLE users (
 	role varchar(50) NOT NULL,
 	CONSTRAINT PK_user PRIMARY KEY (user_id)
   );
+  CREATE TABLE "image_url"(
+  	"id" serial NOT NULL,
+  	"pothole_id" int NOT NULL,
+  	"url" varchar(200) NOT NULL,
+  	 CONSTRAINT "FK_image_url.pothole_id"
+     FOREIGN KEY ("pothole_id")
+     REFERENCES "potholes"("id")
+  );
 
 CREATE TABLE "pothole_status" (
 	"id" serial NOT NULL,
@@ -70,4 +78,5 @@ INSERT INTO pothole_status (pothole_id, status_id, date, user_id) VALUES (1,1, C
 (3,1, CURRENT_TIMESTAMP, 1),
 (4,1, CURRENT_TIMESTAMP, 1),
 (5,1, CURRENT_TIMESTAMP, 1), (1,2, CURRENT_TIMESTAMP, 2), (1,3, CURRENT_TIMESTAMP, 2);
+
 COMMIT TRANSACTION;
