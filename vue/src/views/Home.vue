@@ -36,6 +36,7 @@ export default {
   grid-template-columns: 500px 500px;
   justify-items: center;
   justify-content:center;
+  max-height: 50vh;
 }
 
 .home div {
