@@ -111,6 +111,7 @@ export default {
       neighborhoods: [],
       description: [],
       showFilters: false,
+      filterUserFavorite: true,
       filter: {
         severity: "",
         roadName: "",
@@ -213,7 +214,18 @@ export default {
           } else {
             return new Date(pothole.statuses[0].date) >= this.startDate;
           }
-        });
+        })
+      .filter((pothole)=> {
+        if(this.filterUserFavorite && this.$store.state.user.username)
+        {
+          let statusFound = pothole.statuses.find (status => status.email == this.$store.state.user.username)
+          return statusFound;
+        }else{
+          return true;
+          
+        }
+      });
+
     },
   },
 };
