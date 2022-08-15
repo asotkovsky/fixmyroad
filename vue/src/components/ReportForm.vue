@@ -5,10 +5,10 @@
           class="map-pin-icon"
           v-bind:src="require('../assets/blue-map-pin-icon.png')"
         />
-      <div id="selected-location">Your selected location</div>
-      <div id="road-name" >Road name: {{ $store.state.currentPin.roadName }}</div>
+      <div id="selected-location">Your Selected Location</div>
+      <div id="road-name" >Road Name: {{ $store.state.currentPin.roadName }}</div>
       <div id="neighborhood" >Neighborhood: {{ $store.state.currentPin.neighborhood }}</div>
-      <div id="city">City name: {{ $store.state.currentPin.city }}</div>
+      <div id="city">City Name: {{ $store.state.currentPin.city }}</div>
       <div id="state">State: {{ $store.state.currentPin.state }}</div>
     </div>
     <form class="report-form" @submit.prevent="handleSave">
@@ -231,7 +231,7 @@ img.selected {
                        ". state";
   grid-template-columns: .1fr .9fr;                    
   line-height: 26pt;
-  justify-content: space-between;
+  justify-content: left;
   color: black;
 
 }
@@ -270,7 +270,6 @@ margin-top: 10px;
   grid-area: map-pin-icon;
   height: 35px;
   width: 35px;
-  padding-left: 15px;
 }
 
 #selected-location {
