@@ -68,6 +68,7 @@ export default {
     font-family: sans-serif;
     min-width: 300px;
     border-radius: 5px;
+    height: 90vh;
 
   }
 

@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>Reported Potholes: {{ potholes.length }}</h1>
-    <button v-show="this.$store.state.user" id="toggle-user-filter" class="button" v-on:click ="flipShowMyPotholes()">{{toggleUserFilterText}}</button>
+    <button id="toggle-user-filter" v-show="this.$store.state.user.username" class="button" v-on:click ="flipShowMyPotholes()">{{toggleUserFilterText}}</button>
     <button id="show-filters" class="button" v-on:click="flipShowFilters()">{{toggleFilterText}}</button>
     <button id="show-map" class="button" v-on:click="flipShowMap()">{{toggleMapText}}</button>
 
@@ -299,8 +299,11 @@ div.list-headers {
   border-color: #fad52f;
 }
 
+#toggle-user-filter {
+  margin-right: 10px;
+}
+
 #show-filters{
-  margin-left: 10px;
   margin-right: 10px;
 }
 
