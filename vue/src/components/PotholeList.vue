@@ -1,8 +1,11 @@
 <template>
-  <div>
+  <div class="potholes-list">
     <h1>Reported Potholes: {{ potholes.length }}</h1>
+    <div class="buttons">
     <button id="toggle-user-filter" v-show="this.$store.state.user.username" class="button" v-on:click ="flipShowMyPotholes()">{{toggleUserFilterText}}</button>
     <button id="show-filters" class="button" v-on:click="flipShowFilters()">{{toggleFilterText}}</button>
+    </div>
+    <pothole-map />
     <div class="list-headers" >
 
       <span>
@@ -97,11 +100,13 @@
 <script>
 import PotholeService from "@/services/PotholeService.js";
 import PotholeCard from "@/components/PotholeCard.vue";
+import PotholeMap from '@/components/PotholeMap.vue';
 
 export default {
   name: "pothole-list",
   components: {
     PotholeCard,
+    PotholeMap,
   },
   data() {
     return {
@@ -253,7 +258,13 @@ body {
 div.potholes-list {
   display: flex;
   flex-direction: column;
+  align-content: center;
   gap: 20px;
+}
+
+div.map {
+  display: flex;
+  justify-content: center;
 }
 
 .pothole-card {
