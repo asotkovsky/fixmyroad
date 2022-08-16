@@ -71,7 +71,6 @@ body {
 }
 
 #nav {
-  font-family: sans-serif;
   display: grid;
   grid-template-areas: "logo links";
   width: 100%;
@@ -108,13 +107,23 @@ body {
   height: 100px;
 }
 
-
 .horizontal-logo {
   cursor: pointer;
   grid-area: logo;
 
 }
 
+::-webkit-scrollbar {
+    width: 14px;
+}
+
+::-webkit-scrollbar-thumb {
+  background:#737373; 
+  border-radius: 9px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #fad52f; 
+}
 
 
 </style>
