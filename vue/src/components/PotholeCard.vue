@@ -1,5 +1,4 @@
 <template>
-  <div>
     <div
       :class="{
         'pothole-card-hover': descriptionHover,
@@ -46,7 +45,6 @@
         v-if="showAdminModal"
       />
     </div>
-  </div>
 </template>
 
 <script>
@@ -95,8 +93,8 @@ export default {
 }
 
 div.pothole-card {
-  display: grid;
-  gap: 15px;
+  /* display: grid; */
+  /* gap: 15px; */
   border-style: solid;
   border-width: 3px;
   border-color: #737373;
@@ -108,14 +106,14 @@ div.pothole-card {
   min-height: 4em;
 }
 
-div.pothole-card-no-map {
+/* div.pothole-card-no-map {
   grid-template-columns: 0.5fr 1fr 1fr 1.5fr 2fr 1fr 0.5fr 0.5fr;
 }
 
 div.pothole-card-show-map{
   grid-template-columns: 0.5fr 1fr 1fr 1fr 1fr 0.5fr 0.5fr;
 
-}
+} */
 
 div.pothole-card-hover {
   height: auto;
