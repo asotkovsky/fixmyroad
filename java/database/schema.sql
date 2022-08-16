@@ -42,7 +42,7 @@ CREATE TABLE users (
   CREATE TABLE "image_url"(
   	"id" serial NOT NULL,
   	"pothole_id" int NOT NULL,
-  	"url" varchar(200) NOT NULL,
+  	"url" varchar(256) NOT NULL,
   	 CONSTRAINT "FK_image_url.pothole_id"
      FOREIGN KEY ("pothole_id")
      REFERENCES "potholes"("id")

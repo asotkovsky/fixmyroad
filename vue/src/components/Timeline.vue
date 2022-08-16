@@ -7,7 +7,7 @@
             <ul class="timeline">
               <li
                 v-for="status in statuses"
-                :key="status.id"
+                :key="status.dnu"
                v-bind:data-year="status.date"
                 v-bind:data-text="status.name + ' by ' + status.email"
               ></li>

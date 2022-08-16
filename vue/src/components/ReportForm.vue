@@ -67,7 +67,7 @@ Please describe the pothole</textarea
       <label for="imageUpload">Select an Image:</label>
       <input @change="previewImage($event)" type="file" id="imageUpload" accept="image/*">
         <div v-if="previewUrl">
-            <img :src="previewUrl" alt="">
+            <img class="post_image" :src="previewUrl" alt="">
         </div>
 
 
@@ -85,7 +85,8 @@ Please describe the pothole</textarea
 import PotholeService from "@/services/PotholeService.js";
 import { uploadBytes } from "firebase/storage";
 import { initializeApp } from "firebase/app";
-import { getStorage, ref } from "firebase/storage";
+import { getStorage, ref, getDownloadURL} from "firebase/storage";
+import {v4 as uuidv4 } from "uuid";
 
 const firebaseConfig = {
   apiKey: process.env.VUE_APP_GOOGLE_API_KEY,
@@ -98,13 +99,12 @@ const firebaseConfig = {
 };
   const app = initializeApp(firebaseConfig);
   const storage = getStorage(app);
-  const storageRef = ref(storage, 'images');
+  
 
 export default {
   data() {
     return {
       previewUrl: '',
-      imageUrl: '',
       imageData: null,
       newPothole: {
       latitude: null,
@@ -132,12 +132,14 @@ export default {
     },
     handleSave(){
       if(this.imageData){
-        this.uploadImage().then(() =>{
+        this.uploadImage().then((URL) =>{
+          this.newPothole.imageUrl.push(URL)
           this.uploadPothole()
         })
       }else{
         this.uploadPothole()
       }
+
     },
     uploadPothole() {
       if (this.newPothole.description == "") {
@@ -159,6 +161,7 @@ export default {
       // Clear the form for the next addition (and prevents odd bugs in adding data multiple times)
       const newPothole = {
         latitude: "",
+        imageUrl: [],
         longitude: "",
         severity: "",
         description: "",
@@ -176,15 +179,13 @@ export default {
      previewImage(event) {
             this.imageData = event.target.files[0];
             this.previewUrl = URL.createObjectURL(this.imageData)
-            console.log(this.imageData)
-            this.uploadImage()
         },
 
         uploadImage() {
-          
+            const storageRef = ref(storage, 'images/' + uuidv4());
             return uploadBytes(storageRef, this.imageData).then((snapshot) => {
-                console.log(snapshot)
-                console.log('Uploaded a blob or file!');
+            return getDownloadURL(snapshot.ref)
+               
 
             });
         }
@@ -193,6 +194,9 @@ export default {
 </script>
  
  <style>
+ .post_image{
+height: 15vh;
+ }
 
 .report-attributes {
   display: grid;
