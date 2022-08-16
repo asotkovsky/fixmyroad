@@ -5,7 +5,7 @@
     <p v-if="pothole.statuses">{{pothole.statuses[0].date}}</p>
     <p>{{pothole.roadName}}</p>
     <p>{{pothole.neighborhood}}</p>
-    <p id="description1" @mouseover.stop="descriptionHover = true" @mouseleave.stop="descriptionHover = false">{{pothole.description }}</p>
+    <p id="description1" v-show="expandedView" @mouseover.stop="descriptionHover = true" @mouseleave.stop="descriptionHover = false">{{pothole.description }}</p>
     <p id="status" v-if="pothole.statuses">{{pothole.statuses[(pothole.statuses.length - 1)].name}}</p>
     <img class='location-on-roadway-icon' v-bind:src="require('../assets/icon-' + pothole.locationOnRoadway + '.jpg')">
     <img class='show-modal-icon'  @click="showAdminModal = true" v-bind:src="require('../assets/plus-icon.png')">
@@ -23,7 +23,9 @@ import AdminModal from '../views/AdminModal.vue';
 export default {
   props: {
 
-pothole: Object,
+  pothole: Object,
+  expandedView: Boolean,
+  
   },
   components: {
     AdminModal
@@ -33,7 +35,7 @@ pothole: Object,
     return {
       center: { lat: this.pothole.latitude, lng: this.pothole.longitude },
       descriptionHover: false,
-      showAdminModal: false
+      showAdminModal: false,
     };
   },
   methods:{

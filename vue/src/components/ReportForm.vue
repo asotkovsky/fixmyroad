@@ -118,7 +118,7 @@ export default {
         neighborhood : "", 
         city: "", 
         state : "",
-       
+        imageUrl: []
       },
     };
 

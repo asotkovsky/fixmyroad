@@ -5,7 +5,7 @@ import org.springframework.web.client.RestTemplate;
 @Component
 public class GoogleLocationDao implements LocationDao{
     private RestTemplate restTemplate = new RestTemplate();
-    private String baseURL = "https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyA1vYqGV9VBgHrGW2HSWjjU0PsE448kAec";
+    private String baseURL = "https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyC2q2s0usO82lGaQTribBQWKObAHhv_iAU";
 
     @Override
     public String getFromCoordinates(double latitude, double longitude) {
