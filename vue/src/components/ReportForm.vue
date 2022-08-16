@@ -88,16 +88,14 @@ import { initializeApp } from "firebase/app";
 import { getStorage, ref } from "firebase/storage";
 
 const firebaseConfig = {
-
-  
-  apiKey: "AIzaSyACfSa2Z-kX1aazaVW76X-lDXRMFTnbRHI",
-  authDomain: "te-vue-image-example.firebaseapp.com",
-  projectId: "te-vue-image-example",
-  storageBucket: "te-vue-image-example.appspot.com",
-  messagingSenderId: "405746080437",
-  appId: "1:405746080437:web:0e080d6c65345546d57cfc",
-  measurementId: "G-YD808HPXYY"
-  };
+  apiKey: process.env.VUE_APP_GOOGLE_API_KEY,
+  authDomain: "potholetracker-358713.firebaseapp.com",
+  projectId: "potholetracker-358713",
+  storageBucket: "potholetracker-358713.appspot.com",
+  messagingSenderId: "207952003661",
+  appId: "1:207952003661:web:ad363995e7633473011204",
+  measurementId: "G-K7Q2166FNK",
+};
   const app = initializeApp(firebaseConfig);
   const storage = getStorage(app);
   const storageRef = ref(storage, 'images');
