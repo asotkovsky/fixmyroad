@@ -4,8 +4,10 @@
     <div class="buttons">
     <button id="toggle-user-filter" v-show="this.$store.state.user.username" class="button" v-on:click ="flipShowMyPotholes()">{{toggleUserFilterText}}</button>
     <button id="show-filters" class="button" v-on:click="flipShowFilters()">{{toggleFilterText}}</button>
+    <button id="show-map" class="button" v-on:click="flipShowMap()">{{toggleMapText}}</button>
+    <button id="clear-filters" v-show="isFiltered" class="button" v-on:click="clearFilters()">Clear Filters</button>
     </div>
-    <pothole-map />
+    <pothole-map :potholes="filteredPotholes" v-show="showMap"/>
     <div class="list-headers" >
 
       <span>
@@ -119,6 +121,8 @@ export default {
       toggleFilterText: "Show Filters",
       filterUserFavorite: false,
       toggleUserFilterText: "Show My Potholes",
+      showMap: true,
+      toggleMapText: "Hide Map",
       filter: {
         severity: "",
         roadName: "",
@@ -133,6 +137,23 @@ export default {
     };
   },
   methods:{
+    clearFilters(){
+      this.filter = {
+        severity: "",
+        roadName: "",
+        neighborhood: "",
+        description: "",
+        status: "",
+        locationOnRoadway: "",
+        city: null,
+        state: null,
+        numberOfDays: ""
+      }
+      this.$store.commit("SET_SELECTED_POTHOLE", {})
+      this.filterUserFavorite = false;
+      this.toggleUserFilterText = "Show My Potholes";
+      console.log(this.$store.state.selectedPothole.id)
+    },
     flipShowFilters(){
      this.showFilters = !this.showFilters
       if(this.showFilters){
@@ -150,6 +171,15 @@ export default {
       }
       else{
         this.toggleUserFilterText = "Show My Potholes"
+      }
+    },
+    flipShowMap(){
+      this.showMap = !this.showMap
+      if(this.showMap){
+        this.toggleMapText = "Hide Map"
+      }
+      else{
+        this.toggleMapText = "Show Map"
       }
     }
   },
@@ -172,6 +202,44 @@ export default {
     console.log("pothole list unmounted");
   },
   computed: {
+    isFiltered(){
+      if (this.filter.severity){
+        return true;
+      }
+      if (this.filter.roadName){
+        return true;
+      }
+      if (this.filter.neighborhood){
+        return true;
+      }
+      if (this.filter.description){
+        return true;
+      }
+      if (this.filter.status){
+        return true;
+      }
+      if (this.filter.locationOnRoadway){
+        return true;
+      }
+      if (this.filter.city){
+        return true;
+      }
+      if (this.filter.state){
+        return true;
+      }
+      if (this.filter.numberOfDays){
+        return true;
+      }
+      if (this.$store.state.selectedPothole.id){
+        return true;
+      }
+      if (this.filterUserFavorite){
+        return true;
+      }
+      else {
+        return false;
+      }
+    },
     startDate(){
     const startDate = new Date();
     startDate.setDate(startDate.getDate() - this.filter.numberOfDays)
@@ -243,6 +311,14 @@ export default {
           return true;
           
         }
+      })
+      .filter((pothole) => {
+        if (this.$store.state.selectedPothole.id){
+          return pothole.id == this.$store.state.selectedPothole.id
+        }
+        else {
+          return true;
+        }
       });
 
     },
@@ -260,6 +336,7 @@ div.potholes-list {
   flex-direction: column;
   align-content: center;
   gap: 20px;
+  margin-bottom: 10px;
 }
 
 div.map {
@@ -305,6 +382,9 @@ div.list-headers {
   margin-right: 10px;
 }
 
+#show-map {
+  margin-right: 10px;
+}
 
 
 /* Track */

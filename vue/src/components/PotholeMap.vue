@@ -1,9 +1,11 @@
 <template>
   <div class="map">
     <Map v-bind:center="center" id="map" :zoom="12">
-      <GMarker
-        v-if=" ('lat' in $store.state.currentPin) && ('lng' in $store.state.currentPin)"
-        :position="$store.state.currentPin"
+    
+      <GMarker v-for="currentPothole in potholes"
+      :key="currentPothole.id"
+      :position="{lat: currentPothole.latitude, lng: currentPothole.longitude}"
+      @click="setSelectedPothole(currentPothole)"
       />
     </Map>
   </div>
@@ -15,7 +17,13 @@ import { Map, Marker as GMarker } from "vue2-google-maps";
 
 export default {
     name:"pothole-map",
+    props: ["potholes"],
     components: { Map, GMarker },
+    methods: {
+        setSelectedPothole(pothole){
+        this.$store.commit("SET_SELECTED_POTHOLE", pothole);  
+        }
+    },
     data() {
         return {
 
