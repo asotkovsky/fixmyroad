@@ -122,7 +122,17 @@ body {
   display: flex;
   justify-content: space-between;
 }
+::-webkit-scrollbar {
+    width: 14px;
+}
 
+::-webkit-scrollbar-thumb {
+  background:#737373; 
+  border-radius: 9px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #fad52f; 
+}
 
 
 </style>
