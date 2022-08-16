@@ -1,8 +1,8 @@
 <template>
 <div>
-  <h1>Reported Potholes: {{ potholes.length }}</h1>
   <div class="potholes-list-2">
-    <pothole-map id="altmap" :potholes="filteredPotholes" v-show="showMap"/>
+    
+    
     <div class="buttons">
     <button id="toggle-user-filter" v-show="this.$store.state.user.username" class="button" v-on:click ="flipShowMyPotholes()">{{toggleUserFilterText}}</button>
     <button id="show-filters" class="button" v-on:click="flipShowFilters()">{{toggleFilterText}}</button>
@@ -12,7 +12,7 @@
     
     <div class="list-headers" >
 
-      <span>
+      <span id="severity-filter">
         <p>Severity</p>
         <select v-show="showFilters" name="filterSeverity" v-model.number="filter.severity">
           <option value=""></option>
@@ -23,8 +23,8 @@
           <option value="5">5</option>
         </select>
       </span>
-      <span>
-        <p>Date Reported:</p>
+      <span id="date-filter">
+        <p>Reported</p>
         <select v-show="showFilters" name="filterDate" v-model.number="filter.numberOfDays">
           <option value=""></option>
           <option value="7">Last 7 Days</option>
@@ -32,7 +32,7 @@
           <option value="365">This Year</option>
         </select>
       </span>
-      <span>
+      <span id="road-filter">
         
         <p>Road</p>
         <input v-show="showFilters" list="filteredRoadName" type="text" v-model="filter.roadName" />
@@ -42,7 +42,7 @@
           </option>
         </datalist>
       </span>
-      <span>
+      <span id="neighborhood-filter">
         <p>Neighborhood</p>
         <input v-show="showFilters"
           list="filterNeighborhood"
@@ -58,11 +58,11 @@
           </option>
         </datalist>
       </span>
-      <span>
+      <span id="description-filter">
         <p>Description</p>
         <input v-show="showFilters" type="text" v-model="filter.description" />
       </span>
-      <span>
+      <span id="status-filter">
         <p>Status</p>
         <select v-show="showFilters" name="filterStatus" v-model="filter.status">
           <option value=""></option>
@@ -75,8 +75,8 @@
           <option value="Repaired">repaired</option>
         </select>
       </span>
-      <span>
-        <p>Road/Shoulder</p>
+      <span id="location-filter">
+        <p>Location</p>
         <select v-show="showFilters"
           name="filterLocationOnRoadway"
           v-model="filter.locationOnRoadway"
@@ -89,6 +89,7 @@
       </span>
 
     </div>
+    <pothole-map :potholes="filteredPotholes" v-show="showMap"/>
     <div id="pothole-cards-list">
       <pothole-card
         class="pothole.card"
@@ -97,8 +98,8 @@
         :pothole="currentPothole"
       />
     </div>
-   
-  </div>
+   </div>
+ 
 </div>
 </template>
 
@@ -336,23 +337,21 @@ body {
 }
 div.potholes-list-2 {
   display: grid;
-  grid-template-areas: "map buttons"
-                        "map headers"
+  grid-template-areas: "buttons headers"
                         "map pothole-cards"
                         "map pothole-cards";
+  height: 75vh;                     
   flex-direction: column;
   align-content: center;
-  gap: 20px;
-  margin-bottom: 10px;
+  margin-top: 10px;
 }
 
 #pothole-cards-list {
-  grid-area: "pothole-cards"
-}
-
-#altmap {
-  height: 100%;
-  width: 100%
+  grid-area: "pothole-cards";
+  max-width: 50vw;
+  height: 70vh;
+  margin-left: 10px;
+  overflow-y: auto;
 }
 
 div.map {
@@ -370,11 +369,61 @@ div.list-headers {
   display: grid;
   justify-content: left;
   gap: 15px;
-  grid-template-columns: .7fr .7fr 1.5fr 1fr 2fr .7fr 0.2fr 0.2fr;
+  margin-left: 10px;
+  margin-right: 10px;
+  grid-template-columns: .5fr 1.5fr 1.5fr 1.5fr 2fr 1.5fr .5fr .5fr;
+  width: 48vw;
+}
+
+span#severity-filter {
+  width: .2fr;
+  word-wrap: break-word;
+}
+
+span#date-filter {
+  width: .5fr;
+  word-wrap: break-word;
+}
+
+span#road-filter {
+  width: 1fr;
+  word-wrap: break-word;
+}
+
+span#neighborhood-filter {
+  width: 1.5fr;
+  word-wrap: break-word;
+}
+
+span#description-filter {
+  width: 1.5fr;
+  word-wrap: break-word;
+}
+
+span#status-filter {
+  width: 1.5fr;
+  word-wrap: break-word;
+}
+
+span#location-filter{
+  width: .5fr;
+  word-wrap: break-word;
+}
+
+select {
+  width: 100%;
+  height: 25px;
+}
+
+input {
+  width: 100%;
+  height: 19px;
 }
 
 .buttons {
-  grid-area: "buttons"
+  grid-area: "buttons";
+  max-width: 50vw;
+  align-self: end;
 }
 
 .button {
@@ -383,10 +432,8 @@ div.list-headers {
   border-radius: 5px;
   background-color: #737373;
   color: white;
-  padding: 10px;
   font-family: sans-serif;
   font-weight: 750;
-  margin-bottom: 10px;
 }
 
 .button:hover {
@@ -396,7 +443,8 @@ div.list-headers {
 }
 
 .list-headers {
-  grid-area: "headers"
+  grid-area: "headers";
+  max-width: 50vw;
 }
 
 #toggle-user-filter {
@@ -410,7 +458,6 @@ div.list-headers {
 #show-map {
   margin-right: 10px;
 }
-
 
 /* Track */
 ::-webkit-scrollbar-track {
