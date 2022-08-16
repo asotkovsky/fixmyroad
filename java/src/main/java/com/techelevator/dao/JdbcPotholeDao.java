@@ -64,15 +64,24 @@ public class JdbcPotholeDao implements PotholeDao {
                 pothole.getNeighborhood(),
                 pothole.getCity(),
                 pothole.getState());
-        pothole.setId(id);
+                pothole.setId(id);
 
         int userId = userDao.findIdByUsername(username);
         sql =
                 "INSERT INTO pothole_status (pothole_id, status_id, user_id) VALUES " +
                 "(?,1,?)";
         jdbcTemplate.update(sql, pothole.getId(), userId);
-
+        for(String url: pothole.getImageUrl()){
+            addImageToPothole(pothole, url);
+        }
         return pothole;
+    }
+    @Override
+    public void addImageToPothole(Pothole pothole, String url){
+        String sql = "insert into image_url(url, pothole_id) values (?, ?) ";
+        jdbcTemplate.update(sql, url, pothole.getId());
+
+
     }
 
     @Override
@@ -94,6 +103,18 @@ public class JdbcPotholeDao implements PotholeDao {
             statuses.add(mapRowToStatus(results));
         }
         return statuses;
+    }
+
+
+    private List<String> getImages (int potholeId){
+        List<String> url = new ArrayList<String>();
+        String sql = "select url from image_url where pothole_id = ? ";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, potholeId);
+        while (results.next()){
+            url.add(results.getString("url"));
+        }
+            return url;
+
     }
 
     @Override
@@ -135,6 +156,7 @@ public class JdbcPotholeDao implements PotholeDao {
         List<Status> potholeStatus = getPotholeStatuses(pothole.getId());
         pothole.setStatuses(potholeStatus);
         pothole.setCurrentStatus(potholeStatus.get(potholeStatus.size()-1));
+        pothole.setImageUrl(getImages(pothole.getId()));
         return pothole;
 
     }

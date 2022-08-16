@@ -9,6 +9,7 @@ import java.util.List;
 
 public interface PotholeDao {
     List<Pothole> getAllPotholes();
+    public void addImageToPothole(Pothole pothole, String url);
 
     public Pothole createPothole (Pothole pothole, String username);
 
