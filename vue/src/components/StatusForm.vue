@@ -26,6 +26,7 @@
 <script>
 import PotholeService from "@/services/PotholeService.js";
 import Timeline from "@/components/Timeline.vue";
+import emailjs from 'emailjs-com';
 
 export default {
   name: "status-form",
@@ -66,6 +67,22 @@ export default {
   },
   methods: {
     handleSave() {
+      
+      emailjs.send('status_update_service','status_update',
+        {
+          status: "Repaired",
+          road_name: "Cleveland Ave",
+          neighborhood: "Linden",
+          city: "Columbus",
+          state: "OH",
+          user_email: "fixmyroad.app@gmail.com",
+          }, 'bRb3nMl54vtbGGDIK')
+          .then((result) => {
+            console.log('SUCCESS!', result.text);
+        }, (error) => {
+            console.log('FAILED...', error.text);
+        });
+
       PotholeService.createStatus(this.pothole.id, this.status).then(() =>
         location.reload()
       ).catch((error) => {

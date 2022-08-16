@@ -71,6 +71,7 @@ body {
 }
 
 #nav {
+
   display: grid;
   grid-template-areas: "logo links";
   width: 100%;

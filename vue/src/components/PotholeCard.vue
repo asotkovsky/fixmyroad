@@ -128,7 +128,7 @@ div.pothole-card-hover {
 
 img.location-on-roadway-icon {
   width: 60px;
-  height: 60px;
+  height: 55px;
 }
 
 img.severity-icon {
