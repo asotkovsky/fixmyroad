@@ -10,6 +10,7 @@ import ReportPotholes from '../views/ReportPotholes.vue'
 import PageNotFound from '../components/404.vue'
 import AdminModal from '../views/AdminModal.vue'
 import Timeline from "@/components/Timeline.vue";
+import AlternatePotholeList from "@/components/AlternatePotholeList.vue"
 
 
 Vue.use(Router)
@@ -104,8 +105,15 @@ const router = new Router({
     meta: {
       requiresAuth: false
     }
+  },
+  {
+    path: "/potholelist2",
+    name: "alternate-pothole-list",
+    component: AlternatePotholeList,
+    meta: {
+      requiresAuth: false
   }
-
+  }
 
   ]
 })

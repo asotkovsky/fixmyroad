@@ -36,18 +36,6 @@ pothole: Object,
       showAdminModal: false
     };
   },
-  computed: {
-    checkIfAdmin(){
-    let roleIsAdmin = false;
-    this.$store.state.currentUserAuthorities.forEach(authority => {
-      console.log(authority.name)
-      if (authority.name == 'ROLE_ADMIN') {
-        roleIsAdmin =  true;
-      }
-    });
-    return roleIsAdmin;
-    }
-  },
   methods:{
     handleDelete(){
       PotholeService.deletePothole(this.pothole.id)

@@ -1,13 +1,15 @@
 <template>
-  <div class="potholes-list">
-    <h1>Reported Potholes: {{ potholes.length }}</h1>
+<div>
+  <h1>Reported Potholes: {{ potholes.length }}</h1>
+  <div class="potholes-list-2">
+    <pothole-map id="altmap" :potholes="filteredPotholes" v-show="showMap"/>
     <div class="buttons">
     <button id="toggle-user-filter" v-show="this.$store.state.user.username" class="button" v-on:click ="flipShowMyPotholes()">{{toggleUserFilterText}}</button>
     <button id="show-filters" class="button" v-on:click="flipShowFilters()">{{toggleFilterText}}</button>
     <button id="show-map" class="button" v-on:click="flipShowMap()">{{toggleMapText}}</button>
     <button id="clear-filters" v-show="isFiltered" class="button" v-on:click="clearFilters()">Clear Filters</button>
     </div>
-    <pothole-map :potholes="filteredPotholes" v-show="showMap"/>
+    
     <div class="list-headers" >
 
       <span>
@@ -87,7 +89,7 @@
       </span>
 
     </div>
-    <div class="potholes-list">
+    <div id="pothole-cards-list">
       <pothole-card
         class="pothole.card"
         v-for="currentPothole in filteredPotholes"
@@ -97,6 +99,7 @@
     </div>
    
   </div>
+</div>
 </template>
 
 <script>
@@ -331,17 +334,31 @@ body {
   background-color: #0079bf;
   color: white;
 }
-div.potholes-list {
-  display: flex;
+div.potholes-list-2 {
+  display: grid;
+  grid-template-areas: "map buttons"
+                        "map headers"
+                        "map pothole-cards"
+                        "map pothole-cards";
   flex-direction: column;
   align-content: center;
   gap: 20px;
   margin-bottom: 10px;
 }
 
+#pothole-cards-list {
+  grid-area: "pothole-cards"
+}
+
+#altmap {
+  height: 100%;
+  width: 100%
+}
+
 div.map {
-  display: flex;
-  justify-content: center;
+  grid-area: map;
+  max-width: 50vw;
+  height: 100%
 }
 
 .pothole-card {
@@ -354,6 +371,10 @@ div.list-headers {
   justify-content: left;
   gap: 15px;
   grid-template-columns: .7fr .7fr 1.5fr 1fr 2fr .7fr 0.2fr 0.2fr;
+}
+
+.buttons {
+  grid-area: "buttons"
 }
 
 .button {
@@ -372,6 +393,10 @@ div.list-headers {
   background-color: #fad52f;
   color: #737373;
   border-color: #fad52f;
+}
+
+.list-headers {
+  grid-area: "headers"
 }
 
 #toggle-user-filter {

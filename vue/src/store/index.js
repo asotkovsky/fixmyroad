@@ -21,7 +21,8 @@ export default new Vuex.Store({
     token: currentToken || '',
     user: currentUser || {},
     currentPin: {},
-    currentUserAuthorities: []
+    currentUserAuthorities: [],
+    selectedPothole: {}
   },
   mutations: {
     SET_AUTH_TOKEN(state, token) {
@@ -32,6 +33,9 @@ export default new Vuex.Store({
     },
     SET_CURRENT_PIN(state, pin) { 
       state.currentPin = pin 
+    },
+    SET_SELECTED_POTHOLE(state, pothole) {
+      state.selectedPothole = pothole
     },
     SET_USER(state, user) {
       state.user = user;

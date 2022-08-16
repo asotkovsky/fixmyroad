@@ -1,7 +1,10 @@
 <template>
   <div>
-<timeline :statuses="pothole.statuses"/>
-    <form class="status-form" @submit.prevent="handleSave">
+
+    <timeline id="timeline" :statuses="pothole.statuses"/>
+
+    <form v-if="checkIfAdmin" class="status-form" @submit.prevent="handleSave">
+      <p>Update Status:</p>
       <select name="status" id="status-select" v-model.number="status.id">
         <option value="2">Scheduled For Inspection</option>
         <option value="3">Inspected</option>
@@ -38,6 +41,16 @@ export default {
     submitEnabled() {
       return this.potholeStatus != "";
     },
+    checkIfAdmin(){
+    let roleIsAdmin = false;
+    this.$store.state.currentUserAuthorities.forEach(authority => {
+      console.log(authority.name)
+      if (authority.name == 'ROLE_ADMIN') {
+        roleIsAdmin =  true;
+      }
+    });
+    return roleIsAdmin;
+    }
   },
   methods: {
     handleSave() {
@@ -59,4 +72,5 @@ form.status-form {
   min-width: 50vw;
   min-height: 40vh;
 }
+
 </style>
