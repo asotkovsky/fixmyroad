@@ -71,9 +71,8 @@ body {
 }
 
 #nav {
-  font-family: sans-serif;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-areas: "logo links";
   width: 100%;
   color: white;
 }
@@ -82,8 +81,9 @@ body {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
-  align-items: center;
+  align-items: flex-start;
   gap: 5px;
+  grid-area: links;
 }
 
 .button {
@@ -106,23 +106,24 @@ body {
 #nav img {
   height: 100px;
 }
-.horizontal-logo {
-  cursor: pointer;
-  
-  
-
-
-}
 
 .horizontal-logo {
   cursor: pointer;
+  grid-area: logo;
 
 }
-#nav{
-  display: flex;
-  justify-content: space-between;
+
+::-webkit-scrollbar {
+    width: 14px;
 }
 
+::-webkit-scrollbar-thumb {
+  background:#737373; 
+  border-radius: 9px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #fad52f; 
+}
 
 
 </style>

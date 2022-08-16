@@ -406,13 +406,16 @@ div.map {
   gap: 5px;
 }
 
+
 .list-headers{
   grid-area: headers;
+  justify-content: end;
 
 }
 
 .list-body{
   grid-area: pothole-cards;
+  height: 70vh;
 }
 .card-container-show-map {
   max-width: 50vw;
@@ -427,8 +430,10 @@ div.pothole-card-alignment-show-map {
   width: 48vw;
   grid-area: headers;
   max-width: 50vw;
-  align-items: center;
-  padding: 1em;
+  align-items: end;
+  margin-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 5px;
 }
 
 /*This is the styling/grid layout for when the map is hidden*/
@@ -444,6 +449,7 @@ div.pothole-card-alignment-hide-map {
   justify-content: left;
   gap: 15px;
   grid-template-columns: 0.5fr 1fr 1fr 1.5fr 2fr 1fr 0.5fr 0.5fr;
+
 }
 
 select {
@@ -462,6 +468,7 @@ input {
   max-width: 50vw;
   align-items: end;
   height: 70px;
+  padding-bottom: 5px;
 }
 
 .button {

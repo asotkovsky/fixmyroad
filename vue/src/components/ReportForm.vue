@@ -210,6 +210,10 @@ img.selected {
   border-width: 5px;
 }
 
+#imageUpload {
+  padding-bottom: 5px;
+}
+
 #severity-selection {
   display: flex;
   justify-content: space-between;
@@ -281,6 +285,16 @@ margin-top: 10px;
 #submit {
   margin-bottom: 10px;
 }
+::-webkit-scrollbar {
+    width: 14px;
+}
 
+::-webkit-scrollbar-thumb {
+  background:#737373; 
+  border-radius: 9px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #fad52f; 
+}
 
 </style>
