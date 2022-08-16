@@ -1,9 +1,9 @@
 <template>
   <div>
-    <img class="modal_image" v-for="Url in pothole.imageUrl" :key="Url" v-bind:src="Url" /> 
+    <div class="modal_image_holder"><img class="modal_image" v-for="Url in pothole.imageUrl" :key="Url" v-bind:src="Url" /> </div>
     <timeline id="timeline" :statuses="pothole.statuses"/>
     <button v-show="checkIfUser" v-on:click="noticePothole()" > Notice pothole </button>
-
+<div class="status_holder">
     <form v-if="checkIfAdmin" class="status-form" @submit.prevent="handleSave">
       <p>Update Status:</p>
       <select name="status" id="status-select" v-model.number="status.id">
@@ -19,6 +19,7 @@
       />
       <input type="submit" value="Submit" :disabled="!submitEnabled" />
     </form>
+    </div>
   </div>
 </template>
 
@@ -84,13 +85,28 @@ export default {
 form.status-form {
   display: flex;
   flex-direction: column;
-  gap: 1em;
-  min-width: 50vw;
-  min-height: 40vh;
+  align-items: center;
+  max-height: 25vh;
+  line-height: 20%;
+  width: 50%;
+}
+
+div.modal_image_holder{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
 }
 .modal_image{
- max-width: 60vw;
-
+  max-width: 35vw;
+  max-height: 35vh;
 }
+.status_holder{
+  display: flex;
+justify-content: center;
+font-size: 15px;
+}
+
+
 
 </style>
