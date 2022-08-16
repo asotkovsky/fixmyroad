@@ -385,6 +385,7 @@ gap: 15px;
 grid-template-columns: .7fr .7fr 1.5fr 1fr 2fr .7fr 0.2fr 0.2fr;
 }
 
+/*This is general CSS that applies regardless of the map view.*/ 
 select {
   width: 100%;
   height: 25px;
