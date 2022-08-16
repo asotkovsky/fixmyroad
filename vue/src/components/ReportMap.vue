@@ -1,6 +1,6 @@
 <template>
-  <div class="map">
-    <Map v-bind:center="center" id="map" :zoom="12" v-on:click="handleClick">
+  <div class="report-map">
+    <Map v-bind:center="center" id="report-map" :zoom="12" v-on:click="handleClick">
       <GMarker
         v-if=" ('lat' in $store.state.currentPin) && ('lng' in $store.state.currentPin)"
         :position="$store.state.currentPin"
@@ -74,9 +74,14 @@ export default {
 </script>
 
 <style>
-#map {
+.report-map {
   position: relative;
   height: 400px;
   width: 800px;
+}
+
+#report-map {
+  width: 800px;
+  height: 400px;
 }
 </style>

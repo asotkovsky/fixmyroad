@@ -2,11 +2,9 @@
 <div class="modal-backdrop">
     <div class="modal">
       <header class="modal-header">
-        <!-- <slot name="header"> -->
           <span>
-          Update Pothole ID: {{pothole.id}}
+          Pothole ID: {{pothole.id}}
           </span>
-        <!-- </slot> -->
         <button
           type="button"
           class="btn-close"
@@ -18,11 +16,8 @@
 
       <section class="modal-body">
         <slot name="body">
-            <p>Update Status:</p>
             <status-form :pothole="pothole"/>
-            <br/>
-            <br/>
-            <delete-pothole :pothole="pothole"/>
+            <delete-pothole v-if="checkIfAdmin" :pothole="pothole"/>
         </slot>
        </section>
     </div>
@@ -42,6 +37,18 @@ export default {
         this.$emit('close');
       }
     },
+    computed: {
+    checkIfAdmin(){
+    let roleIsAdmin = false;
+    this.$store.state.currentUserAuthorities.forEach(authority => {
+      console.log(authority.name)
+      if (authority.name == 'ROLE_ADMIN') {
+        roleIsAdmin =  true;
+      }
+    });
+    return roleIsAdmin;
+    }
+  },
   };
 
 </script>
@@ -62,13 +69,14 @@ export default {
   .modal {
 
     box-shadow: 2px 2px 20px 1px;
-    overflow-x: auto;
+    background-color:#F5F5F5;
+    width: 60%;
     display: flex;
     flex-direction: column;
     font-family: sans-serif;
     min-width: 300px;
     border-radius: 5px;
-    height: 90vh;
+    height: auto;
 
   }
 

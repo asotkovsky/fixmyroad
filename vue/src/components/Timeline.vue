@@ -32,6 +32,7 @@ export default {
   text-align: justify;
   margin: 90px auto;
   display: flex;
+  max-width: 75%;
   justify-content: space-between;
 
   background: linear-gradient(
