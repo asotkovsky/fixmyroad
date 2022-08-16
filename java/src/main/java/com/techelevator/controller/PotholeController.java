@@ -22,7 +22,7 @@ public class PotholeController {
         this.potholeDao = potholeDao;
         this.locationDao = locationDao;
     }
-
+    @PreAuthorize("permitAll")
     @RequestMapping(path = "/potholes", method = RequestMethod.GET)
     public List<Pothole> getAllPotholes() {
         return potholeDao.getAllPotholes();
@@ -33,10 +33,6 @@ public class PotholeController {
         return locationDao.getFromCoordinates(latitude, longitude);
     }
 
-    @RequestMapping(path = "/pothole/{id}/statuses", method = RequestMethod.GET)
-    public List<Status> getPotholeStatuses(@PathVariable("id") int potholeId) {
-        return potholeDao.getPotholeStatuses(potholeId);
-    }
 
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @RequestMapping(path = "/potholes", method = RequestMethod.POST)

@@ -18,6 +18,9 @@ public class Pothole {
     private String city;
     private String state;
     private List<Status> statuses;
+    private Status currentStatus;
+    private boolean isUserFavorite;
+    private List<String> imageUrl;
 
 
     @AssertTrue(message = "Latitude and Longitude must be provided")
@@ -90,6 +93,14 @@ public class Pothole {
         this.neighborhood = neighborhood;
     }
 
+    public Status getCurrentStatus() {
+        return currentStatus;
+    }
+
+    public void setCurrentStatus(Status currentStatus) {
+        this.currentStatus = currentStatus;
+    }
+
     public String getCity() {
         return city;
     }
@@ -112,6 +123,14 @@ public class Pothole {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public boolean isUserFavorite() {
+        return isUserFavorite;
+    }
+
+    public void setUserFavorite(boolean userFavorite) {
+        isUserFavorite = userFavorite;
     }
 
     public double getLongitude() {
@@ -141,8 +160,8 @@ public class Pothole {
             this.description = description.substring(0, 200);
         } else {
             this.description = description;
-        }
-        ;
+        };
+
 
     }
 
@@ -152,6 +171,14 @@ public class Pothole {
 
     public void setSeverity(int severity) {
         this.severity = severity;
+    }
+
+    public List<String> getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(List<String> imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public String getLocationOnRoadway() {

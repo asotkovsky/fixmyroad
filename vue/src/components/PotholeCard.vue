@@ -8,7 +8,7 @@
     <p id="description1" @mouseover.stop="descriptionHover = true" @mouseleave.stop="descriptionHover = false">{{pothole.description }}</p>
     <p id="status" v-if="pothole.statuses">{{pothole.statuses[(pothole.statuses.length - 1)].name}}</p>
     <img class='location-on-roadway-icon' v-bind:src="require('../assets/icon-' + pothole.locationOnRoadway + '.jpg')">
-    <img class='show-modal-icon' v-if="checkIfAdmin" @click="showAdminModal = true" v-bind:src="require('../assets/plus-icon.png')">
+    <img class='show-modal-icon'  @click="showAdminModal = true" v-bind:src="require('../assets/plus-icon.png')">
     <admin-modal :pothole="pothole" @close="showAdminModal = false" v-if="showAdminModal"/>
   </div>
 

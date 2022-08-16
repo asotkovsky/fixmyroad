@@ -5,10 +5,10 @@
           class="map-pin-icon"
           v-bind:src="require('../assets/blue-map-pin-icon.png')"
         />
-      <div id="selected-location">Your selected location</div>
-      <div id="road-name" >Road name: {{ $store.state.currentPin.roadName }}</div>
+      <div id="selected-location">Your Selected Location</div>
+      <div id="road-name" >Road Name: {{ $store.state.currentPin.roadName }}</div>
       <div id="neighborhood" >Neighborhood: {{ $store.state.currentPin.neighborhood }}</div>
-      <div id="city">City name: {{ $store.state.currentPin.city }}</div>
+      <div id="city">City Name: {{ $store.state.currentPin.city }}</div>
       <div id="state">State: {{ $store.state.currentPin.state }}</div>
     </div>
     <form class="report-form" @submit.prevent="handleSave">
@@ -64,23 +64,52 @@
 Please describe the pothole</textarea
       >
 
+      <label for="imageUpload">Select an Image:</label>
+      <input @change="previewImage($event)" type="file" id="imageUpload" accept="image/*">
+        <div v-if="previewUrl">
+            <img :src="previewUrl" alt="">
+        </div>
+
+
       <input id="submit"
         type="submit"
         value="Submit"
         :disabled="!submitEnabled"
       />
     </form>
+
   </div>
 </template>
  
  <script>
 import PotholeService from "@/services/PotholeService.js";
+import { uploadBytes } from "firebase/storage";
+import { initializeApp } from "firebase/app";
+import { getStorage, ref } from "firebase/storage";
+
+const firebaseConfig = {
+
+  
+  apiKey: "AIzaSyACfSa2Z-kX1aazaVW76X-lDXRMFTnbRHI",
+  authDomain: "te-vue-image-example.firebaseapp.com",
+  projectId: "te-vue-image-example",
+  storageBucket: "te-vue-image-example.appspot.com",
+  messagingSenderId: "405746080437",
+  appId: "1:405746080437:web:0e080d6c65345546d57cfc",
+  measurementId: "G-YD808HPXYY"
+  };
+  const app = initializeApp(firebaseConfig);
+  const storage = getStorage(app);
+  const storageRef = ref(storage, 'images');
 
 export default {
   data() {
     return {
+      previewUrl: '',
+      imageUrl: '',
+      imageData: null,
       newPothole: {
-        latitude: null,
+      latitude: null,
         longitude: null,
         severity: "",
         description: "",
@@ -89,8 +118,10 @@ export default {
         neighborhood : "", 
         city: "", 
         state : "",
+       
       },
     };
+
   },
   computed: {
     submitEnabled() {
@@ -101,7 +132,16 @@ export default {
     setSeverity(severitySelection) {
       this.newPothole.severity = severitySelection;
     },
-    handleSave() {
+    handleSave(){
+      if(this.imageData){
+        this.uploadImage().then(() =>{
+          this.uploadPothole()
+        })
+      }else{
+        this.uploadPothole()
+      }
+    },
+    uploadPothole() {
       if (this.newPothole.description == "") {
         this.newPothole.description = "None provided.";
       }
@@ -134,6 +174,22 @@ export default {
 
       this.$store.commit("SET_CURRENT_PIN", {});
     },
+
+     previewImage(event) {
+            this.imageData = event.target.files[0];
+            this.previewUrl = URL.createObjectURL(this.imageData)
+            console.log(this.imageData)
+            this.uploadImage()
+        },
+
+        uploadImage() {
+          
+            return uploadBytes(storageRef, this.imageData).then((snapshot) => {
+                console.log(snapshot)
+                console.log('Uploaded a blob or file!');
+
+            });
+        }
   },
 };
 </script>
@@ -175,7 +231,7 @@ img.selected {
                        ". state";
   grid-template-columns: .1fr .9fr;                    
   line-height: 26pt;
-  justify-content: space-between;
+  justify-content: left;
   color: black;
 
 }
@@ -214,7 +270,6 @@ margin-top: 10px;
   grid-area: map-pin-icon;
   height: 35px;
   width: 35px;
-  padding-left: 15px;
 }
 
 #selected-location {

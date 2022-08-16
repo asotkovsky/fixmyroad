@@ -1,10 +1,15 @@
 <template>
   <div>
     <h1>Reported Potholes: {{ potholes.length }}</h1>
-    <div class="list-headers">
+    <button id="toggle-user-filter" v-show="this.$store.state.user.username" class="button" v-on:click ="flipShowMyPotholes()">{{toggleUserFilterText}}</button>
+    <button id="show-filters" class="button" v-on:click="flipShowFilters()">{{toggleFilterText}}</button>
+    <button id="show-map" class="button" v-on:click="flipShowMap()">{{toggleMapText}}</button>
+
+    <div class="list-headers" >
+
       <span>
         <p>Severity</p>
-        <select name="filterSeverity" v-model.number="filter.severity">
+        <select v-show="showFilters" name="filterSeverity" v-model.number="filter.severity">
           <option value=""></option>
           <option value="1">1</option>
           <option value="2">2</option>
@@ -15,7 +20,7 @@
       </span>
       <span>
         <p>Date Reported:</p>
-        <select name="filterDate" v-model.number="filter.numberOfDays">
+        <select v-show="showFilters" name="filterDate" v-model.number="filter.numberOfDays">
           <option value=""></option>
           <option value="7">Last 7 Days</option>
           <option value="30">Last 30 Days</option>
@@ -25,7 +30,7 @@
       <span>
         
         <p>Road</p>
-        <input list="filteredRoadName" type="text" v-model="filter.roadName" />
+        <input v-show="showFilters" list="filteredRoadName" type="text" v-model="filter.roadName" />
         <datalist id="filteredRoadName">
           <option v-for="roadName in roadNames" v-bind:key="roadName">
             {{ roadName }}
@@ -34,7 +39,7 @@
       </span>
       <span>
         <p>Neighborhood</p>
-        <input
+        <input v-show="showFilters"
           list="filterNeighborhood"
           type="text"
           v-model="filter.neighborhood"
@@ -50,11 +55,11 @@
       </span>
       <span>
         <p>Description</p>
-        <input type="text" v-model="filter.description" />
+        <input v-show="showFilters" type="text" v-model="filter.description" />
       </span>
       <span>
         <p>Status</p>
-        <select name="filterStatus" v-model="filter.status">
+        <select v-show="showFilters" name="filterStatus" v-model="filter.status">
           <option value=""></option>
           <option value="Reported">reported</option>
           <option value="Scheduled For Inspection">
@@ -67,7 +72,7 @@
       </span>
       <span>
         <p>Road/Shoulder</p>
-        <select
+        <select v-show="showFilters"
           name="filterLocationOnRoadway"
           v-model="filter.locationOnRoadway"
         >
@@ -107,6 +112,12 @@ export default {
       availableStatus: [],
       neighborhoods: [],
       description: [],
+      showFilters: false,
+      toggleFilterText: "Show Filters",
+      filterUserFavorite: false,
+      toggleUserFilterText: "Show My Potholes",
+      showMap: true,
+      toggleMapText: "Hide Map",
       filter: {
         severity: "",
         roadName: "",
@@ -120,6 +131,37 @@ export default {
       },
     };
   },
+  methods:{
+    flipShowFilters(){
+     this.showFilters = !this.showFilters
+      if(this.showFilters){
+        this.toggleFilterText = "Hide Filters"
+      }
+      else{
+        this.toggleFilterText = "Show Filters"
+      }
+    },
+    flipShowMyPotholes(){
+
+      this.filterUserFavorite =!this.filterUserFavorite
+      if(this.filterUserFavorite){
+        this.toggleUserFilterText = "Show All Potholes"
+      }
+      else{
+        this.toggleUserFilterText = "Show My Potholes"
+      }
+    },
+    flipShowMap(){
+      this.showMap = !this.showMap
+      if(this.showMap){
+        this.toggleMapText = "Hide Map"
+      }
+      else{
+        this.toggleMapText = "Show Map"
+      }
+    }
+  },
+
   mounted() {
     PotholeService.getPotholes().then((response) => {
       this.potholes = response.data;
@@ -131,13 +173,7 @@ export default {
       let neighborhoods = this.potholes.map((pothole) => pothole.neighborhood);
       this.neighborhoods = [...new Set(neighborhoods)];
 
-      this.potholes.forEach((pothole) => {
-        PotholeService.getPotholeStatuses(pothole.id).then((response) => {
-          pothole.statuses = response.data;
-          pothole.currentStatus =
-            pothole.statuses[pothole.statuses.length - 1].name;
-        });
-      });
+    
     });
   },
   unmounted() {
@@ -196,7 +232,7 @@ export default {
           if (this.filter.status == "") {
             return true;
           } else {
-            return pothole.currentStatus == this.filter.status;
+            return pothole.currentStatus.name == this.filter.status;
           }
         })
         .filter((pothole) => {
@@ -205,7 +241,18 @@ export default {
           } else {
             return new Date(pothole.statuses[0].date) >= this.startDate;
           }
-        });
+        })
+      .filter((pothole)=> {
+        if(this.filterUserFavorite && this.$store.state.user.username)
+        {
+          let statusFound = pothole.statuses.find (status => status.email == this.$store.state.user.username)
+          return statusFound;
+        }else{
+          return true;
+          
+        }
+      });
+
     },
   },
 };
@@ -234,7 +281,48 @@ div.list-headers {
   grid-template-columns: .7fr .7fr 1.5fr 1fr 2fr .7fr 0.2fr 0.2fr;
 }
 
+.button {
+  border-style: solid;
+  border-color: #737373;
+  border-radius: 5px;
+  background-color: #737373;
+  color: white;
+  padding: 10px;
+  font-family: sans-serif;
+  font-weight: 750;
+  margin-bottom: 10px;
+}
+
+.button:hover {
+  background-color: #fad52f;
+  color: #737373;
+  border-color: #fad52f;
+}
+
+#toggle-user-filter {
+  margin-right: 10px;
+}
+
+#show-filters{
+  margin-right: 10px;
+}
 
 
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey; 
+  border-radius: 10px;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background:#737373; 
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #fad52f; 
+}
 
 </style>

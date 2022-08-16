@@ -1,5 +1,6 @@
 <template>
   <div id="login" class="text-center">
+
     <form class="form-signing" @submit.prevent="login">
       <img
         class="horizontal-logo"
@@ -60,7 +61,8 @@ import authService from "../services/AuthService";
 
 export default {
   name: "login",
-  components: {},
+  components: {
+  },
   data() {
     return {
       user: {

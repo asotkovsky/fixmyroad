@@ -23,21 +23,13 @@ public class JdbcPotholeDao implements PotholeDao {
 
     @Override
     public List<Pothole> getAllPotholes() {
+
         List<Pothole> potholes = new ArrayList<Pothole>();
 
         String sql =
-                "SELECT " +
-                "potholes.id, " +
-                "potholes.longitude, " +
-                "potholes.latitude, " +
-                "potholes.description, " +
-                "potholes.severity, " +
-                "potholes.location_on_roadway, " +
-                "potholes.road_name, " +
-                "potholes.neighborhood, " +
-                "potholes.city, " +
-                "potholes.state " +
-                "FROM potholes";
+                "SELECT potholes.id, potholes.longitude,potholes.latitude, potholes.description, potholes.severity, potholes.location_on_roadway, " +
+                        "potholes.road_name, potholes.neighborhood, potholes.city, potholes.state " +
+                        "FROM potholes";
 
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
 
@@ -62,9 +54,7 @@ public class JdbcPotholeDao implements PotholeDao {
                 "state" +
                 ") " +
                 "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) returning id";
-        Integer id = jdbcTemplate.queryForObject(
-                sql,
-                Integer.class,
+        Integer id = jdbcTemplate.queryForObject(sql, Integer.class,
                 pothole.getLongitude(),
                 pothole.getLatitude(),
                 pothole.getDescription(),
@@ -73,17 +63,25 @@ public class JdbcPotholeDao implements PotholeDao {
                 pothole.getRoadName(),
                 pothole.getNeighborhood(),
                 pothole.getCity(),
-                pothole.getState()
-                                                );
-        pothole.setId(id);
+                pothole.getState());
+                pothole.setId(id);
 
         int userId = userDao.findIdByUsername(username);
         sql =
                 "INSERT INTO pothole_status (pothole_id, status_id, user_id) VALUES " +
                 "(?,1,?)";
         jdbcTemplate.update(sql, pothole.getId(), userId);
-
+        for(String url: pothole.getImageUrl()){
+            addImageToPothole(pothole, url);
+        }
         return pothole;
+    }
+    @Override
+    public void addImageToPothole(Pothole pothole, String url){
+        String sql = "insert into image_url(url, pothole_id) values (?, ?) ";
+        jdbcTemplate.update(sql, url, pothole.getId());
+
+
     }
 
     @Override
@@ -91,11 +89,13 @@ public class JdbcPotholeDao implements PotholeDao {
 
         List<Status> statuses = new ArrayList<Status>();
 
-        String sql = "SELECT s.status_name, ps.date " +
-                     "FROM status s " +
-                     "JOIN pothole_status ps ON s.id = ps.status_id " +
-                     "JOIN potholes p ON ps.pothole_id = p.id " +
-                     "WHERE p.id = ?";
+        String sql = "SELECT s.status_name, ps.date, u.username as email " +
+                "FROM status s " +
+                "JOIN pothole_status ps ON s.id = ps.status_id " +
+                "JOIN potholes p ON ps.pothole_id = p.id " +
+                "Join users u on u.user_id = ps.user_id " +
+                "WHERE p.id = ? " +
+                "order by ps.date ";
 
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, potholeId);
 
@@ -103,6 +103,18 @@ public class JdbcPotholeDao implements PotholeDao {
             statuses.add(mapRowToStatus(results));
         }
         return statuses;
+    }
+
+
+    private List<String> getImages (int potholeId){
+        List<String> url = new ArrayList<String>();
+        String sql = "select url from image_url where pothole_id = ? ";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, potholeId);
+        while (results.next()){
+            url.add(results.getString("url"));
+        }
+            return url;
+
     }
 
     @Override
@@ -121,6 +133,7 @@ public class JdbcPotholeDao implements PotholeDao {
 
         status.setName(results.getString("status_name"));
         Date date = results.getDate("date");
+        status.setEmail(results.getString("email"));
         if (date != null) {
             status.setDate(date.toLocalDate());
         }
@@ -140,7 +153,10 @@ public class JdbcPotholeDao implements PotholeDao {
         pothole.setNeighborhood(results.getString("neighborhood"));
         pothole.setCity(results.getString("city"));
         pothole.setState(results.getString("state"));
-
+        List<Status> potholeStatus = getPotholeStatuses(pothole.getId());
+        pothole.setStatuses(potholeStatus);
+        pothole.setCurrentStatus(potholeStatus.get(potholeStatus.size()-1));
+        pothole.setImageUrl(getImages(pothole.getId()));
         return pothole;
 
     }
