@@ -16,6 +16,7 @@
 
       <section class="modal-body">
         <slot name="body">
+
             <status-form :pothole="pothole"/>
             <delete-pothole v-if="checkIfAdmin" :pothole="pothole"/>
         </slot>
@@ -40,7 +41,8 @@ export default {
     computed: {
     checkIfAdmin(){
     let roleIsAdmin = false;
-    this.$store.state.currentUserAuthorities.forEach(authority => {
+    if (this.$store.state.user.authorities)
+    this.$store.state.user.authorities.forEach(authority => {
       console.log(authority.name)
       if (authority.name == 'ROLE_ADMIN') {
         roleIsAdmin =  true;

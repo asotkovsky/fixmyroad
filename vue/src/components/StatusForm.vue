@@ -1,7 +1,8 @@
 <template>
   <div>
-
+    <img class="modal_image" v-for="Url in pothole.imageUrl" :key="Url" v-bind:src="Url" /> 
     <timeline id="timeline" :statuses="pothole.statuses"/>
+    <button v-show="checkIfUser" v-on:click="noticePothole()" > Notice pothole </button>
 
     <form v-if="checkIfAdmin" class="status-form" @submit.prevent="handleSave">
       <p>Update Status:</p>
@@ -43,13 +44,23 @@ export default {
     },
     checkIfAdmin(){
     let roleIsAdmin = false;
-    this.$store.state.currentUserAuthorities.forEach(authority => {
+    if (this.$store.state.user.authorities)
+    this.$store.state.user.authorities.forEach(authority => {
       console.log(authority.name)
       if (authority.name == 'ROLE_ADMIN') {
         roleIsAdmin =  true;
       }
     });
     return roleIsAdmin;
+    },
+    checkIfUser(){
+    if (this.$store.state.user.authorities){
+      return this.$store.state.user.authorities.find( authority => {
+      return authority.name == "ROLE_USER"  
+
+      })
+    }
+    return false;
     }
   },
   methods: {
@@ -60,6 +71,11 @@ export default {
           alert(error.message);})
       this.status = { id: null, date: new Date().toISOString().slice(0, 10) };
     },
+    noticePothole(){
+      this.status.id= 6
+      this.handleSave()
+    }
+    
   },
 };
 </script>
@@ -71,6 +87,10 @@ form.status-form {
   gap: 1em;
   min-width: 50vw;
   min-height: 40vh;
+}
+.modal_image{
+ max-width: 60vw;
+
 }
 
 </style>
