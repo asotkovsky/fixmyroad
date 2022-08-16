@@ -1,17 +1,17 @@
 <template>
-  <div class="potholes-list">
-    <h1>Reported Potholes: {{ potholes.length }}</h1>
+<div>
+  <div :class="showMap ? 'potholes-list-map-view' : 'pothole-list-hide-map-view'">
+    
     <div class="buttons">
     <button id="toggle-user-filter" v-show="this.$store.state.user.username" class="button" v-on:click ="flipShowMyPotholes()">{{toggleUserFilterText}}</button>
     <button id="show-filters" class="button" v-on:click="flipShowFilters()">{{toggleFilterText}}</button>
     <button id="show-map" class="button" v-on:click="flipShowMap()">{{toggleMapText}}</button>
     <button id="clear-filters" v-show="isFiltered" class="button" v-on:click="clearFilters()">Clear Filters</button>
     </div>
-    <pothole-map :potholes="filteredPotholes" v-show="showMap"/>
-    <div class="list-headers" >
-
-      <span>
-        <p>Severity</p>
+    
+    <div :class="showMap ? 'headers-show-map' : 'headers-hide-map'" >
+      <span id="severity-filter">
+        Severity
         <select v-show="showFilters" name="filterSeverity" v-model.number="filter.severity">
           <option value=""></option>
           <option value="1">1</option>
@@ -21,8 +21,8 @@
           <option value="5">5</option>
         </select>
       </span>
-      <span>
-        <p>Date Reported:</p>
+      <span id="date-filter">
+        Reported
         <select v-show="showFilters" name="filterDate" v-model.number="filter.numberOfDays">
           <option value=""></option>
           <option value="7">Last 7 Days</option>
@@ -30,9 +30,9 @@
           <option value="365">This Year</option>
         </select>
       </span>
-      <span>
+      <span id="road-filter">
         
-        <p>Road</p>
+        Road
         <input v-show="showFilters" list="filteredRoadName" type="text" v-model="filter.roadName" />
         <datalist id="filteredRoadName">
           <option v-for="roadName in roadNames" v-bind:key="roadName">
@@ -40,8 +40,8 @@
           </option>
         </datalist>
       </span>
-      <span>
-        <p>Neighborhood</p>
+      <span id="neighborhood-filter">
+        Neighborhood
         <input v-show="showFilters"
           list="filterNeighborhood"
           type="text"
@@ -56,12 +56,12 @@
           </option>
         </datalist>
       </span>
-      <span>
-        <p>Description</p>
+      <span v-show="!showMap" id="description-filter">
+        Description
         <input v-show="showFilters" type="text" v-model="filter.description" />
       </span>
-      <span>
-        <p>Status</p>
+      <span id="status-filter">
+        Status
         <select v-show="showFilters" name="filterStatus" v-model="filter.status">
           <option value=""></option>
           <option value="Reported">reported</option>
@@ -73,8 +73,8 @@
           <option value="Repaired">repaired</option>
         </select>
       </span>
-      <span>
-        <p>Road/Shoulder</p>
+      <span id="location-filter">
+        Location
         <select v-show="showFilters"
           name="filterLocationOnRoadway"
           v-model="filter.locationOnRoadway"
@@ -87,16 +87,19 @@
       </span>
 
     </div>
-    <div class="potholes-list">
-      <pothole-card
+    <pothole-map class="map" :potholes="filteredPotholes" v-show="showMap"/>
+    <div :class="showMap ? 'pothole-cards-show-map' : 'pothole-cards-hide-map'">
+      <pothole-card 
+        :showMap="showMap"
         class="pothole.card"
         v-for="currentPothole in filteredPotholes"
         :key="currentPothole.id"
         :pothole="currentPothole"
       />
     </div>
-   
-  </div>
+   </div>
+ 
+</div>
 </template>
 
 <script>
@@ -327,33 +330,77 @@ export default {
 </script>
 
 <style>
-body {
-  background-color: #0079bf;
-  color: white;
-}
-div.potholes-list {
-  display: flex;
+
+/*This is the styling/grid layout for when the map is showing*/ 
+div.potholes-list-map-view {
+  display: grid;
+  grid-template-areas:  "buttons headers"
+                        "map pothole-cards";
+  height: 70vh;                     
   flex-direction: column;
   align-content: center;
-  gap: 20px;
-  margin-bottom: 10px;
+  margin-top: 30px;
 }
 
 div.map {
-  display: flex;
-  justify-content: center;
+  grid-area: map;
+  max-width: 50vw;
+  height: 100%
 }
 
-.pothole-card {
-  background-color: white;
-  color: black;
+.pothole-cards-show-map {
+  grid-area: pothole-cards;
+  max-width: 50vw;
+  height: 70vh;
+  margin-left: 5px;
+  margin-right: 10px;
+  overflow-y: auto;
 }
 
-div.list-headers {
+div.headers-show-map {
   display: grid;
   justify-content: left;
   gap: 15px;
-  grid-template-columns: .7fr .7fr 1.5fr 1fr 2fr .7fr 0.2fr 0.2fr;
+  margin-left: 10px;
+  margin-right: 10px;
+  grid-template-columns: .5fr 1.5fr 1.5fr 1.5fr 1.5fr .5fr .5fr;
+  width: 48vw;
+  grid-area: headers;
+  max-width: 50vw;
+  align-items: center;
+}
+
+/*This is the styling/grid layout for when the map is hidden*/ 
+div.pothole-list-hide-map-view {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  margin-bottom: 10px;
+}
+
+div.headers-hide-map {
+display: grid;
+justify-content: left;
+gap: 15px;
+grid-template-columns: .7fr .7fr 1.5fr 1fr 2fr .7fr 0.2fr 0.2fr;
+}
+
+select {
+  width: 100%;
+  height: 25px;
+}
+
+input {
+  width: 100%;
+  height: 19px;
+}
+
+.buttons {
+  display: flex;
+  grid-area: buttons;
+  max-width: 50vw;
+  align-items: end;
+  height: 70px;
 }
 
 .button {
@@ -362,16 +409,18 @@ div.list-headers {
   border-radius: 5px;
   background-color: #737373;
   color: white;
-  padding: 10px;
   font-family: sans-serif;
   font-weight: 750;
-  margin-bottom: 10px;
 }
 
 .button:hover {
   background-color: #fad52f;
   color: #737373;
   border-color: #fad52f;
+}
+
+#location-filter {
+  margin-right: 10px;
 }
 
 #toggle-user-filter {
@@ -385,7 +434,6 @@ div.list-headers {
 #show-map {
   margin-right: 10px;
 }
-
 
 /* Track */
 ::-webkit-scrollbar-track {

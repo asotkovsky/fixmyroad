@@ -24,7 +24,7 @@ export default {
   props: {
 
   pothole: Object,
-  expandedView: Boolean,
+  showMap: Boolean,
   
   },
   components: {
@@ -74,6 +74,7 @@ div.pothole-card {
   border-style: solid;
   border-width: 3px;
   border-color: #737373;
+
   border-radius:5px;
   align-items: center;
   justify-content: left;
