@@ -1,5 +1,5 @@
 <template>
-  <div>
+  
     <div
       :class="{
         'pothole-card-hover': descriptionHover,
@@ -46,7 +46,7 @@
         v-if="showAdminModal"
       />
     </div>
-  </div>
+  
 </template>
 
 <script>
@@ -109,7 +109,7 @@ div.pothole-card {
 }
 
 div.pothole-card-no-map {
-  grid-template-columns: 0.5fr 1fr 1fr 1.5fr 2fr 1fr 0.5fr 0.5fr;
+  grid-template-columns: 0.5fr 1fr 1fr 1fr 1fr 0.5fr 0.5fr 0.2fr;
 }
 
 div.pothole-card-show-map{

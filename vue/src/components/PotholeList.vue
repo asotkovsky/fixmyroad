@@ -336,7 +336,7 @@ div.potholes-list-map-view {
   display: grid;
   grid-template-areas:  "buttons headers"
                         "map pothole-cards";
-  height: 70vh;                     
+  height: 70vh;                    
   flex-direction: column;
   align-content: center;
   margin-top: 30px;
@@ -367,7 +367,6 @@ div.map {
   height: 70vh;
   margin-left: 5px;
   margin-right: 10px;
-  overflow-y: auto;
   display: flex;
   flex-direction: column;
   gap:5px
@@ -382,8 +381,10 @@ div.headers-show-map {
   width: 48vw;
   grid-area: headers;
   max-width: 50vw;
-  align-items: center;
-  padding:1em
+  align-items: end;
+  margin-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 5px;
 }
 
 /*This is the styling/grid layout for when the map is hidden*/ 
@@ -397,8 +398,9 @@ div.pothole-list-hide-map-view {
 div.headers-hide-map {
 display: grid;
 justify-content: left;
+padding-left: 15px;
 gap: 15px;
-grid-template-columns: 0.5fr 1fr 1fr 1.5fr 2fr 1fr 0.5fr 0.5fr;
+grid-template-columns: 0.5fr 1fr 1fr 1fr 1fr 0.5fr 0.5fr 0.2fr;
 }
 
 select {
@@ -417,6 +419,7 @@ input {
   max-width: 50vw;
   align-items: end;
   height: 70px;
+  padding-bottom: 5px;
 }
 
 .button {
