@@ -430,7 +430,7 @@ div.pothole-card-alignment-show-map {
   width: 48vw;
   grid-area: headers;
   max-width: 50vw;
-  align-items: end;
+  align-items: center;
   margin-left: 10px;
   padding-right: 10px;
   padding-bottom: 5px;
@@ -449,6 +449,7 @@ div.pothole-card-alignment-hide-map {
   justify-content: left;
   gap: 15px;
   grid-template-columns: 0.5fr 1fr 1fr 1.5fr 2fr 1fr 0.5fr 0.5fr;
+  align-items: center;
 
 }
 
