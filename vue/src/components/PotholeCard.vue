@@ -25,7 +25,7 @@
         {{ pothole.description }}
       </p>
       <p id="status" v-if="pothole.statuses">
-        {{ pothole.statuses[pothole.statuses.length - 1].name }}
+        {{ getlastStatusName() }}
       </p>
       <img
         class="location-on-roadway-icon"
@@ -72,7 +72,16 @@ export default {
         location.reload()
       );
     },
-  },
+    getlastStatusName(){
+      let filteredStatuses = [];
+      this.pothole.statuses.forEach((status) => {
+        if (status.public == true){
+          filteredStatuses.push(status);
+        }
+      });
+      return filteredStatuses[filteredStatuses.length -1].name
+    }
+  }
 };
 </script>
 
