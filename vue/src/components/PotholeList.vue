@@ -404,7 +404,7 @@ div.potholes-list-map-view {
 
 div.map {
   grid-area: map;
-  max-width: 50vw;
+  max-width: 48vw;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -427,9 +427,7 @@ div.map {
   grid-area: pothole-cards;
   height: 70vh;
 }
-.card-container-show-map {
-  max-width: 50vw;
-}
+
 
 div.pothole-card-alignment-show-map {
   display: grid;
@@ -439,7 +437,6 @@ div.pothole-card-alignment-show-map {
   grid-template-columns: 0.5fr 1fr 1fr 1fr 1fr 0.5fr 0.5fr;
   width: 48vw;
   grid-area: headers;
-  max-width: 50vw;
   align-items: center;
   margin-left: 10px;
   padding-right: 10px;
