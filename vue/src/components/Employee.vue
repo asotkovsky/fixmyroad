@@ -11,6 +11,7 @@ import PotholeService from "@/services/PotholeService.js";
 export default {
     data() {
         return {
+
             employeesList:[]
         }
     },
@@ -23,7 +24,8 @@ export default {
         handleDrop(event){
         console.log(event.dataTransfer.getData("text/plain"))
         let potholeId = event.dataTransfer.getData("text/plain")
-        PotholeService.createStatus(potholeId, {id: 8})
+        let status= { id: 8, date: new Date().toISOString().slice(0, 10), email: this.employee.name}
+        PotholeService.createStatus(potholeId, status)
         }
        
     }

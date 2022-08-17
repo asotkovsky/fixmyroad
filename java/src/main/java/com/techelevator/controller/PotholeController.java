@@ -47,7 +47,11 @@ public class PotholeController {
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @RequestMapping(path = "/pothole/{pothole_id}/statuses", method = RequestMethod.POST)
     public Status createStatus(@PathVariable("pothole_id") int potholeId, @RequestBody Status status, Principal principal) {
-        return potholeDao.createStatus(potholeId, status, principal.getName());
+        String userName = status.getEmail();
+        if(userName.equals("")){
+            userName = principal.getName();
+        }
+        return potholeDao.createStatus(potholeId, status, userName);
     }
 
     @PreAuthorize("hasRole('ADMIN')")
