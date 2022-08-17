@@ -77,6 +77,9 @@ export default {
 </script>
 
 <style>
+p{
+  margin:0
+}
 #description1 {
   overflow: hidden;
   white-space: nowrap;
@@ -93,8 +96,6 @@ export default {
 }
 
 div.pothole-card {
-  /* display: grid; */
-  /* gap: 15px; */
   border-style: solid;
   border-width: 3px;
   border-color: #737373;
