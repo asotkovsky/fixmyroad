@@ -52,5 +52,10 @@ public class PotholeController {
         potholeDao.deletePothole(id);
     }
 
+    @PreAuthorize("permitAll")
+    @RequestMapping(path = "/statuses/{id}", method = RequestMethod.DELETE)
+    public void deleteStatus(@PathVariable("id") int id) {
+        potholeDao.deletePothole(id);
+    }
 
 }

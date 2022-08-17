@@ -23,6 +23,10 @@ export default {
 
     createStatus(potholeId, status){
       return axios.post(`/pothole/${potholeId}/statuses`, status)
+    },
+
+    deleteStatus(statusId){
+      return axios.delete(`/potholes/${statusId}`)
     }
 
     
