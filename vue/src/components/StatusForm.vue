@@ -1,25 +1,49 @@
 <template>
   <div>
-    <div class="modal_image_holder"><img class="modal_image" v-for="Url in pothole.imageUrl" :key="Url" v-bind:src="Url" /> </div>
-    <timeline id="timeline" :statuses="pothole.statuses"/>
-    <button class="status-buttons" id="noticed-button" v-show="checkIfUser && !isNoticed" v-on:click="noticePothole()" > Notice Pothole </button>
-    <button class="status-buttons" id="subscription-button" v-on:click="manageSubscriptions()">{{subscribeButtonText}}</button>
-<div class="status_holder">
-    <form v-if="checkIfAdmin" class="status-form" @submit.prevent="handleSave">
-      <p>Update Status:</p>
-      <select name="status" id="status-select" v-model.number="status.id">
-        <option value="2">Scheduled For Inspection</option>
-        <option value="3">Inspected</option>
-        <option value="4">Scheduled For Repair</option>
-        <option value="5">Repaired</option>
-      </select>
-      <input
-        type="date"
-        v-bind:disabled="![2, 4].includes(status.id)"
-        v-model="status.date"
+    <div class="modal_image_holder">
+      <pothole-details :pothole="pothole" /><img
+        class="modal_image"
+        v-for="Url in pothole.imageUrl"
+        :key="Url"
+        v-bind:src="Url"
       />
-      <input type="submit" value="Submit" :disabled="!submitEnabled" />
-    </form>
+    </div>
+    <timeline id="timeline" :statuses="pothole.statuses" />
+    <button
+      class="status-buttons"
+      id="noticed-button"
+      v-show="checkIfUser && !isNoticed"
+      v-on:click="noticePothole()"
+    >
+      Notice Pothole
+    </button>
+    <button
+      class="status-buttons"
+      id="subscription-button"
+      v-on:click="manageSubscriptions()"
+    >
+      {{ subscribeButtonText }}
+    </button>
+    <div class="status_holder">
+      <form
+        v-if="checkIfAdmin"
+        class="status-form"
+        @submit.prevent="handleSave"
+      >
+        <p>Update Status:</p>
+        <select name="status" id="status-select" v-model.number="status.id">
+          <option value="2">Scheduled For Inspection</option>
+          <option value="3">Inspected</option>
+          <option value="4">Scheduled For Repair</option>
+          <option value="5">Repaired</option>
+        </select>
+        <input
+          type="date"
+          v-bind:disabled="![2, 4].includes(status.id)"
+          v-model="status.date"
+        />
+        <input type="submit" value="Submit" :disabled="!submitEnabled" />
+      </form>
     </div>
   </div>
 </template>
@@ -28,6 +52,7 @@
 import PotholeService from "@/services/PotholeService.js";
 import EmailService from "@/services/EmailService.js";
 import Timeline from "@/components/Timeline.vue";
+import PotholeDetails from "../components/PotholeDetails.vue";
 
 export default {
   name: "status-form",
@@ -36,100 +61,116 @@ export default {
       status: { id: null, date: new Date().toISOString().slice(0, 10) },
     };
   },
-  components:{
-    Timeline
-
+  components: {
+    Timeline,
+    PotholeDetails,
   },
   props: ["pothole"],
   computed: {
-    isNoticed(){
+    isNoticed() {
       let isNoticed = false;
       this.pothole.statuses.forEach((status) => {
-        if ((status.name == 'Noticed') && (this.$store.state.user.username == status.email)){
+        if (
+          status.name == "Noticed" &&
+          this.$store.state.user.username == status.email
+        ) {
           isNoticed = true;
         }
-      })
+      });
       return isNoticed;
     },
-    isSubscribed(){
+    isSubscribed() {
       let isSubscribed = false;
       this.pothole.statuses.forEach((status) => {
-        if ((status.name == 'Subscribed') && (this.$store.state.user.username == status.email)){
+        if (
+          status.name == "Subscribed" &&
+          this.$store.state.user.username == status.email
+        ) {
           isSubscribed = true;
         }
-      })
+      });
       return isSubscribed;
     },
-    subscribeButtonText(){
+    subscribeButtonText() {
       if (this.isSubscribed) {
-        return "Unsubscribe"
+        return "Unsubscribe";
+      } else {
+        return "Subscribe To Email Updates";
       }
-      else {return "Subscribe To Email Updates"}
     },
     submitEnabled() {
       return this.potholeStatus != "";
     },
-    checkIfAdmin(){
-    let roleIsAdmin = false;
-    if (this.$store.state.user.authorities)
-    this.$store.state.user.authorities.forEach(authority => {
-      console.log(authority.name)
-      if (authority.name == 'ROLE_ADMIN') {
-        roleIsAdmin =  true;
-      }
-    });
-    return roleIsAdmin;
+    checkIfAdmin() {
+      let roleIsAdmin = false;
+      if (this.$store.state.user.authorities)
+        this.$store.state.user.authorities.forEach((authority) => {
+          console.log(authority.name);
+          if (authority.name == "ROLE_ADMIN") {
+            roleIsAdmin = true;
+          }
+        });
+      return roleIsAdmin;
     },
-    checkIfUser(){
-    if (this.$store.state.user.authorities){
-      return this.$store.state.user.authorities.find( authority => {
-      return authority.name == "ROLE_USER"  
-
-      })
-    }
-    return false;
-    }
+    checkIfUser() {
+      if (this.$store.state.user.authorities) {
+        return this.$store.state.user.authorities.find((authority) => {
+          return authority.name == "ROLE_USER";
+        });
+      }
+      return false;
+    },
   },
   methods: {
     handleSave() {
-
-      PotholeService.createStatus(this.pothole.id, this.status).then((response) =>{
-      if ((this.status.id != 6) && (this.status.id != 7)){
-      let createdStatus = response.data;
-      EmailService.sendStatusUpdateEmail(this.pothole, createdStatus)}
-      }).catch((error) => {
-          alert(error.message);})
+      PotholeService.createStatus(this.pothole.id, this.status)
+        .then((response) => {
+          if (this.status.id != 6 && this.status.id != 7) {
+            let createdStatus = response.data;
+            EmailService.sendStatusUpdateEmail(this.pothole, createdStatus);
+          }
+        })
+        .catch((error) => {
+          alert(error.message);
+        });
       this.$store.dispatch("reloadPotholes");
       this.status = { id: null, date: new Date().toISOString().slice(0, 10) };
     },
-  
-    noticePothole(){
-      this.status.id= 6
+
+    noticePothole() {
+      this.status.id = 6;
       this.handleSave();
       this.$store.dispatch("reloadPotholes");
     },
-    manageSubscriptions(){
-
-      if (!this.isSubscribed){
-        const subscribeStatus = { id: 7, date: new Date().toISOString().slice(0, 10) };
-        PotholeService.createStatus(this.pothole.id, subscribeStatus).then(() =>{
-        alert("You have subscribed to status updates! To unsubscribe, visit the pothole details page.");
-        this.$store.dispatch("reloadPotholes")});
+    manageSubscriptions() {
+      if (!this.isSubscribed) {
+        const subscribeStatus = {
+          id: 7,
+          date: new Date().toISOString().slice(0, 10),
+        };
+        PotholeService.createStatus(this.pothole.id, subscribeStatus).then(
+          () => {
+            alert(
+              "You have subscribed to status updates! To unsubscribe, visit the pothole details page."
+            );
+            this.$store.dispatch("reloadPotholes");
+          }
+        );
       }
 
-      if(this.isSubscribed){
+      if (this.isSubscribed) {
         let statusIDToDelete = "";
         this.pothole.statuses.forEach((status) => {
-          if (status.name == "Subscribed"){
-            statusIDToDelete = status.id
+          if (status.name == "Subscribed") {
+            statusIDToDelete = status.id;
           }
-        })
-        PotholeService.deleteStatus(statusIDToDelete).then(() =>{
+        });
+        PotholeService.deleteStatus(statusIDToDelete).then(() => {
           alert("You have unsubscribed from email updates on this pothole.");
-          this.$store.dispatch("reloadPotholes")});
+          this.$store.dispatch("reloadPotholes");
+        });
       }
-    }
-    
+    },
   },
 };
 </script>
@@ -144,24 +185,23 @@ form.status-form {
   width: 50%;
 }
 
-div.modal_image_holder{
+div.modal_image_holder {
   display: flex;
   flex-direction: row;
   justify-content: center;
   width: 100%;
 }
-.modal_image{
+.modal_image {
   max-width: 35vw;
   max-height: 35vh;
 }
-.status_holder{
+.status_holder {
   display: flex;
-justify-content: center;
-font-size: 15px;
+  justify-content: center;
+  font-size: 15px;
 }
 
-
-.status-buttons{
+.status-buttons {
   border-style: solid;
   border-color: #737373;
   border-radius: 5px;
@@ -172,10 +212,7 @@ font-size: 15px;
   font-weight: 750;
 }
 
-#noticed-button{
+#noticed-button {
   margin-right: 10px;
 }
-
-
-
 </style>
