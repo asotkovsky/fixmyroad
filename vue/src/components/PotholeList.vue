@@ -404,7 +404,7 @@ div.potholes-list-map-view {
 
 div.map {
   grid-area: map;
-  max-width: 48vw;
+  width: 48vw;
   height: 100%;
   display: flex;
   flex-direction: column;
