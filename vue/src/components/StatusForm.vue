@@ -2,7 +2,8 @@
   <div>
     <div class="modal_image_holder"><img class="modal_image" v-for="Url in pothole.imageUrl" :key="Url" v-bind:src="Url" /> </div>
     <timeline id="timeline" :statuses="pothole.statuses"/>
-    <button v-show="checkIfUser" v-on:click="noticePothole()" > Notice pothole </button>
+    <button class="status-buttons" id="noticed-button" v-show="checkIfUser && !isNoticed" v-on:click="noticePothole()" > Notice Pothole </button>
+    <button class="status-buttons" id="subscription-button" v-on:click="manageSubscriptions()">{{subscribeButtonText}}</button>
 <div class="status_holder">
     <form v-if="checkIfAdmin" class="status-form" @submit.prevent="handleSave">
       <p>Update Status:</p>
@@ -41,6 +42,30 @@ export default {
   },
   props: ["pothole"],
   computed: {
+    isNoticed(){
+      let isNoticed = false;
+      this.pothole.statuses.forEach((status) => {
+        if ((status.name == 'Noticed') && (this.$store.state.user.username == status.email)){
+          isNoticed = true;
+        }
+      })
+      return isNoticed;
+    },
+    isSubscribed(){
+      let isSubscribed = false;
+      this.pothole.statuses.forEach((status) => {
+        if ((status.name == 'Subscribed') && (this.$store.state.user.username == status.email)){
+          isSubscribed = true;
+        }
+      })
+      return isSubscribed;
+    },
+    subscribeButtonText(){
+      if (this.isSubscribed) {
+        return "Unsubscribe"
+      }
+      else {return "Subscribe To Email Updates"}
+    },
     submitEnabled() {
       return this.potholeStatus != "";
     },
@@ -68,15 +93,41 @@ export default {
   methods: {
     handleSave() {
 
-      PotholeService.createStatus(this.pothole.id, this.status).then(() =>{
-      EmailService.sendStatusUpdateEmail(this.pothole).then(() => location.reload())
+      PotholeService.createStatus(this.pothole.id, this.status).then((response) =>{
+      if ((this.status.id != 6) && (this.status.id != 7)){
+      let createdStatus = response.data;
+      EmailService.sendStatusUpdateEmail(this.pothole, createdStatus)}
       }).catch((error) => {
           alert(error.message);})
+      this.$store.dispatch("reloadPotholes");
       this.status = { id: null, date: new Date().toISOString().slice(0, 10) };
     },
+  
     noticePothole(){
       this.status.id= 6
-      this.handleSave()
+      this.handleSave();
+      this.$store.dispatch("reloadPotholes");
+    },
+    manageSubscriptions(){
+
+      if (!this.isSubscribed){
+        const subscribeStatus = { id: 7, date: new Date().toISOString().slice(0, 10) };
+        PotholeService.createStatus(this.pothole.id, subscribeStatus).then(() =>{
+        alert("You have subscribed to status updates! To unsubscribe, visit the pothole details page.");
+        this.$store.dispatch("reloadPotholes")});
+      }
+
+      if(this.isSubscribed){
+        let statusIDToDelete = "";
+        this.pothole.statuses.forEach((status) => {
+          if (status.name == "Subscribed"){
+            statusIDToDelete = status.id
+          }
+        })
+        PotholeService.deleteStatus(statusIDToDelete).then(() =>{
+          alert("You have unsubscribed from email updates on this pothole.");
+          this.$store.dispatch("reloadPotholes")});
+      }
     }
     
   },
@@ -107,6 +158,22 @@ div.modal_image_holder{
   display: flex;
 justify-content: center;
 font-size: 15px;
+}
+
+
+.status-buttons{
+  border-style: solid;
+  border-color: #737373;
+  border-radius: 5px;
+  background-color: #737373;
+  color: white;
+  padding: 10px;
+  font-family: sans-serif;
+  font-weight: 750;
+}
+
+#noticed-button{
+  margin-right: 10px;
 }
 
 

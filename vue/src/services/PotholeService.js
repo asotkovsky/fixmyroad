@@ -26,12 +26,15 @@ export default {
     },
     getEmployees(){
       return axios.get('/employees')
+    },
+    deleteStatus(statusId){
+      return axios.delete(`/statuses/${statusId}`)
     }
-
+  }
     
 
 
 
    
 
-}
+  

@@ -1,5 +1,5 @@
 <template>
-  <div id="map">
+  <div >
     <Map v-bind:center="center" id="map" :zoom="12">
     
       <GMarker v-for="currentPothole in potholes"
@@ -44,7 +44,7 @@ export default {
 
 <style>
 #map {
-  height: 70vh;
-  width: 50vw;
+  height: 100%;
+  width: 100%;
 }
 </style>

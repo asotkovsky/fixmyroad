@@ -29,7 +29,9 @@ public class JdbcPotholeDao implements PotholeDao {
         String sql =
                 "SELECT potholes.id, potholes.longitude,potholes.latitude, potholes.description, potholes.severity, potholes.location_on_roadway, " +
                         "potholes.road_name, potholes.neighborhood, potholes.city, potholes.state " +
-                        "FROM potholes";
+                        "FROM potholes " +
+                        "JOIN pothole_status ps ON potholes.id = ps.pothole_id AND ps.status_id = 1 " +
+                        "ORDER BY ps.date, ps.status_id";
 
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
 
@@ -89,13 +91,13 @@ public class JdbcPotholeDao implements PotholeDao {
 
         List<Status> statuses = new ArrayList<Status>();
 
-        String sql = "SELECT s.status_name, ps.date, u.username as email " +
+        String sql = "SELECT s.status_name, ps.date, u.username as email, ps.id, s.is_public " +
                 "FROM status s " +
                 "JOIN pothole_status ps ON s.id = ps.status_id " +
                 "JOIN potholes p ON ps.pothole_id = p.id " +
                 "Join users u on u.user_id = ps.user_id " +
                 "WHERE p.id = ? " +
-                "order by ps.date ";
+                "order by ps.date::DATE, ps.status_id ";
 
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, potholeId);
 
@@ -118,14 +120,35 @@ public class JdbcPotholeDao implements PotholeDao {
     }
 
     @Override
-    public void createStatus(int potholeId, Status status, String username) {
+    public Status createStatus(int potholeId, Status status, String username) {
         String sql =
                 "INSERT INTO pothole_status (pothole_id, status_id, user_id, date) " +
-                "VALUES(?, ?, ?, ?)";
+                "VALUES(?, ?, ?, ?) RETURNING pothole_status.id";
 
         int userId = userDao.findIdByUsername(username);
-        jdbcTemplate.update(sql, potholeId, status.getId(), userId, status.getDate());
+        Integer id = jdbcTemplate.queryForObject(sql, Integer.class, potholeId, status.getId(), userId, status.getDate());
 
+        sql = "SELECT s.status_name, ps.date, u.username AS email, ps.id, s.is_public " +
+                "FROM status s " +
+                "JOIN pothole_status ps ON s.id = ps.status_id " +
+                "JOIN potholes p ON ps.pothole_id = p.id " +
+                "Join users u on u.user_id = ps.user_id " +
+                "WHERE ps.id = ?";
+
+        SqlRowSet result = jdbcTemplate.queryForRowSet(sql, id);
+        Status addedStatus = null;
+        if(result.next()) {
+            addedStatus = mapRowToStatus(result);
+        }
+
+        return addedStatus;
+
+    }
+
+    @Override
+    public void deleteStatus(int statusId) {
+        String sql = "DELETE from pothole_status WHERE id = ?";
+        jdbcTemplate.update(sql, statusId);
     }
 
     private Status mapRowToStatus(SqlRowSet results) {
@@ -134,6 +157,8 @@ public class JdbcPotholeDao implements PotholeDao {
         status.setName(results.getString("status_name"));
         Date date = results.getDate("date");
         status.setEmail(results.getString("email"));
+        status.setId(results.getInt("id"));
+        status.setPublic(results.getBoolean("is_public"));
         if (date != null) {
             status.setDate(date.toLocalDate());
         }

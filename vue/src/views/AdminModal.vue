@@ -40,7 +40,6 @@ export default {
       let roleIsAdmin = false;
       if (this.$store.state.user.authorities)
         this.$store.state.user.authorities.forEach((authority) => {
-          console.log(authority.name);
           if (authority.name == "ROLE_ADMIN") {
             roleIsAdmin = true;
           }

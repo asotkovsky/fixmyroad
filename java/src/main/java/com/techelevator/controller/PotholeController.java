@@ -46,8 +46,8 @@ public class PotholeController {
 
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @RequestMapping(path = "/pothole/{pothole_id}/statuses", method = RequestMethod.POST)
-    public void createStatus(@PathVariable("pothole_id") int potholeId, @RequestBody Status status, Principal principal) {
-        potholeDao.createStatus(potholeId, status, principal.getName());
+    public Status createStatus(@PathVariable("pothole_id") int potholeId, @RequestBody Status status, Principal principal) {
+        return potholeDao.createStatus(potholeId, status, principal.getName());
     }
 
     @PreAuthorize("hasRole('ADMIN')")
@@ -59,9 +59,16 @@ public class PotholeController {
     @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping(path = "/employees", method = RequestMethod.GET)
     public List<Employee> getEmployees ()
-
     {
         List<Employee> employeeList = employeeDao.gitAllEmployee();
         return employeeList;}
-}
+
+
+    @PreAuthorize("permitAll")
+    @RequestMapping(path = "/statuses/{id}", method = RequestMethod.DELETE)
+    public void deleteStatus(@PathVariable("id") int id) {
+        potholeDao.deleteStatus(id);
+    }}
+
+
 

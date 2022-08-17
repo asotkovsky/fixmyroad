@@ -6,7 +6,7 @@
           <div class="Scriptcontent">
             <ul class="timeline">
               <li
-                v-for="status in statuses"
+                v-for="status in filteredStatuses"
                 :key="status.dnu"
                v-bind:data-year="status.date"
                 v-bind:data-text="status.name + ' by ' + status.email"
@@ -22,6 +22,17 @@
 <script>
 export default {
   props: ["statuses"],
+  computed: {
+    filteredStatuses(){
+      let filteredStatuses = [];
+      this.statuses.forEach((status) => {
+        if (status.public == true){
+          filteredStatuses.push(status);
+        }
+      });
+      return filteredStatuses;
+    }
+  }
 };
 </script>
 

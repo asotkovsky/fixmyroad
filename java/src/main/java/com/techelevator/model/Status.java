@@ -9,6 +9,15 @@ public class Status {
     private LocalDate date;
     private int id;
     private String email;
+    private boolean isPublic;
+
+    public boolean isPublic() {
+        return isPublic;
+    }
+
+    public void setPublic(boolean isPublic) {
+        this.isPublic = isPublic;
+    }
 
     public int getId() {
         return id;
