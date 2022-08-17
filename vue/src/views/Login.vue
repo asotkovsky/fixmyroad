@@ -3,7 +3,7 @@
 
     <form class="form-signing" @submit.prevent="login">
       <img
-        class="horizontal-logo"
+        class="login-horizontal-logo"
         v-bind:src="require('@/assets/fixmyroad-horizontal-logo.png')"
         
       />
@@ -262,7 +262,7 @@ margin-top: 10px;
 .need{
   color: #FAD52F;
 }
-.horizontal-logo{
+.login-horizontal-logo{
   height: 100px;
 }
 

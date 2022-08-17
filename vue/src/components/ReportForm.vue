@@ -210,6 +210,10 @@ img.selected {
   border-width: 5px;
 }
 
+#imageUpload {
+  padding-bottom: 5px;
+}
+
 #severity-selection {
   display: flex;
   justify-content: space-between;

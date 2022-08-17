@@ -25,6 +25,7 @@
 
 <script>
 import PotholeService from "@/services/PotholeService.js";
+import EmailService from "@/services/EmailService.js";
 import Timeline from "@/components/Timeline.vue";
 
 export default {
@@ -66,9 +67,10 @@ export default {
   },
   methods: {
     handleSave() {
-      PotholeService.createStatus(this.pothole.id, this.status).then(() =>
-        location.reload()
-      ).catch((error) => {
+
+      PotholeService.createStatus(this.pothole.id, this.status).then(() =>{
+      EmailService.sendStatusUpdateEmail(this.pothole).then(() => location.reload())
+      }).catch((error) => {
           alert(error.message);})
       this.status = { id: null, date: new Date().toISOString().slice(0, 10) };
     },

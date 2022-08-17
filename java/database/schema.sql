@@ -73,15 +73,24 @@ INSERT INTO users (username,password_hash,role) VALUES ('admin@fixmyroad.com','$
 
 INSERT INTO status (status_name) VALUES ('Reported'), ('Scheduled For Inspection'), ('Inspected'), ('Scheduled For Repair'), ('Repaired'), ('Noticed');
 
-INSERT INTO potholes (longitude, latitude, description, severity, location_on_roadway, road_name, neighborhood, city, state) VALUES (-82.983330, 39.983334, 'pothole 1', 5, 'Shoulder', 'Cleveland Ave', 'Linden', 'Columbus', 'OH');
-INSERT INTO potholes (longitude, latitude, description, severity, location_on_roadway, road_name, neighborhood, city, state) VALUES (-82.998790, 39.961180, 'pothole 2', 3, 'Road', 'Cleveland Ave', 'Linden', 'Columbus', 'OH');
-INSERT INTO potholes (longitude, latitude, description, severity, location_on_roadway, road_name, neighborhood, city, state) VALUES (-83.042504, 39.997804, 'pothole 3', 1, 'Shoulder', 'Cleveland Ave', 'Linden', 'Columbus', 'OH');
-INSERT INTO potholes (longitude, latitude, description, severity, location_on_roadway, road_name, neighborhood, city, state) VALUES (-83.002533, 39.965521, 'pothole 4', 2, 'Road', 'Cleveland Ave', 'Linden', 'Columbus', 'OH');
-INSERT INTO potholes (longitude, latitude, description, severity, location_on_roadway, road_name, neighborhood, city, state) VALUES (-83.014596, 39.960514, 'pothole 5', 4, 'Shoulder', 'Cleveland Ave', 'Linden', 'Columbus', 'OH');
+INSERT INTO potholes (longitude, latitude, description, severity, location_on_roadway, road_name, neighborhood, city, state) VALUES
+(-83.078802, 40.001482, 'pothole 1', 5, 'Shoulder', 'Greycliff Ln', 'West Scioto', 'Columbus', 'OH'),
+(-82.978890, 39.994907, 'pothole 2', 3, 'Road', 'Chittenden Ave', 'South Linden', 'Columbus', 'OH'),
+(-82.980136, 39.945062, 'pothole 3', 1, 'Shoulder', 'Stanley Ave', 'South Columbus', 'Columbus', 'OH'),
+(-82.953489, 39.989120, 'pothole 4', 2, 'Road', 'Woodward Ave', 'St. Marys', 'Columbus', 'OH'),
+(-83.045156, 39.933069, 'pothole 5', 4, 'Shoulder', 'Forest Dr', 'Southwest Columbus', 'Columbus', 'OH');
+
 
 INSERT INTO pothole_status (pothole_id, status_id, date, user_id) VALUES (1,1, CURRENT_TIMESTAMP, 1), (2,1, CURRENT_TIMESTAMP, 1),
 (3,1, CURRENT_TIMESTAMP, 1),
 (4,1, CURRENT_TIMESTAMP, 1),
 (5,1, CURRENT_TIMESTAMP, 1), (1,2, CURRENT_TIMESTAMP, 2), (1,3, CURRENT_TIMESTAMP, 2);
+
+INSERT INTO image_url (pothole_id,url) VALUES
+(1,'http://cdn.shopify.com/s/files/1/0597/4910/5840/articles/pothole_key.jpg?v=1635187694'),
+(2,'https://image.shutterstock.com/z/stock-photo-car-wheel-close-up-near-a-pothole-on-the-road-broken-asphalt-on-the-roads-spring-and-autumn-1892815027.jpg'),
+(3,'https://image.shutterstock.com/image-photo/potholes-road-looking-like-alien-260nw-1014358009.jpg'),
+(4,'https://www.chicagomag.com/wp-content/archive/Chicago-Magazine/March-2014/How-to-Navigate-the-Red-Tape-of-Pothole-Damage-Reimbursement/Pothole.jpg'),
+(5,'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSH64He9salvEqpv33CuFIOeS2522ZIT_OZ1g&usqp=CAU');
 
 COMMIT TRANSACTION;

@@ -1,111 +1,168 @@
 <template>
-<div>
-  <div :class="showMap ? 'potholes-list-map-view' : 'pothole-list-hide-map-view'">
-    
-    <div class="buttons">
-    <button id="toggle-user-filter" v-show="this.$store.state.user.username" class="button" v-on:click ="flipShowMyPotholes()">{{toggleUserFilterText}}</button>
-    <button id="show-filters" class="button" v-on:click="flipShowFilters()">{{toggleFilterText}}</button>
-    <button id="show-map" class="button" v-on:click="flipShowMap()">{{toggleMapText}}</button>
-    <button id="clear-filters" v-show="isFiltered" class="button" v-on:click="clearFilters()">Clear Filters</button>
-    </div>
-    
-    <div :class="showMap ? 'headers-show-map' : 'headers-hide-map'" >
-      <span id="severity-filter">
-        Severity
-        <select v-show="showFilters" name="filterSeverity" v-model.number="filter.severity">
-          <option value=""></option>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-        </select>
-      </span>
-      <span id="date-filter">
-        Reported
-        <select v-show="showFilters" name="filterDate" v-model.number="filter.numberOfDays">
-          <option value=""></option>
-          <option value="7">Last 7 Days</option>
-          <option value="30">Last 30 Days</option>
-          <option value="365">This Year</option>
-        </select>
-      </span>
-      <span id="road-filter">
-        
-        Road
-        <input v-show="showFilters" list="filteredRoadName" type="text" v-model="filter.roadName" />
-        <datalist id="filteredRoadName">
-          <option v-for="roadName in roadNames" v-bind:key="roadName">
-            {{ roadName }}
-          </option>
-        </datalist>
-      </span>
-      <span id="neighborhood-filter">
-        Neighborhood
-        <input v-show="showFilters"
-          list="filterNeighborhood"
-          type="text"
-          v-model="filter.neighborhood"
-        />
-        <datalist id="filterNeighborhood">
-          <option
-            v-for="neighborhood in neighborhoods"
-            v-bind:key="neighborhood"
-          >
-            {{ neighborhood }}
-          </option>
-        </datalist>
-      </span>
-      <span v-show="!showMap" id="description-filter">
-        Description
-        <input v-show="showFilters" type="text" v-model="filter.description" />
-      </span>
-      <span id="status-filter">
-        Status
-        <select v-show="showFilters" name="filterStatus" v-model="filter.status">
-          <option value=""></option>
-          <option value="Reported">reported</option>
-          <option value="Scheduled For Inspection">
-            scheduled for inspection
-          </option>
-          <option value="Inspected">inspected</option>
-          <option value="Scheduled For Repair">scheduled for repair</option>
-          <option value="Repaired">repaired</option>
-        </select>
-      </span>
-      <span id="location-filter">
-        Location
-        <select v-show="showFilters"
-          name="filterLocationOnRoadway"
-          v-model="filter.locationOnRoadway"
+  <div>
+    <div
+      :class="showMap ? 'potholes-list-map-view' : 'pothole-list-hide-map-view'"
+    >
+      <div class="buttons">
+        <button
+          id="toggle-user-filter"
+          v-show="this.$store.state.user.username"
+          class="button"
+          v-on:click="flipShowMyPotholes()"
         >
-          <option value=""></option>
-          <option value="Road">Road</option>
-          <option value="Shoulder">Shoulder</option>
-        </select>
+          {{ toggleUserFilterText }}
+        </button>
+        <button id="show-filters" class="button" v-on:click="flipShowFilters()">
+          {{ toggleFilterText }}
+        </button>
+        <button id="show-map" class="button" v-on:click="flipShowMap()">
+          {{ toggleMapText }}
+        </button>
+        <button
+          id="clear-filters"
+          v-show="isFiltered"
+          class="button"
+          v-on:click="clearFilters()"
+        >
+          Clear Filters
+        </button>
+      </div>
 
-      </span>
+      <div
+        class="card-container list-headers"
+        :class="{ 'card-container-show-map': showMap }"
+      >
+        <div
+          :class="
+            showMap
+              ? 'pothole-card-alignment-show-map'
+              : 'pothole-card-alignment-hide-map'
+          "
+        >
+          <span id="severity-filter">
+            Severity
+            <select
+              v-show="showFilters"
+              name="filterSeverity"
+              v-model.number="filter.severity"
+            >
+              <option value=""></option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </select>
+          </span>
+          <span id="date-filter">
+            Reported
+            <select
+              v-show="showFilters"
+              name="filterDate"
+              v-model.number="filter.numberOfDays"
+            >
+              <option value=""></option>
+              <option value="7">Last 7 Days</option>
+              <option value="30">Last 30 Days</option>
+              <option value="365">This Year</option>
+            </select>
+          </span>
+          <span id="road-filter">
+            Road
+            <input
+              v-show="showFilters"
+              list="filteredRoadName"
+              type="text"
+              v-model="filter.roadName"
+            />
+            <datalist id="filteredRoadName">
+              <option v-for="roadName in roadNames" v-bind:key="roadName">
+                {{ roadName }}
+              </option>
+            </datalist>
+          </span>
+          <span id="neighborhood-filter">
+            Neighborhood
+            <input
+              v-show="showFilters"
+              list="filterNeighborhood"
+              type="text"
+              v-model="filter.neighborhood"
+            />
+            <datalist id="filterNeighborhood">
+              <option
+                v-for="neighborhood in neighborhoods"
+                v-bind:key="neighborhood"
+              >
+                {{ neighborhood }}
+              </option>
+            </datalist>
+          </span>
+          <span v-show="!showMap" id="description-filter">
+            Description
+            <input
+              v-show="showFilters"
+              type="text"
+              v-model="filter.description"
+            />
+          </span>
+          <span id="status-filter">
+            Status
+            <select
+              v-show="showFilters"
+              name="filterStatus"
+              v-model="filter.status"
+            >
+              <option value=""></option>
+              <option value="Reported">reported</option>
+              <option value="Scheduled For Inspection">
+                scheduled for inspection
+              </option>
+              <option value="Inspected">inspected</option>
+              <option value="Scheduled For Repair">scheduled for repair</option>
+              <option value="Repaired">repaired</option>
+            </select>
+          </span>
+          <span id="location-filter">
+            Location
+            <select
+              v-show="showFilters"
+              name="filterLocationOnRoadway"
+              v-model="filter.locationOnRoadway"
+            >
+              <option value=""></option>
+              <option value="Road">Road</option>
+              <option value="Shoulder">Shoulder</option>
+            </select>
+          </span>
+        </div>
+      </div>
 
+      <pothole-map class="map" :potholes="filteredPotholes" v-show="showMap" />
+      <div
+        class="card-container list-body"
+        :class="{ 'card-container-show-map': showMap }"
+      >
+        <pothole-card
+          :showMap="showMap"
+          :class="
+            showMap
+              ? 'pothole-card-alignment-show-map'
+              : 'pothole-card-alignment-hide-map'
+          "
+          v-for="currentPothole in filteredPotholes"
+          :key="currentPothole.id"
+          :pothole="currentPothole"
+        />
+      </div>
     </div>
-    <pothole-map class="map" :potholes="filteredPotholes" v-show="showMap"/>
-    <div :class="showMap ? 'pothole-cards-show-map' : 'pothole-cards-hide-map'">
-      <pothole-card 
-        :showMap="showMap"
-        class="pothole.card"
-        v-for="currentPothole in filteredPotholes"
-        :key="currentPothole.id"
-        :pothole="currentPothole"
-      />
-    </div>
-   </div>
- 
-</div>
+  </div>
 </template>
 
 <script>
 import PotholeService from "@/services/PotholeService.js";
 import PotholeCard from "@/components/PotholeCard.vue";
-import PotholeMap from '@/components/PotholeMap.vue';
+import PotholeMap from "@/components/PotholeMap.vue";
 
 export default {
   name: "pothole-list",
@@ -135,12 +192,12 @@ export default {
         locationOnRoadway: "",
         city: null,
         state: null,
-        numberOfDays: ""
+        numberOfDays: "",
       },
     };
   },
-  methods:{
-    clearFilters(){
+  methods: {
+    clearFilters() {
       this.filter = {
         severity: "",
         roadName: "",
@@ -150,41 +207,37 @@ export default {
         locationOnRoadway: "",
         city: null,
         state: null,
-        numberOfDays: ""
-      }
-      this.$store.commit("SET_SELECTED_POTHOLE", {})
+        numberOfDays: "",
+      };
+      this.$store.commit("SET_SELECTED_POTHOLE", {});
       this.filterUserFavorite = false;
       this.toggleUserFilterText = "Show My Potholes";
-      console.log(this.$store.state.selectedPothole.id)
+      console.log(this.$store.state.selectedPothole.id);
     },
-    flipShowFilters(){
-     this.showFilters = !this.showFilters
-      if(this.showFilters){
-        this.toggleFilterText = "Hide Filters"
-      }
-      else{
-        this.toggleFilterText = "Show Filters"
-      }
-    },
-    flipShowMyPotholes(){
-
-      this.filterUserFavorite =!this.filterUserFavorite
-      if(this.filterUserFavorite){
-        this.toggleUserFilterText = "Show All Potholes"
-      }
-      else{
-        this.toggleUserFilterText = "Show My Potholes"
+    flipShowFilters() {
+      this.showFilters = !this.showFilters;
+      if (this.showFilters) {
+        this.toggleFilterText = "Hide Filters";
+      } else {
+        this.toggleFilterText = "Show Filters";
       }
     },
-    flipShowMap(){
-      this.showMap = !this.showMap
-      if(this.showMap){
-        this.toggleMapText = "Hide Map"
+    flipShowMyPotholes() {
+      this.filterUserFavorite = !this.filterUserFavorite;
+      if (this.filterUserFavorite) {
+        this.toggleUserFilterText = "Show All Potholes";
+      } else {
+        this.toggleUserFilterText = "Show My Potholes";
       }
-      else{
-        this.toggleMapText = "Show Map"
+    },
+    flipShowMap() {
+      this.showMap = !this.showMap;
+      if (this.showMap) {
+        this.toggleMapText = "Hide Map";
+      } else {
+        this.toggleMapText = "Show Map";
       }
-    }
+    },
   },
 
   mounted() {
@@ -197,56 +250,53 @@ export default {
       this.roadNames = [...new Set(roadNames)];
       let neighborhoods = this.potholes.map((pothole) => pothole.neighborhood);
       this.neighborhoods = [...new Set(neighborhoods)];
-
-    
     });
   },
   unmounted() {
     console.log("pothole list unmounted");
   },
   computed: {
-    isFiltered(){
-      if (this.filter.severity){
+    isFiltered() {
+      if (this.filter.severity) {
         return true;
       }
-      if (this.filter.roadName){
+      if (this.filter.roadName) {
         return true;
       }
-      if (this.filter.neighborhood){
+      if (this.filter.neighborhood) {
         return true;
       }
-      if (this.filter.description){
+      if (this.filter.description) {
         return true;
       }
-      if (this.filter.status){
+      if (this.filter.status) {
         return true;
       }
-      if (this.filter.locationOnRoadway){
+      if (this.filter.locationOnRoadway) {
         return true;
       }
-      if (this.filter.city){
+      if (this.filter.city) {
         return true;
       }
-      if (this.filter.state){
+      if (this.filter.state) {
         return true;
       }
-      if (this.filter.numberOfDays){
+      if (this.filter.numberOfDays) {
         return true;
       }
-      if (this.$store.state.selectedPothole.id){
+      if (this.$store.state.selectedPothole.id) {
         return true;
       }
-      if (this.filterUserFavorite){
+      if (this.filterUserFavorite) {
         return true;
-      }
-      else {
+      } else {
         return false;
       }
     },
-    startDate(){
-    const startDate = new Date();
-    startDate.setDate(startDate.getDate() - this.filter.numberOfDays)
-    return startDate;
+    startDate() {
+      const startDate = new Date();
+      startDate.setDate(startDate.getDate() - this.filter.numberOfDays);
+      return startDate;
     },
     filteredPotholes() {
       return this.potholes
@@ -305,38 +355,36 @@ export default {
             return new Date(pothole.statuses[0].date) >= this.startDate;
           }
         })
-      .filter((pothole)=> {
-        if(this.filterUserFavorite && this.$store.state.user.username)
-        {
-          let statusFound = pothole.statuses.find (status => status.email == this.$store.state.user.username)
-          return statusFound;
-        }else{
-          return true;
-          
-        }
-      })
-      .filter((pothole) => {
-        if (this.$store.state.selectedPothole.id){
-          return pothole.id == this.$store.state.selectedPothole.id
-        }
-        else {
-          return true;
-        }
-      });
-
+        .filter((pothole) => {
+          if (this.filterUserFavorite && this.$store.state.user.username) {
+            let statusFound = pothole.statuses.find(
+              (status) => status.email == this.$store.state.user.username
+            );
+            return statusFound;
+          } else {
+            return true;
+          }
+        })
+        .filter((pothole) => {
+          if (this.$store.state.selectedPothole.id) {
+            return pothole.id == this.$store.state.selectedPothole.id;
+          } else {
+            return true;
+          }
+        });
     },
   },
 };
 </script>
 
 <style>
-
-/*This is the styling/grid layout for when the map is showing*/ 
+/*This is the styling/grid layout for when the map is showing*/
 div.potholes-list-map-view {
   display: grid;
-  grid-template-areas:  "buttons headers"
-                        "map pothole-cards";
-  height: 70vh;                    
+  grid-template-areas:
+    "buttons headers"
+    "map pothole-cards";
+  height: 70vh;
   flex-direction: column;
   align-content: center;
   margin-top: 30px;
@@ -350,29 +398,30 @@ div.map {
   flex-direction: column;
 }
 
-.pothole-cards-show-map {
+.card-container {
+  margin-left: 5px;
+  margin-right: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+
+.list-headers{
+  grid-area: headers;
+  justify-content: end;
+
+}
+
+.list-body{
   grid-area: pothole-cards;
+  height: 70vh;
+}
+.card-container-show-map {
   max-width: 50vw;
-  height: 70vh;
-  margin-left: 5px;
-  margin-right: 10px;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  gap:5px
 }
 
-.pothole-cards-hide-map {
-  /* grid-area: pothole-cards; */
-  height: 70vh;
-  margin-left: 5px;
-  margin-right: 10px;
-  display: flex;
-  flex-direction: column;
-  gap:5px
-}
-
-div.headers-show-map {
+div.pothole-card-alignment-show-map {
   display: grid;
   justify-content: left;
   gap: 15px;
@@ -381,13 +430,13 @@ div.headers-show-map {
   width: 48vw;
   grid-area: headers;
   max-width: 50vw;
-  align-items: end;
+  align-items: center;
   margin-left: 10px;
   padding-right: 10px;
   padding-bottom: 5px;
 }
 
-/*This is the styling/grid layout for when the map is hidden*/ 
+/*This is the styling/grid layout for when the map is hidden*/
 div.pothole-list-hide-map-view {
   display: flex;
   flex-direction: column;
@@ -395,12 +444,13 @@ div.pothole-list-hide-map-view {
   margin-bottom: 10px;
 }
 
-div.headers-hide-map {
-display: grid;
-justify-content: left;
-padding-left: 15px;
-gap: 15px;
-grid-template-columns: 0.5fr 1fr 1fr 1fr 1fr 0.5fr 0.5fr 0.2fr;
+div.pothole-card-alignment-hide-map {
+  display: grid;
+  justify-content: left;
+  gap: 15px;
+  grid-template-columns: 0.5fr 1fr 1fr 1.5fr 2fr 1fr 0.5fr 0.5fr;
+  align-items: center;
+
 }
 
 select {
@@ -446,7 +496,7 @@ input {
   margin-right: 10px;
 }
 
-#show-filters{
+#show-filters {
   margin-right: 10px;
 }
 
@@ -456,18 +506,17 @@ input {
 
 /* Track */
 ::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 5px grey; 
+  box-shadow: inset 0 0 5px grey;
   border-radius: 10px;
 }
- 
+
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background:#737373; 
+  background: #737373;
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #fad52f; 
+  background: #fad52f;
 }
-
 </style>

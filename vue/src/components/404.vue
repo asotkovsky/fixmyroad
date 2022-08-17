@@ -19,6 +19,7 @@ export default {
 #page-not-found-view {
 display: flex;
 height: 300px;
+margin-top: 60px;
 justify-content: center;
 }
 

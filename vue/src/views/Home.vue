@@ -36,12 +36,15 @@ export default {
   grid-template-columns: 500px 500px;
   justify-items: center;
   justify-content:center;
-  max-height: 90vh;
+  max-height: 60vh;
 }
 
 .home div {
   display: flex;
-  margin: 100px;
+  margin-left: 100px;
+  margin-right: 100px;
+  margin-bottom: 100px;
+  margin-top: 60px;
   height: 400px;
   width: 500px;
   flex-direction: column;
