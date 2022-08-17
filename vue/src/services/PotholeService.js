@@ -23,6 +23,9 @@ export default {
 
     createStatus(potholeId, status){
       return axios.post(`/pothole/${potholeId}/statuses`, status)
+    },
+    getEmployees(){
+      return axios.get('/employees')
     }
 
     

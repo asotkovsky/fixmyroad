@@ -1,6 +1,6 @@
 <template>
   
-    <div
+    <div draggable="true" v-on:dragstart="dragStart"
       :class="{
         'pothole-card-hover': descriptionHover,
       }"
@@ -72,6 +72,9 @@ export default {
         location.reload()
       );
     },
+    dragStart(event){
+      event.dataTransfer.setData("text/plain", this.pothole.id)
+    }
   },
 };
 </script>

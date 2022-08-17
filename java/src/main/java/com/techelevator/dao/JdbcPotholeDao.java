@@ -140,6 +140,7 @@ public class JdbcPotholeDao implements PotholeDao {
         return status;
     }
 
+
     private Pothole mapRowToPothole(SqlRowSet results) {
         Pothole pothole = new Pothole();
 
