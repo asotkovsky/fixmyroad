@@ -61,7 +61,7 @@ export default {
                 noticedStatuses.push(status);
             }
         })
-        if(noticedStatuses.length > 1){
+        if(noticedStatuses.length != 1){
             this.noticedText = "times"
         }
         return noticedStatuses.length 

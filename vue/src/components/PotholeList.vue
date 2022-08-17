@@ -175,18 +175,24 @@
         />
       </div>
     </div>
+  <div>
+    <employeeList/>
+  </div>
   </div>
 </template>
 
 <script>
 import PotholeCard from "@/components/PotholeCard.vue";
 import PotholeMap from "@/components/PotholeMap.vue";
+import employeeList from "@/components/EmployeeList.vue";
 
 export default {
   name: "pothole-list",
   components: {
     PotholeCard,
     PotholeMap,
+    employeeList,
+    
   },
   data() {
     return {

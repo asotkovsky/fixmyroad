@@ -1,7 +1,9 @@
 package com.techelevator.controller;
 
+import com.techelevator.dao.EmployeeDao;
 import com.techelevator.dao.LocationDao;
 import com.techelevator.dao.PotholeDao;
+import com.techelevator.model.Employee;
 import com.techelevator.model.Pothole;
 import com.techelevator.model.Status;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -17,10 +19,12 @@ public class PotholeController {
 
     private final PotholeDao potholeDao;
     private final LocationDao locationDao;
+    private final EmployeeDao employeeDao;
 
-    public PotholeController(PotholeDao potholeDao, LocationDao locationDao) {
+    public PotholeController(PotholeDao potholeDao, LocationDao locationDao, EmployeeDao employeeDao) {
         this.potholeDao = potholeDao;
         this.locationDao = locationDao;
+        this.employeeDao = employeeDao;
     }
     @PreAuthorize("permitAll")
     @RequestMapping(path = "/potholes", method = RequestMethod.GET)
@@ -43,7 +47,11 @@ public class PotholeController {
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @RequestMapping(path = "/pothole/{pothole_id}/statuses", method = RequestMethod.POST)
     public Status createStatus(@PathVariable("pothole_id") int potholeId, @RequestBody Status status, Principal principal) {
-        return potholeDao.createStatus(potholeId, status, principal.getName());
+        String userName = status.getEmail();
+        if(userName.equals("")){
+            userName = principal.getName();
+        }
+        return potholeDao.createStatus(potholeId, status, userName);
     }
 
     @PreAuthorize("hasRole('ADMIN')")
@@ -52,10 +60,19 @@ public class PotholeController {
         potholeDao.deletePothole(id);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
+    @RequestMapping(path = "/employees", method = RequestMethod.GET)
+    public List<Employee> getEmployees ()
+    {
+        List<Employee> employeeList = employeeDao.gitAllEmployee();
+        return employeeList;}
+
+
     @PreAuthorize("permitAll")
     @RequestMapping(path = "/statuses/{id}", method = RequestMethod.DELETE)
     public void deleteStatus(@PathVariable("id") int id) {
         potholeDao.deleteStatus(id);
-    }
+    }}
 
-}
+
+

@@ -1,6 +1,6 @@
 <template>
   
-    <div
+    <div draggable="true" v-on:dragstart="dragStart"
       :class="{
         'pothole-card-hover': descriptionHover,
       }"
@@ -80,8 +80,11 @@ export default {
         }
       });
       return filteredStatuses[filteredStatuses.length -1].name
+    },
+    dragStart(event){
+      event.dataTransfer.setData("text/plain", this.pothole.id)
     }
-  }
+  },
 };
 </script>
 

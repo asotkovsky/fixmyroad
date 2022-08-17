@@ -72,7 +72,10 @@ CREATE INDEX "PK FK" ON  "pothole_status" ("pothole_id", "status_id");
 INSERT INTO users (username,password_hash,role) VALUES ('user@fixmyroad.com','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER');
 INSERT INTO users (username,password_hash,role) VALUES ('admin@fixmyroad.com','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_ADMIN');
 
-INSERT INTO status (status_name, is_public) VALUES ('Reported', true), ('Scheduled For Inspection', true), ('Inspected', true), ('Scheduled For Repair', true), ('Repaired', true), ('Noticed', false), ('Subscribed', false);
+INSERT INTO status (status_name, is_public)
+ VALUES ('Reported', true), ('Scheduled For Inspection', true),
+ ('Inspected', true), ('Scheduled For Repair', true), ('Repaired', true),
+ ('Noticed', false), ('Subscribed', false), ('Assigned', true);
 
 INSERT INTO potholes (longitude, latitude, description, severity, location_on_roadway, road_name, neighborhood, city, state) VALUES
 (-83.078802, 40.001482, 'pothole 1', 5, 'Shoulder', 'Greycliff Ln', 'West Scioto', 'Columbus', 'OH'),
