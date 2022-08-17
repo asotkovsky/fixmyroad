@@ -404,7 +404,7 @@ div.potholes-list-map-view {
 
 div.map {
   grid-area: map;
-  width: 48vw;
+  width: 47vw;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -436,7 +436,7 @@ div.pothole-card-alignment-show-map {
   gap: 15px;
   margin-right: 10px;
   grid-template-columns: 0.5fr 1fr 1fr 1fr 1fr 0.5fr 0.5fr;
-  width: 48vw;
+  width: 47vw;
   grid-area: headers;
   align-items: center;
   margin-left: 10px;
