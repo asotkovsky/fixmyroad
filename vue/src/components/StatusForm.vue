@@ -69,11 +69,13 @@ export default {
     handleSave() {
 
       PotholeService.createStatus(this.pothole.id, this.status).then(() =>{
-      EmailService.sendStatusUpdateEmail(this.pothole).then(() => location.reload())
+      EmailService.sendStatusUpdateEmail(this.pothole).then(() => 
+      location.reload())
       }).catch((error) => {
           alert(error.message);})
       this.status = { id: null, date: new Date().toISOString().slice(0, 10) };
     },
+  
     noticePothole(){
       this.status.id= 6
       this.handleSave()
