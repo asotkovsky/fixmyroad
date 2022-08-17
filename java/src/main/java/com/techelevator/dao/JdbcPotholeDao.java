@@ -30,7 +30,7 @@ public class JdbcPotholeDao implements PotholeDao {
                 "SELECT potholes.id, potholes.longitude,potholes.latitude, potholes.description, potholes.severity, potholes.location_on_roadway, " +
                         "potholes.road_name, potholes.neighborhood, potholes.city, potholes.state " +
                         "FROM potholes " +
-                        "JOIN pothole_status ps ON potholes.id = ps.pothole_id " +
+                        "JOIN pothole_status ps ON potholes.id = ps.pothole_id AND ps.status_id = 1 " +
                         "ORDER BY ps.date, ps.status_id";
 
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
@@ -97,7 +97,7 @@ public class JdbcPotholeDao implements PotholeDao {
                 "JOIN potholes p ON ps.pothole_id = p.id " +
                 "Join users u on u.user_id = ps.user_id " +
                 "WHERE p.id = ? " +
-                "order by ps.date ";
+                "order by ps.date, ps.status_id ";
 
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, potholeId);
 
