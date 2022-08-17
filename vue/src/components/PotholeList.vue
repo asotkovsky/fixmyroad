@@ -426,6 +426,7 @@ div.map {
 .list-body {
   grid-area: pothole-cards;
   height: 70vh;
+  overflow-y: auto;
 }
 .card-container-show-map {
   max-width: 50vw;

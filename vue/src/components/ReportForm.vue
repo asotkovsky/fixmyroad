@@ -2,12 +2,16 @@
   <div class="report-attributes">
     <div class="report">
       <img
-          class="map-pin-icon"
-          v-bind:src="require('../assets/blue-map-pin-icon.png')"
-        />
+        class="map-pin-icon"
+        v-bind:src="require('../assets/blue-map-pin-icon.png')"
+      />
       <div id="selected-location">Your Selected Location</div>
-      <div id="road-name" >Road Name: {{ $store.state.currentPin.roadName }}</div>
-      <div id="neighborhood" >Neighborhood: {{ $store.state.currentPin.neighborhood }}</div>
+      <div id="road-name">
+        Road Name: {{ $store.state.currentPin.roadName }}
+      </div>
+      <div id="neighborhood">
+        Neighborhood: {{ $store.state.currentPin.neighborhood }}
+      </div>
       <div id="city">City Name: {{ $store.state.currentPin.city }}</div>
       <div id="state">State: {{ $store.state.currentPin.state }}</div>
     </div>
@@ -65,19 +69,32 @@ Please describe the pothole</textarea
       >
 
       <label for="imageUpload">Select an Image:</label>
-      <input @change="previewImage($event)" type="file" id="imageUpload" accept="image/*">
-        <div v-if="previewUrl">
-            <img class="post_image" :src="previewUrl" alt="">
-        </div>
-
-
-      <input id="submit"
+      <input
+        @change="previewImage($event)"
+        type="file"
+        id="imageUpload"
+        accept="image/*"
+      />
+      <div v-if="previewUrl">
+        <img class="post_image" :src="previewUrl" alt="" />
+      </div>
+      <div id="subscribe-checkbox">
+        <input
+          type="checkbox"
+          id="checkbox-to-subscribe"
+          v-model="subscriptionRequested"
+        />
+        <label for="subscribe-checkbox"
+          >Check here to receive status update emails</label
+        >
+      </div>
+      <input
+        id="submit"
         type="submit"
         value="Submit"
         :disabled="!submitEnabled"
       />
     </form>
-
   </div>
 </template>
  
@@ -85,8 +102,8 @@ Please describe the pothole</textarea
 import PotholeService from "@/services/PotholeService.js";
 import { uploadBytes } from "firebase/storage";
 import { initializeApp } from "firebase/app";
-import { getStorage, ref, getDownloadURL} from "firebase/storage";
-import {v4 as uuidv4 } from "uuid";
+import { getStorage, ref, getDownloadURL } from "firebase/storage";
+import { v4 as uuidv4 } from "uuid";
 
 const firebaseConfig = {
   apiKey: process.env.VUE_APP_GOOGLE_API_KEY,
@@ -97,49 +114,51 @@ const firebaseConfig = {
   appId: "1:207952003661:web:ad363995e7633473011204",
   measurementId: "G-K7Q2166FNK",
 };
-  const app = initializeApp(firebaseConfig);
-  const storage = getStorage(app);
-  
+const app = initializeApp(firebaseConfig);
+const storage = getStorage(app);
 
 export default {
   data() {
     return {
-      previewUrl: '',
+      previewUrl: "",
       imageData: null,
+      subscriptionRequested: false,
       newPothole: {
-      latitude: null,
+        latitude: null,
         longitude: null,
         severity: "",
         description: "",
         locationOnRoadway: "",
-        roadName : "", 
-        neighborhood : "", 
-        city: "", 
-        state : "",
-        imageUrl: []
+        roadName: "",
+        neighborhood: "",
+        city: "",
+        state: "",
+        imageUrl: [],
       },
     };
-
   },
   computed: {
     submitEnabled() {
-      return (('lat' in this.$store.state.currentPin) && ('lng' in this.$store.state.currentPin) && (this.newPothole.severity > 0))
-    }
+      return (
+        "lat" in this.$store.state.currentPin &&
+        "lng" in this.$store.state.currentPin &&
+        this.newPothole.severity > 0
+      );
+    },
   },
   methods: {
     setSeverity(severitySelection) {
       this.newPothole.severity = severitySelection;
     },
-    handleSave(){
-      if(this.imageData){
-        this.uploadImage().then((URL) =>{
-          this.newPothole.imageUrl.push(URL)
-          this.uploadPothole()
-        })
-      }else{
-        this.uploadPothole()
+    handleSave() {
+      if (this.imageData) {
+        this.uploadImage().then((URL) => {
+          this.newPothole.imageUrl.push(URL);
+          this.uploadPothole();
+        });
+      } else {
+        this.uploadPothole();
       }
-
     },
     uploadPothole() {
       if (this.newPothole.description == "") {
@@ -153,7 +172,24 @@ export default {
       this.newPothole.roadName = this.$store.state.currentPin.roadName;
 
       PotholeService.createPothole(this.newPothole)
-        .then(() => this.$router.push({ name: "potholes-list" }))
+        .then((response) => {
+          const subscribeStatus = {
+            id: 7,
+            date: new Date().toISOString().slice(0, 10),
+          };
+          const pothole = response.data;
+          if (this.subscriptionRequested) {
+
+            PotholeService.createStatus(pothole.id, subscribeStatus).then(
+              () => {
+                alert(
+                  "You have subscribed to status updates! To unsubscribe, visit the pothole details page."
+                );
+                this.$router.push({ name: "potholes-list" });
+              }
+            );
+          }else{this.$router.push({ name: "potholes-list" });} 
+        })
         .catch((error) => {
           alert(error.message);
         });
@@ -176,27 +212,25 @@ export default {
       this.$store.commit("SET_CURRENT_PIN", {});
     },
 
-     previewImage(event) {
-            this.imageData = event.target.files[0];
-            this.previewUrl = URL.createObjectURL(this.imageData)
-        },
+    previewImage(event) {
+      this.imageData = event.target.files[0];
+      this.previewUrl = URL.createObjectURL(this.imageData);
+    },
 
-        uploadImage() {
-            const storageRef = ref(storage, 'images/' + uuidv4());
-            return uploadBytes(storageRef, this.imageData).then((snapshot) => {
-            return getDownloadURL(snapshot.ref)
-               
-
-            });
-        }
+    uploadImage() {
+      const storageRef = ref(storage, "images/" + uuidv4());
+      return uploadBytes(storageRef, this.imageData).then((snapshot) => {
+        return getDownloadURL(snapshot.ref);
+      });
+    },
   },
 };
 </script>
  
  <style>
- .post_image{
-height: 15vh;
- }
+.post_image {
+  height: 15vh;
+}
 
 .report-attributes {
   display: grid;
@@ -230,16 +264,16 @@ img.selected {
   display: grid;
   gap: 5px;
   align-content: center;
-  grid-template-areas: "map-pin-icon selected-location "
-                       ". road-name"
-                       ". neighborhood"
-                       ". city"
-                       ". state";
-  grid-template-columns: .1fr .9fr;                    
+  grid-template-areas:
+    "map-pin-icon selected-location "
+    ". road-name"
+    ". neighborhood"
+    ". city"
+    ". state";
+  grid-template-columns: 0.1fr 0.9fr;
   line-height: 26pt;
   justify-content: left;
   color: black;
-
 }
 
 textarea {
@@ -247,13 +281,13 @@ textarea {
   margin-top: 10px;
 }
 
-select{
+select {
   margin-bottom: 10px;
   margin-top: 10px;
 }
 
-#severity{
-margin-top: 10px;
+#severity {
+  margin-top: 10px;
 }
 
 #road-name {
@@ -272,7 +306,7 @@ margin-top: 10px;
   grid-area: state;
 }
 
-.map-pin-icon{
+.map-pin-icon {
   grid-area: map-pin-icon;
   height: 35px;
   width: 35px;
@@ -282,19 +316,25 @@ margin-top: 10px;
   grid-area: selected-location;
 }
 
+#subscribe-checkbox {
+  display: flex;
+  white-space: nowrap;
+  align-items: center;
+  justify-items: left;
+}
+
 #submit {
   margin-bottom: 10px;
 }
 ::-webkit-scrollbar {
-    width: 14px;
+  width: 14px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background:#737373; 
+  background: #737373;
   border-radius: 9px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #fad52f; 
+  background: #fad52f;
 }
-
 </style>

@@ -97,7 +97,7 @@ public class JdbcPotholeDao implements PotholeDao {
                 "JOIN potholes p ON ps.pothole_id = p.id " +
                 "Join users u on u.user_id = ps.user_id " +
                 "WHERE p.id = ? " +
-                "order by ps.date, ps.status_id ";
+                "order by ps.date::DATE, ps.status_id ";
 
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, potholeId);
 

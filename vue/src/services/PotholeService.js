@@ -26,7 +26,7 @@ export default {
     },
 
     deleteStatus(statusId){
-      return axios.delete(`/potholes/${statusId}`)
+      return axios.delete(`/statuses/${statusId}`)
     }
 
     

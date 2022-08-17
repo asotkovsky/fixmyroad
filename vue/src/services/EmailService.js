@@ -15,7 +15,7 @@ export default {
     sendStatusUpdateEmail(pothole) {
         return emailjs.send('status_update_service', 'status_update',
             {
-                status: pothole.statuses[pothole.statuses.length - 1].name,
+                status: this.lastPublicStatus(pothole),
                 road_name: pothole.roadName,
                 neighborhood: pothole.neighborhood,
                 city: pothole.city,
@@ -29,6 +29,18 @@ export default {
                 console.log('FAILED...', error.text);
             });
 
-    }
+    },
+
+    lastPublicStatus(pothole){
+        let filteredStatuses = [];
+        pothole.statuses.forEach((status) => {
+          if (status.public == true){
+            filteredStatuses.push(status);
+          }
+        });
+        const lastPublicStatus = filteredStatuses[filteredStatuses.length -1].name;
+        return lastPublicStatus;
+      }
+    
 
 }
