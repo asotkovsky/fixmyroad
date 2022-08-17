@@ -93,9 +93,10 @@ export default {
   methods: {
     handleSave() {
 
-      PotholeService.createStatus(this.pothole.id, this.status).then(() =>{
+      PotholeService.createStatus(this.pothole.id, this.status).then((response) =>{
       if ((this.status.id != 6) && (this.status.id != 7)){
-      EmailService.sendStatusUpdateEmail(this.pothole)}
+      let createdStatus = response.data;
+      EmailService.sendStatusUpdateEmail(this.pothole, createdStatus)}
       }).catch((error) => {
           alert(error.message);})
       this.$store.dispatch("reloadPotholes");

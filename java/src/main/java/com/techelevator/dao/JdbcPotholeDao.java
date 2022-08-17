@@ -120,13 +120,28 @@ public class JdbcPotholeDao implements PotholeDao {
     }
 
     @Override
-    public void createStatus(int potholeId, Status status, String username) {
+    public Status createStatus(int potholeId, Status status, String username) {
         String sql =
                 "INSERT INTO pothole_status (pothole_id, status_id, user_id, date) " +
-                "VALUES(?, ?, ?, ?)";
+                "VALUES(?, ?, ?, ?) RETURNING pothole_status.id";
 
         int userId = userDao.findIdByUsername(username);
-        jdbcTemplate.update(sql, potholeId, status.getId(), userId, status.getDate());
+        Integer id = jdbcTemplate.queryForObject(sql, Integer.class, potholeId, status.getId(), userId, status.getDate());
+
+        sql = "SELECT s.status_name, ps.date, u.username AS email, ps.id, s.is_public " +
+                "FROM status s " +
+                "JOIN pothole_status ps ON s.id = ps.status_id " +
+                "JOIN potholes p ON ps.pothole_id = p.id " +
+                "Join users u on u.user_id = ps.user_id " +
+                "WHERE ps.id = ?";
+
+        SqlRowSet result = jdbcTemplate.queryForRowSet(sql, id);
+        Status addedStatus = null;
+        if(result.next()) {
+            addedStatus = mapRowToStatus(result);
+        }
+
+        return addedStatus;
 
     }
 

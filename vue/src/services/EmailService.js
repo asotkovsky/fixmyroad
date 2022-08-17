@@ -12,10 +12,10 @@ export default {
         return recipients;
     },
 
-    sendStatusUpdateEmail(pothole) {
+    sendStatusUpdateEmail(pothole, status) {
         return emailjs.send('status_update_service', 'status_update',
             {
-                status: this.lastPublicStatus(pothole),
+                status: status.name,
                 road_name: pothole.roadName,
                 neighborhood: pothole.neighborhood,
                 city: pothole.city,
@@ -31,16 +31,5 @@ export default {
 
     },
 
-    lastPublicStatus(pothole){
-        let filteredStatuses = [];
-        pothole.statuses.forEach((status) => {
-          if (status.public == true){
-            filteredStatuses.push(status);
-          }
-        });
-        const lastPublicStatus = filteredStatuses[filteredStatuses.length -1].name;
-        return lastPublicStatus;
-      }
-    
 
 }
