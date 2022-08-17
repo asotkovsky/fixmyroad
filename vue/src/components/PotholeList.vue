@@ -42,6 +42,12 @@
           <span id="severity-filter">
             Severity
             <select
+              v-on:change="
+                $store.commit('SET_FILTER_FIELD', {
+                  fieldName: 'severity',
+                  value: filter.severity,
+                })
+              "
               v-show="showFilters"
               name="filterSeverity"
               v-model.number="filter.severity"
@@ -57,6 +63,12 @@
           <span id="date-filter">
             Reported
             <select
+              v-on:change="
+                $store.commit('SET_FILTER_FIELD', {
+                  fieldName: 'numberOfDays',
+                  value: filter.numberOfDays,
+                })
+              "
               v-show="showFilters"
               name="filterDate"
               v-model.number="filter.numberOfDays"
@@ -70,6 +82,8 @@
           <span id="road-filter">
             Road
             <input
+             v-on:change="$store.commit('SET_FILTER_FIELD', {fieldName:'roadName', value:filter.roadName})"
+
               v-show="showFilters"
               list="filteredRoadName"
               type="text"
@@ -84,6 +98,8 @@
           <span id="neighborhood-filter">
             Neighborhood
             <input
+             v-on:change="$store.commit('SET_FILTER_FIELD', {fieldName:'neighborhood', value:filter.neighborhood})"
+
               v-show="showFilters"
               list="filterNeighborhood"
               type="text"
@@ -101,6 +117,7 @@
           <span v-show="!showMap" id="description-filter">
             Description
             <input
+            v-on:input="$store.commit('SET_FILTER_FIELD', {fieldName:'description', value:filter.description})"
               v-show="showFilters"
               type="text"
               v-model="filter.description"
@@ -109,6 +126,7 @@
           <span id="status-filter">
             Status
             <select
+            v-on:change="$store.commit('SET_FILTER_FIELD', {fieldName:'status', value:filter.status})"
               v-show="showFilters"
               name="filterStatus"
               v-model="filter.status"
@@ -126,6 +144,7 @@
           <span id="location-filter">
             Location
             <select
+            v-on:change="$store.commit('SET_FILTER_FIELD', {fieldName:'locationOnRoadway', value:filter.locationOnRoadway})"
               v-show="showFilters"
               name="filterLocationOnRoadway"
               v-model="filter.locationOnRoadway"
@@ -160,7 +179,6 @@
 </template>
 
 <script>
-import PotholeService from "@/services/PotholeService.js";
 import PotholeCard from "@/components/PotholeCard.vue";
 import PotholeMap from "@/components/PotholeMap.vue";
 
@@ -172,7 +190,6 @@ export default {
   },
   data() {
     return {
-      potholes: [],
       roadNames: [],
       availableStatus: [],
       neighborhoods: [],
@@ -241,47 +258,42 @@ export default {
   },
 
   mounted() {
-    PotholeService.getPotholes().then((response) => {
-      this.potholes = response.data;
-      this.potholes.sort((a, b) => {
-        return new Date(b.datetimeReported) - new Date(a.datetimeReported);
-      });
-      let roadNames = this.potholes.map((pothole) => pothole.roadName);
+    this.$store.dispatch('reloadPotholes')
+      let roadNames = this.$store.state.potholes.map((pothole) => pothole.roadName);
       this.roadNames = [...new Set(roadNames)];
-      let neighborhoods = this.potholes.map((pothole) => pothole.neighborhood);
+      let neighborhoods = this.$store.state.potholes.map((pothole) => pothole.neighborhood);
       this.neighborhoods = [...new Set(neighborhoods)];
-    });
   },
   unmounted() {
     console.log("pothole list unmounted");
   },
   computed: {
     isFiltered() {
-      if (this.filter.severity) {
+      if (this.$store.state.filter.severity) {
         return true;
       }
-      if (this.filter.roadName) {
+      if (this.$store.state.filter.roadName) {
         return true;
       }
-      if (this.filter.neighborhood) {
+      if (this.$store.state.filter.neighborhood) {
         return true;
       }
-      if (this.filter.description) {
+      if (this.$store.state.filter.description) {
         return true;
       }
-      if (this.filter.status) {
+      if (this.$store.state.filter.status) {
         return true;
       }
-      if (this.filter.locationOnRoadway) {
+      if (this.$store.state.filter.locationOnRoadway) {
         return true;
       }
-      if (this.filter.city) {
+      if (this.$store.state.filter.city) {
         return true;
       }
-      if (this.filter.state) {
+      if (this.$store.state.filter.state) {
         return true;
       }
-      if (this.filter.numberOfDays) {
+      if (this.$store.state.filter.numberOfDays) {
         return true;
       }
       if (this.$store.state.selectedPothole.id) {
@@ -295,61 +307,61 @@ export default {
     },
     startDate() {
       const startDate = new Date();
-      startDate.setDate(startDate.getDate() - this.filter.numberOfDays);
+      startDate.setDate(startDate.getDate() - this.$store.state.filter.numberOfDays);
       return startDate;
     },
     filteredPotholes() {
-      return this.potholes
+      return this.$store.state.potholes
         .filter((pothole) => {
-          if (this.filter.severity == "") {
+          if (this.$store.state.filter.severity == "") {
             return true;
           } else {
-            return pothole.severity == this.filter.severity;
+            return pothole.severity == this.$store.state.filter.severity;
           }
         })
         .filter((pothole) => {
-          if (this.filter.roadName == "") {
+          if (this.$store.state.filter.roadName == "") {
             return true;
           } else {
             return pothole.roadName
               .toLowerCase()
-              .includes(this.filter.roadName.toLowerCase());
+              .includes(this.$store.state.filter.roadName.toLowerCase());
           }
         })
         .filter((pothole) => {
-          if (this.filter.neighborhood == "") {
+          if (this.$store.state.filter.neighborhood == "") {
             return true;
           } else {
             return pothole.neighborhood
               .toLowerCase()
-              .includes(this.filter.neighborhood.toLowerCase());
+              .includes(this.$store.state.filter.neighborhood.toLowerCase());
           }
         })
         .filter((pothole) => {
-          if (this.filter.locationOnRoadway == "") {
+          if (this.$store.state.filter.locationOnRoadway == "") {
             return true;
           } else {
-            return pothole.locationOnRoadway == this.filter.locationOnRoadway;
+            return pothole.locationOnRoadway == this.$store.state.filter.locationOnRoadway;
           }
         })
         .filter((pothole) => {
-          if (this.filter.description == "") {
+          if (this.$store.state.filter.description == "") {
             return true;
           } else {
             return pothole.description
               .toLowerCase()
-              .includes(this.filter.description.toLowerCase());
+              .includes(this.$store.state.filter.description.toLowerCase());
           }
         })
         .filter((pothole) => {
-          if (this.filter.status == "") {
+          if (this.$store.state.filter.status == "") {
             return true;
           } else {
-            return pothole.currentStatus.name == this.filter.status;
+            return pothole.currentStatus.name == this.$store.state.filter.status;
           }
         })
         .filter((pothole) => {
-          if (this.filter.numberOfDays == "") {
+          if (this.$store.state.filter.numberOfDays == "") {
             return true;
           } else {
             return new Date(pothole.statuses[0].date) >= this.startDate;
@@ -406,14 +418,12 @@ div.map {
   gap: 5px;
 }
 
-
-.list-headers{
+.list-headers {
   grid-area: headers;
   justify-content: end;
-
 }
 
-.list-body{
+.list-body {
   grid-area: pothole-cards;
   height: 70vh;
 }
@@ -450,7 +460,6 @@ div.pothole-card-alignment-hide-map {
   gap: 15px;
   grid-template-columns: 0.5fr 1fr 1fr 1.5fr 2fr 1fr 0.5fr 0.5fr;
   align-items: center;
-
 }
 
 select {

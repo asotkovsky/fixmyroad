@@ -1,4 +1,5 @@
 <template>
+
   <div id="app">
     <span id="nav">
       <img
@@ -48,6 +49,7 @@
 </template>
 
 <script>
+
 export default {
   methods: {
     reDirect(path){

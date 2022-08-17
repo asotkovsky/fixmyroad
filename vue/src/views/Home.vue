@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-  <div>
+  <div>  
   <img class='home-icon' @click="reDirect('/report')" v-bind:src="require('../assets/report-icon.png')">
   <a href="/report"> Report A New Pothole</a>
   </div>

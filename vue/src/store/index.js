@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
+import  PotholeService  from '../services/PotholeService.js'
 
 Vue.use(Vuex)
 
@@ -22,8 +23,21 @@ export default new Vuex.Store({
     user: currentUser || {},
     currentPin: {},
     currentUserAuthorities: [],
-    selectedPothole: {}
+    selectedPothole: {},
+    potholes: [],
+    filter: {
+      severity: "",
+      roadName: "",
+      neighborhood: "",
+      description: "",
+      status: "",
+      locationOnRoadway: "",
+      city: null,
+      state: null,
+      numberOfDays: "",
+    }
   },
+
   mutations: {
     SET_AUTH_TOKEN(state, token) {
       state.token = token;
@@ -31,8 +45,13 @@ export default new Vuex.Store({
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
 
     },
-    SET_CURRENT_PIN(state, pin) { 
-      state.currentPin = pin 
+    SET_POTHOLES(state, potholes) {
+      state.potholes = potholes
+
+
+    },
+    SET_CURRENT_PIN(state, pin) {
+      state.currentPin = pin
     },
     SET_SELECTED_POTHOLE(state, pothole) {
       state.selectedPothole = pothole
@@ -50,6 +69,35 @@ export default new Vuex.Store({
       state.token = '';
       state.user = {};
       axios.defaults.headers.common = {};
+    },
+    SET_FILTER_FIELD(state, payload) {
+      state.filter[payload.fieldName] = payload.value
+      console.log(payload.fieldName)
+      console.log(payload.value)
+    },
+    CLEAR_FILTERS(state) {
+      state.filter = {
+        severity: "",
+        roadName: "",
+        neighborhood: "",
+        description: "",
+        status: "",
+        locationOnRoadway: "",
+        city: null,
+        state: null,
+        numberOfDays: "",
+      }
+    }
+
+  },
+  actions: {
+reloadPotholes(context){
+  PotholeService.getPotholes().then(response => {
+    let potholes = response.data
+    context.commit("SET_POTHOLES", potholes)
+  })
     }
   }
 })
+
+
