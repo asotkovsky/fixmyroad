@@ -42,7 +42,7 @@
         </select>
         <input
           type="date"
-          v-bind:disabled="![2, 4].includes(status.id)"
+          v-bind:disabled="![3, 5].includes(status.id)"
           v-model="status.date"
         />
         <input type="submit" value="Submit" :disabled="!submitEnabled" />
