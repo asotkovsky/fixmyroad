@@ -160,7 +160,7 @@
               <option value="Repaired">Repaired</option>
             </select>
           </span>
-          <span id="location-filter">
+          <span id="location-filter" v-show="!$store.getters.currentUserIsAdmin">
             Location
             <select
               v-on:change="
@@ -176,6 +176,22 @@
               <option value=""></option>
               <option value="Road">Road</option>
               <option value="Shoulder">Shoulder</option>
+            </select>
+          </span>
+          <span v-show="$store.getters.currentUserIsAdmin"> Assigned
+             <select
+              v-on:change="
+                $store.commit('SET_FILTER_FIELD', {
+                  fieldName: 'assigned',
+                  value: filter.assigned,
+                })
+              "
+              v-show="showFilters"
+              v-model="filter.assigned"
+            >
+              <option value= 0 ></option>
+              <option value= 1 >Assigned</option>
+              <option value= 2 >Unassigned</option>
             </select>
           </span>
         </div>
@@ -241,6 +257,7 @@ export default {
         city: null,
         state: null,
         numberOfDays: "",
+        assigned: 0
       },
     };
   },
@@ -256,6 +273,7 @@ export default {
         city: null,
         state: null,
         numberOfDays: "",
+        assigned: 0
       };
       this.$store.commit("SET_SELECTED_POTHOLE", {});
       this.$store.commit("CLEAR_FILTERS");
@@ -347,6 +365,9 @@ export default {
         return true;
       }
       if (this.$store.state.filter.employeeName) {
+        return true;
+      }
+      if(this.$store.state.filter.assigned > 0){
         return true;
       }
       if (this.filterUserFavorite) {
@@ -450,7 +471,19 @@ export default {
               pothole
             );
           }
-        });
+        })
+        .filter(pothole=>{
+          if(this.$store.state.filter.assigned == 0){
+            return true
+          }
+          else if(this.$store.state.filter.assigned == 1){
+            return pothole.statuses.find(status=> status.name == "Assigned")
+          }
+          else{
+            let assignedStatuses = pothole.statuses.filter( status => status.name == "Assigned")
+            return assignedStatuses.length == 0
+          }
+        })
     },
   },
 };

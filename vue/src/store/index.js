@@ -36,6 +36,7 @@ export default new Vuex.Store({
       state: null,
       numberOfDays: "",
       employeeName: "",
+      assigned:0
     }
   },
   getters:{
@@ -94,6 +95,7 @@ export default new Vuex.Store({
         state: null,
         numberOfDays: "",
         employeeName: "",
+        assigned:0
 
       }
     }
