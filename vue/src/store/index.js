@@ -35,6 +35,7 @@ export default new Vuex.Store({
       city: null,
       state: null,
       numberOfDays: "",
+      employeeName: "",
     }
   },
 
@@ -72,8 +73,7 @@ export default new Vuex.Store({
     },
     SET_FILTER_FIELD(state, payload) {
       state.filter[payload.fieldName] = payload.value
-      console.log(payload.fieldName)
-      console.log(payload.value)
+      console.log(payload.name, payload.value)
     },
     CLEAR_FILTERS(state) {
       state.filter = {
@@ -86,6 +86,8 @@ export default new Vuex.Store({
         city: null,
         state: null,
         numberOfDays: "",
+        employeeName: "",
+
       }
     }
 

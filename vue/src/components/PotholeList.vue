@@ -82,8 +82,12 @@
           <span id="road-filter">
             Road
             <input
-             v-on:change="$store.commit('SET_FILTER_FIELD', {fieldName:'roadName', value:filter.roadName})"
-
+              v-on:change="
+                $store.commit('SET_FILTER_FIELD', {
+                  fieldName: 'roadName',
+                  value: filter.roadName,
+                })
+              "
               v-show="showFilters"
               list="filteredRoadName"
               type="text"
@@ -98,8 +102,12 @@
           <span id="neighborhood-filter">
             Neighborhood
             <input
-             v-on:change="$store.commit('SET_FILTER_FIELD', {fieldName:'neighborhood', value:filter.neighborhood})"
-
+              v-on:change="
+                $store.commit('SET_FILTER_FIELD', {
+                  fieldName: 'neighborhood',
+                  value: filter.neighborhood,
+                })
+              "
               v-show="showFilters"
               list="filterNeighborhood"
               type="text"
@@ -117,7 +125,12 @@
           <span v-show="!showMap" id="description-filter">
             Description
             <input
-            v-on:input="$store.commit('SET_FILTER_FIELD', {fieldName:'description', value:filter.description})"
+              v-on:input="
+                $store.commit('SET_FILTER_FIELD', {
+                  fieldName: 'description',
+                  value: filter.description,
+                })
+              "
               v-show="showFilters"
               type="text"
               v-model="filter.description"
@@ -126,7 +139,12 @@
           <span id="status-filter">
             Status
             <select
-            v-on:change="$store.commit('SET_FILTER_FIELD', {fieldName:'status', value:filter.status})"
+              v-on:change="
+                $store.commit('SET_FILTER_FIELD', {
+                  fieldName: 'status',
+                  value: filter.status,
+                })
+              "
               v-show="showFilters"
               name="filterStatus"
               v-model="filter.status"
@@ -145,7 +163,12 @@
           <span id="location-filter">
             Location
             <select
-            v-on:change="$store.commit('SET_FILTER_FIELD', {fieldName:'locationOnRoadway', value:filter.locationOnRoadway})"
+              v-on:change="
+                $store.commit('SET_FILTER_FIELD', {
+                  fieldName: 'locationOnRoadway',
+                  value: filter.locationOnRoadway,
+                })
+              "
               v-show="showFilters"
               name="filterLocationOnRoadway"
               v-model="filter.locationOnRoadway"
@@ -174,11 +197,13 @@
           :key="currentPothole.id"
           :pothole="currentPothole"
         />
+
       </div>
+        <employeeList id="employee-list"/>
     </div>
-  <div>
-    <employeeList/>
-  </div>
+  
+  
+  
   </div>
 </template>
 
@@ -193,7 +218,6 @@ export default {
     PotholeCard,
     PotholeMap,
     employeeList,
-    
   },
   data() {
     return {
@@ -234,6 +258,7 @@ export default {
         numberOfDays: "",
       };
       this.$store.commit("SET_SELECTED_POTHOLE", {});
+      this.$store.commit("CLEAR_FILTERS");
       this.filterUserFavorite = false;
       this.toggleUserFilterText = "Show My Potholes";
       console.log(this.$store.state.selectedPothole.id);
@@ -262,14 +287,29 @@ export default {
         this.toggleMapText = "Show Map";
       }
     },
+    isEmployeePothole(employeeEmail, pothole) {
+      let repairedStatus = pothole.statuses.find(
+        (status) => status.name == "Repaired"
+      );
+      if (repairedStatus) {
+        return false;
+      }
+      return pothole.statuses.find((status) => {
+        return status.name == "Assigned" && status.email == employeeEmail;
+      });
+    },
   },
 
   mounted() {
-    this.$store.dispatch('reloadPotholes')
-      let roadNames = this.$store.state.potholes.map((pothole) => pothole.roadName);
-      this.roadNames = [...new Set(roadNames)];
-      let neighborhoods = this.$store.state.potholes.map((pothole) => pothole.neighborhood);
-      this.neighborhoods = [...new Set(neighborhoods)];
+    this.$store.dispatch("reloadPotholes");
+    let roadNames = this.$store.state.potholes.map(
+      (pothole) => pothole.roadName
+    );
+    this.roadNames = [...new Set(roadNames)];
+    let neighborhoods = this.$store.state.potholes.map(
+      (pothole) => pothole.neighborhood
+    );
+    this.neighborhoods = [...new Set(neighborhoods)];
   },
   unmounted() {
     console.log("pothole list unmounted");
@@ -306,6 +346,9 @@ export default {
       if (this.$store.state.selectedPothole.id) {
         return true;
       }
+      if (this.$store.state.filter.employeeName) {
+        return true;
+      }
       if (this.filterUserFavorite) {
         return true;
       } else {
@@ -314,7 +357,9 @@ export default {
     },
     startDate() {
       const startDate = new Date();
-      startDate.setDate(startDate.getDate() - this.$store.state.filter.numberOfDays);
+      startDate.setDate(
+        startDate.getDate() - this.$store.state.filter.numberOfDays
+      );
       return startDate;
     },
     filteredPotholes() {
@@ -348,7 +393,10 @@ export default {
           if (this.$store.state.filter.locationOnRoadway == "") {
             return true;
           } else {
-            return pothole.locationOnRoadway == this.$store.state.filter.locationOnRoadway;
+            return (
+              pothole.locationOnRoadway ==
+              this.$store.state.filter.locationOnRoadway
+            );
           }
         })
         .filter((pothole) => {
@@ -364,7 +412,9 @@ export default {
           if (this.$store.state.filter.status == "") {
             return true;
           } else {
-            return pothole.currentStatus.name == this.$store.state.filter.status;
+            return (
+              pothole.currentStatus.name == this.$store.state.filter.status
+            );
           }
         })
         .filter((pothole) => {
@@ -390,6 +440,16 @@ export default {
           } else {
             return true;
           }
+        })
+        .filter((pothole) => {
+          if (this.$store.state.filter.employeeName == "") {
+            return true;
+          } else {
+            return this.isEmployeePothole(
+              this.$store.state.filter.employeeName,
+              pothole
+            );
+          }
         });
     },
   },
@@ -402,11 +462,20 @@ div.potholes-list-map-view {
   display: grid;
   grid-template-areas:
     "buttons headers"
-    "map pothole-cards";
+    "map pothole-cards"
+    "employeelist employeelist";
   height: 70vh;
   flex-direction: column;
   align-content: center;
   margin-top: 30px;
+  padding-top: 25px;
+}
+#employee-list{
+  grid-area: employeelist;
+  display: flex;
+  gap: 10px;
+  padding-top: 10px;
+
 }
 
 div.map {
@@ -435,7 +504,6 @@ div.map {
   height: 70vh;
   overflow-y: auto;
 }
-
 
 div.pothole-card-alignment-show-map {
   display: grid;

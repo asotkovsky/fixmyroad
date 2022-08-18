@@ -118,6 +118,7 @@ export default {
   background: #fad52f;
   border-radius: 5px;
   height: 25px;
+  padding-top: .3px;
 }
 .delete {
   width: 50%;
