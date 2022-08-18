@@ -1,5 +1,5 @@
 <template>
-  <div class="employee_card" v-on:dragover.prevent v-on:drop.prevent="handleDrop">
+  <div class="employee_card" v-on:dragover.prevent v-on:drop.prevent="handleDrop" v-on:click="handleClick">
       {{employee.fullName}}
         {{employee.name}}
         {{assignedPotholes.length}}
