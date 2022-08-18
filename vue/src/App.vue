@@ -10,6 +10,10 @@
         
       />
       <div class="links">
+        <div id="logged-in-user-display" v-show="(JSON.stringify(this.$store.state.user) != '{}') && $route.name != 'home'">
+        <img id="person-icon" v-bind:src="require('@/assets/person-icon.png')"/>
+        <p >{{this.$store.state.user.firstName}}</p>
+        </div>
         <router-link
           class="button"
           v-show="$route.name !== 'home' && $route.name !== 'login'"
@@ -80,13 +84,27 @@ body {
   color: white;
 }
 
+#person-icon{
+  height: 27px;
+  width: 27px;
+  padding-right: 5px;
+}
+
 .links {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
   align-items: flex-start;
-  gap: 5px;
+  gap: 10px;
   grid-area: links;
+}
+
+#logged-in-user-display{
+  display: flex;
+justify-content: center;
+font-weight: 600;
+padding-top: 7px;
+margin-right:5px;
 }
 
 .button {
@@ -96,24 +114,19 @@ body {
   background-color: #737373;
   color: white;
   padding: 10px;
-  font-family: sans-serif;
   font-weight: 750;
 }
 
-.links :hover {
+.links router-link:hover {
   background-color: #fad52f;
   color: #737373;
   border-color: #fad52f;
 }
 
-#nav img {
-  height: 100px;
-}
-
 .horizontal-logo {
   cursor: pointer;
   grid-area: logo;
-
+  height: 100px;
 }
 
 ::-webkit-scrollbar {
