@@ -31,10 +31,14 @@
     </p>
     <img
       class="location-on-roadway-icon"
+      v-show="! $store.getters.currentUserIsAdmin"
       v-bind:src="
         require('../assets/icon-' + pothole.locationOnRoadway + '.jpg')
       "
     />
+    <p v-show="$store.getters.currentUserIsAdmin">
+      {{assignedTo?"Assigned":"Unassigned"}}
+    </p>
     <img
       class="show-modal-icon"
       @click="showAdminModal = true"
@@ -67,6 +71,11 @@ export default {
       showAdminModal: false,
       beingDragged: false,
     };
+  },
+  computed:{
+    assignedTo(){
+      return this.pothole.statuses.find(status=>status.name=="Assigned");
+    }
   },
   methods: {
     handleDelete() {
