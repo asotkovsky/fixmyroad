@@ -82,6 +82,7 @@ body {
   grid-template-areas: "logo links";
   width: 100%;
   color: white;
+  
 }
 
 #person-icon{

@@ -5,5 +5,5 @@ import com.techelevator.model.Employee;
 import java.util.List;
 
 public interface EmployeeDao {
-    public List<Employee> gitAllEmployee();
+    public List<Employee> getAllEmployee();
 }
