@@ -48,7 +48,7 @@ public class PotholeController {
     @RequestMapping(path = "/pothole/{pothole_id}/statuses", method = RequestMethod.POST)
     public Status createStatus(@PathVariable("pothole_id") int potholeId, @RequestBody Status status, Principal principal) {
         String userName = status.getEmail();
-        if(userName.equals("")){
+        if(userName == null){
             userName = principal.getName();
         }
         return potholeDao.createStatus(potholeId, status, userName);

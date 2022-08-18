@@ -32,10 +32,10 @@
       >
         <p>Update Status:</p>
         <select name="status" id="status-select" v-model.number="status.id">
-          <option value="2">Scheduled For Inspection</option>
-          <option value="3">Inspected</option>
-          <option value="4">Scheduled For Repair</option>
-          <option value="5">Repaired</option>
+          <option value="3">Scheduled For Inspection</option>
+          <option value="4">Inspected</option>
+          <option value="5">Scheduled For Repair</option>
+          <option value="6">Repaired</option>
         </select>
         <input
           type="date"
@@ -129,18 +129,17 @@ export default {
             let createdStatus = response.data;
             EmailService.sendStatusUpdateEmail(this.pothole, createdStatus);
           }
+          this.$store.dispatch("reloadPotholes");
         })
         .catch((error) => {
           alert(error.message);
         });
-      this.$store.dispatch("reloadPotholes");
       this.status = { id: null, date: new Date().toISOString().slice(0, 10) };
     },
 
     noticePothole() {
       this.status.id = 6;
       this.handleSave();
-      this.$store.dispatch("reloadPotholes");
     },
     manageSubscriptions() {
       if (!this.isSubscribed) {
