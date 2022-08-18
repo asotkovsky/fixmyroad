@@ -1,49 +1,60 @@
 <template>
-
-    <div draggable="true" @dragend="beingDragged=false" v-on:dragstart="dragStart"
-      :class="{'hidden':beingDragged,
-        'pothole-card-hover': descriptionHover,}"
-      class="pothole-card"
+  <div
+    draggable="true"
+    @dragend="beingDragged = false"
+    v-on:dragstart="dragStart"
+    :class="{
+      'pothole-card-hover': descriptionHover,
+    }"
+    class="pothole-card"
+  >
+    <img
+      class="severity-icon-pothole-card"
+      v-if="pothole.severity != 0"
+      v-bind:src="
+        require('../assets/severity-icon-' + pothole.severity + '.png')
+      "
+    />
+    <p v-if="pothole.statuses">{{ pothole.statuses[0].date }}</p>
+    <p>{{ pothole.roadName }}</p>
+    <p>{{ pothole.neighborhood }}</p>
+    <p
+      id="description1"
+      v-show="!showMap"
+      @mouseover.stop="descriptionHover = true"
+      @mouseleave.stop="descriptionHover = false"
     >
-      <img
-        class="severity-icon-pothole-card"
-        v-if="pothole.severity != 0"
-        v-bind:src="
-          require('../assets/severity-icon-' + pothole.severity + '.png')
-        "
-      />
-      <p v-if="pothole.statuses">{{ pothole.statuses[0].date }}</p>
-      <p>{{ pothole.roadName }}</p>
-      <p>{{ pothole.neighborhood }}</p>
-      <p
-        id="description1"
-        v-show="!showMap"
-        @mouseover.stop="descriptionHover = true"
-        @mouseleave.stop="descriptionHover = false"
-      >
-        {{ pothole.description }}
-      </p>
-      <p id="status" v-if="pothole.statuses">
-        {{ getlastStatusName() }}
-      </p>
-      <img
-        class="location-on-roadway-icon"
-        v-bind:src="
-          require('../assets/icon-' + pothole.locationOnRoadway + '.jpg')
-        "
-      />
-      <img
-        class="show-modal-icon"
-        @click="showAdminModal = true"
-        v-bind:src="require('../assets/plus-icon.png')"
-      />
-      <admin-modal
-        :pothole="pothole"
-        @close="showAdminModal = false"
-        v-if="showAdminModal"
-      />
-    </div>
-  
+      {{ pothole.description }}
+    </p>
+    <p id="status" v-if="pothole.statuses">
+      {{ getlastStatusName() }}
+    </p>
+    <img
+      class="location-on-roadway-icon"
+      v-show="!$store.getters.currentUserIsAdmin"
+      v-bind:src="
+        require('../assets/icon-' + pothole.locationOnRoadway + '.jpg')
+      "
+    />
+    <img
+      v-bind:src="
+        assignedTo
+          ? require('../assets/checked.png')
+          : require('../assets/unchecked.png')
+      "
+      v-show="$store.getters.currentUserIsAdmin"
+    />
+    <img
+      class="show-modal-icon"
+      @click="showAdminModal = true"
+      v-bind:src="require('../assets/plus-icon.png')"
+    />
+    <admin-modal
+      :pothole="pothole"
+      @close="showAdminModal = false"
+      v-if="showAdminModal"
+    />
+  </div>
 </template>
 
 <script>
@@ -66,37 +77,41 @@ export default {
       beingDragged: false,
     };
   },
+  computed: {
+    assignedTo() {
+      return this.pothole.statuses.find((status) => status.name == "Assigned");
+    },
+  },
   methods: {
     handleDelete() {
       PotholeService.deletePothole(this.pothole.id).then(() =>
         location.reload()
       );
     },
-    getlastStatusName(){
+    getlastStatusName() {
       let filteredStatuses = [];
       this.pothole.statuses.forEach((status) => {
-        if (status.public == true){
+        if (status.public == true) {
           filteredStatuses.push(status);
         }
       });
-      return filteredStatuses[filteredStatuses.length -1].name
+      return filteredStatuses[filteredStatuses.length - 1].name;
     },
-    dragStart(event){
+    dragStart(event) {
       event.dataTransfer.setData("text/plain", this.pothole.id);
       this.beingDragged = true;
 
-      // event.target.style.display="none"
-    }
+    },
   },
 };
 </script>
 
 <style>
-p{
-  margin:0
+p {
+  margin: 0;
 }
 
-.show-modal-icon{
+.show-modal-icon {
   justify-self: center;
 }
 
@@ -158,10 +173,12 @@ img.severity-icon-pothole-card {
   height: 60px;
   align-self: center;
 }
+ HEAD
 
 .pothole-card.hidden{
   opacity:50%;
 }
+
 </style>
 
 

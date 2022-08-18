@@ -36,6 +36,14 @@ export default new Vuex.Store({
       state: null,
       numberOfDays: "",
       employeeName: "",
+      assigned:0
+    }
+  },
+  getters:{
+    currentUserIsAdmin(state){
+      if(state.user.authorities){
+        return state.user.authorities.find(auth=>auth.name=="ROLE_ADMIN")
+      }
     }
   },
 
@@ -87,6 +95,7 @@ export default new Vuex.Store({
         state: null,
         numberOfDays: "",
         employeeName: "",
+        assigned:0
 
       }
     }
