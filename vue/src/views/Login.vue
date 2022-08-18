@@ -82,6 +82,7 @@ export default {
             this.$store.commit("SET_USER", response.data.user);
             this.$store.commit("SET_USER_AUTHORITIES", response.data.user.authorities)
             this.$router.push("/");
+            this.$store.commit('CLEAR_FILTERS')
           }
         })
         .catch(error => {
