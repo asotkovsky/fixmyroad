@@ -91,7 +91,7 @@ public class JdbcPotholeDao implements PotholeDao {
 
         List<Status> statuses = new ArrayList<Status>();
 
-        String sql = "SELECT s.status_name, ps.date, u.username as email, ps.id, s.is_public " +
+        String sql = "SELECT s.status_name, ps.date, u.username as email, CONCAT(u.first_name, ' ', u.last_name) AS full_name, ps.id, s.is_public " +
                 "FROM status s " +
                 "JOIN pothole_status ps ON s.id = ps.status_id " +
                 "JOIN potholes p ON ps.pothole_id = p.id " +
@@ -128,7 +128,7 @@ public class JdbcPotholeDao implements PotholeDao {
         int userId = userDao.findIdByUsername(username);
         Integer id = jdbcTemplate.queryForObject(sql, Integer.class, potholeId, status.getId(), userId, status.getDate());
 
-        sql = "SELECT s.status_name, ps.date, u.username AS email, ps.id, s.is_public " +
+        sql = "SELECT s.status_name, ps.date, u.username AS email, CONCAT(u.first_name, ' ', u.last_name) AS full_name, ps.id, s.is_public " +
                 "FROM status s " +
                 "JOIN pothole_status ps ON s.id = ps.status_id " +
                 "JOIN potholes p ON ps.pothole_id = p.id " +
@@ -157,6 +157,7 @@ public class JdbcPotholeDao implements PotholeDao {
         status.setName(results.getString("status_name"));
         Date date = results.getDate("date");
         status.setEmail(results.getString("email"));
+        status.setFullName(results.getString("full_name"));
         status.setId(results.getInt("id"));
         status.setPublic(results.getBoolean("is_public"));
         if (date != null) {

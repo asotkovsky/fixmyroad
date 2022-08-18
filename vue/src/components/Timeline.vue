@@ -9,7 +9,7 @@
                 v-for="status in filteredStatuses"
                 :key="status.dnu"
                v-bind:data-year="status.date"
-                v-bind:data-text="status.name + ' by ' + status.email"
+                v-bind:data-text="status.name + ' by ' + status.fullName"
               ></li>
             </ul>
           </div>

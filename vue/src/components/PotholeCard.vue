@@ -1,13 +1,12 @@
 <template>
-  
-    <div draggable="true" v-on:dragstart="dragStart"
-      :class="{
-        'pothole-card-hover': descriptionHover,
-      }"
+
+    <div draggable="true" @dragend="beingDragged=false" v-on:dragstart="dragStart"
+      :class="{'hidden':beingDragged,
+        'pothole-card-hover': descriptionHover,}"
       class="pothole-card"
     >
       <img
-        class="severity-icon"
+        class="severity-icon-pothole-card"
         v-if="pothole.severity != 0"
         v-bind:src="
           require('../assets/severity-icon-' + pothole.severity + '.png')
@@ -64,6 +63,7 @@ export default {
       center: { lat: this.pothole.latitude, lng: this.pothole.longitude },
       descriptionHover: false,
       showAdminModal: false,
+      beingDragged: false,
     };
   },
   methods: {
@@ -82,7 +82,8 @@ export default {
       return filteredStatuses[filteredStatuses.length -1].name
     },
     dragStart(event){
-      event.dataTransfer.setData("text/plain", this.pothole.id)
+      event.dataTransfer.setData("text/plain", this.pothole.id);
+      this.beingDragged = true;
     }
   },
 };
@@ -92,6 +93,11 @@ export default {
 p{
   margin:0
 }
+
+.show-modal-icon{
+  justify-self: center;
+}
+
 #description1 {
   overflow: hidden;
   white-space: nowrap;
@@ -117,6 +123,7 @@ div.pothole-card {
   align-items: center;
   justify-content: left;
   min-height: 4em;
+  padding-right: 0px;
 }
 
 /* div.pothole-card-no-map {
@@ -144,9 +151,14 @@ img.location-on-roadway-icon {
   height: 55px;
 }
 
-img.severity-icon {
+img.severity-icon-pothole-card {
   width: 60px;
   height: 60px;
+  align-self: center;
+}
+
+.pothole-card.hidden{
+  visibility: hidden;
 }
 </style>
 
