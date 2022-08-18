@@ -125,7 +125,7 @@ export default {
     handleSave() {
       PotholeService.createStatus(this.pothole.id, this.status)
         .then((response) => {
-          if (this.status.id != 6 && this.status.id != 7) {
+          if (this.status.id != 7 && this.status.id != 8) {
             let createdStatus = response.data;
             EmailService.sendStatusUpdateEmail(this.pothole, createdStatus);
           }
@@ -138,13 +138,13 @@ export default {
     },
 
     noticePothole() {
-      this.status.id = 6;
+      this.status.id = 7;
       this.handleSave();
     },
     manageSubscriptions() {
       if (!this.isSubscribed) {
         const subscribeStatus = {
-          id: 7,
+          id: 8,
           date: new Date().toISOString().slice(0, 10),
         };
         PotholeService.createStatus(this.pothole.id, subscribeStatus).then(
