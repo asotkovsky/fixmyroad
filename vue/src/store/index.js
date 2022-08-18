@@ -38,6 +38,13 @@ export default new Vuex.Store({
       employeeName: "",
     }
   },
+  getters:{
+    currentUserIsAdmin(state){
+      if(state.user.authorities){
+        return state.user.authorities.find(auth=>auth.name=="ROLE_ADMIN")
+      }
+    }
+  },
 
   mutations: {
     SET_AUTH_TOKEN(state, token) {
