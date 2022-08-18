@@ -447,8 +447,6 @@ div.pothole-card-alignment-show-map {
   grid-area: headers;
   align-items: center;
   margin-left: 10px;
-  padding-right: 10px;
-  padding-bottom: 5px;
 }
 
 /*This is the styling/grid layout for when the map is hidden*/

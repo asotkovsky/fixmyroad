@@ -10,9 +10,18 @@ public class Status {
     private int id;
     private String email;
     private boolean isPublic;
+    private String fullName;
 
     public boolean isPublic() {
         return isPublic;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public void setPublic(boolean isPublic) {

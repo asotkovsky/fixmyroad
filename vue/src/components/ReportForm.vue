@@ -293,6 +293,12 @@ select {
 #severity {
   margin-top: 10px;
 }
+
+.severity-icon{
+height: 60px;
+width: 60px;
+}
+
 .severity-icon:hover {
   height:75px;
   width: 75px;
