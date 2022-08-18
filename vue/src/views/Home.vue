@@ -1,13 +1,13 @@
 <template>
   <div class="home">
-  <div>  
-  <img class='home-icon' @click="reDirect('/report')" v-bind:src="require('../assets/report-icon.png')">
+    <h1 id="welcome">Welcome {{this.$store.state.user.firstName}}!</h1>
+  <div id="report-icon">  
+  <img  class='home-icon' @click="reDirect('/report')" v-bind:src="require('../assets/report-icon.png')">
   <a href="/report"> Report A New Pothole</a>
   </div>
-  <div>
+  <div id="list-icon">
   <img class='home-icon' @click="reDirect('/potholes')" v-bind:src="require('../assets/pothole-list-icon.png')">
   <a href="/potholes"> View Reported Potholes</a>
-
   </div>
   </div>
 </template>
@@ -33,34 +33,40 @@ export default {
 
 .home {
   display: grid;
-  grid-template-columns: 500px 500px;
+  grid-template-areas: "welcome welcome"
+                      "report-icon list-icon";
   justify-items: center;
-  justify-content:center;
-  max-height: 60vh;
 }
 
 .home div {
   display: flex;
-  margin-left: 100px;
-  margin-right: 100px;
-  margin-bottom: 100px;
-  margin-top: 60px;
-  height: 400px;
-  width: 500px;
   flex-direction: column;
-  align-items: center;
-  justify-content: flex-end;
+}
 
+#welcome{
+  grid-area: welcome;
+  margin: 0px;
+}
+
+#report-icon{
+  grid-area: report-icon;
+  align-items: center;
+
+}
+
+#list-icon{
+  grid-area: list-icon;
+  align-items: center;
 }
 
 .home img {
-  height: 300px;
-  width: 300px;
+  height: 45vh;
+  width: 45vh;
 }
 
 .home img:hover {
-height: 375px;
-width: 375px;
+height: 50vh;
+width: 50vh;
 }
 
 a {

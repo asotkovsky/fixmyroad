@@ -239,9 +239,12 @@ export default {
 }
 
 img.selected {
-  border-style: solid;
+  width:75px;
+  height:75px;
+  filter: brightness(85%);
+  /* border-style: solid;
   border-color: #737373;
-  border-width: 5px;
+  border-width: 5px; */
 }
 
 #imageUpload {
@@ -251,7 +254,8 @@ img.selected {
 #severity-selection {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 10px;
+  align-items: center;
+  height: 75px;
 }
 
 .report-form {
@@ -289,6 +293,12 @@ select {
 #severity {
   margin-top: 10px;
 }
+.severity-icon:hover {
+  height:75px;
+  width: 75px;
+}
+
+
 
 #road-name {
   grid-area: road-name;

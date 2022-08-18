@@ -12,15 +12,17 @@ CREATE SEQUENCE seq_user_id
 
 CREATE TABLE users (
 	user_id int DEFAULT nextval('seq_user_id'::regclass) NOT NULL,
+	first_name varchar(50) NOT NULL,
+	last_name varchar(50) NOT NULL,
 	username varchar(50) NOT NULL UNIQUE,
 	password_hash varchar(200) NOT NULL,
 	role varchar(50) NOT NULL,
 	CONSTRAINT PK_user PRIMARY KEY (user_id)
 );
 
-INSERT INTO users (username,password_hash,role) VALUES ('user1','user1','ROLE_USER');
-INSERT INTO users (username,password_hash,role) VALUES ('user2','user2','ROLE_USER');
-INSERT INTO users (username,password_hash,role) VALUES ('user3','user3','ROLE_USER');
+INSERT INTO users (username,password_hash,role) VALUES ('user1','user1','user1','user1','ROLE_USER');
+INSERT INTO users (username,password_hash,role) VALUES ('user2','user2','user2','user2','ROLE_USER');
+INSERT INTO users (username,password_hash,role) VALUES ('user3','user3','user3','user3','ROLE_USER');
 
 CREATE TABLE potholes (
   id serial NOT NULL,

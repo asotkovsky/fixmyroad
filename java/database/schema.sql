@@ -35,6 +35,8 @@ CREATE TABLE "status" (
 
 CREATE TABLE users (
 	user_id int DEFAULT nextval('seq_user_id'::regclass) NOT NULL,
+	first_name varchar(50) NOT NULL,
+	last_name varchar(50) NOT NULL,
 	username varchar(90) NOT NULL UNIQUE,
 	password_hash varchar(200) NOT NULL,
 	role varchar(50) NOT NULL,
@@ -69,8 +71,8 @@ CREATE TABLE "pothole_status" (
 
 CREATE INDEX "PK FK" ON  "pothole_status" ("pothole_id", "status_id");
 
-INSERT INTO users (username,password_hash,role) VALUES ('user@fixmyroad.com','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER');
-INSERT INTO users (username,password_hash,role) VALUES ('admin@fixmyroad.com','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_ADMIN');
+INSERT INTO users (username, first_name, last_name, password_hash,role) VALUES ('user@fixmyroad.com','April', 'Ludgate','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER');
+INSERT INTO users (username, first_name, last_name, password_hash,role) VALUES ('admin@fixmyroad.com','Leslie','Knope','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_ADMIN');
 
 INSERT INTO status (status_name, is_public)
  VALUES ('Reported', true), ('Scheduled For Inspection', true),
