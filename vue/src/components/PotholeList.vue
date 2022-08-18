@@ -497,7 +497,7 @@ div.potholes-list-map-view {
     "buttons headers"
     "map pothole-cards"
     "employeelist employeelist";
-  height: 70vh;
+  height: 69vh;
   flex-direction: column;
   align-content: center;
   margin-top: 30px;
@@ -534,7 +534,7 @@ div.map {
 
 .list-body {
   grid-area: pothole-cards;
-  height: 70vh;
+  height: 69vh;
   overflow-y: auto;
 }
 
