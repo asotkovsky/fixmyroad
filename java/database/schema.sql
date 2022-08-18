@@ -75,9 +75,14 @@ INSERT INTO users (username, first_name, last_name, password_hash,role) VALUES (
 INSERT INTO users (username, first_name, last_name, password_hash,role) VALUES ('admin@fixmyroad.com','Leslie','Knope','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_ADMIN');
 
 INSERT INTO status (status_name, is_public)
- VALUES ('Reported', true), ('Scheduled For Inspection', true),
- ('Inspected', true), ('Scheduled For Repair', true), ('Repaired', true),
- ('Noticed', false), ('Subscribed', false), ('Assigned', true);
+ VALUES ('Reported', true),
+   ('Assigned', true),
+  ('Scheduled For Inspection', true),
+ ('Inspected', true),
+ ('Scheduled For Repair', true),
+  ('Repaired', true),
+ ('Noticed', false),
+  ('Subscribed', false);
 
 INSERT INTO potholes (longitude, latitude, description, severity, location_on_roadway, road_name, neighborhood, city, state) VALUES
 (-83.078802, 40.001482, 'pothole 1', 5, 'Shoulder', 'Greycliff Ln', 'West Scioto', 'Columbus', 'OH'),
@@ -90,7 +95,7 @@ INSERT INTO potholes (longitude, latitude, description, severity, location_on_ro
 INSERT INTO pothole_status (pothole_id, status_id, date, user_id) VALUES (1,1, CURRENT_TIMESTAMP, 1), (2,1, CURRENT_TIMESTAMP, 1),
 (3,1, CURRENT_TIMESTAMP, 1),
 (4,1, CURRENT_TIMESTAMP, 1),
-(5,1, CURRENT_TIMESTAMP, 1), (1,2, CURRENT_TIMESTAMP, 2), (1,3, CURRENT_TIMESTAMP, 2);
+(5,1, CURRENT_TIMESTAMP, 1), (1,3, CURRENT_TIMESTAMP, 2), (1,4, CURRENT_TIMESTAMP, 2);
 
 INSERT INTO image_url (pothole_id,url) VALUES
 (1,'http://cdn.shopify.com/s/files/1/0597/4910/5840/articles/pothole_key.jpg?v=1635187694'),

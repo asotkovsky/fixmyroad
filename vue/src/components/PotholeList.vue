@@ -234,6 +234,7 @@ export default {
         numberOfDays: "",
       };
       this.$store.commit("SET_SELECTED_POTHOLE", {});
+      this.$store.commit("CLEAR_FILTERS");
       this.filterUserFavorite = false;
       this.toggleUserFilterText = "Show My Potholes";
       console.log(this.$store.state.selectedPothole.id);
@@ -306,11 +307,15 @@ export default {
       if (this.$store.state.selectedPothole.id) {
         return true;
       }
+       if (this.$store.state.filter.employeeName){
+        return true
+      }
       if (this.filterUserFavorite) {
         return true;
       } else {
         return false;
       }
+     
     },
     startDate() {
       const startDate = new Date();
