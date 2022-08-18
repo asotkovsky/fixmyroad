@@ -31,14 +31,19 @@
     </p>
     <img
       class="location-on-roadway-icon"
-      v-show="! $store.getters.currentUserIsAdmin"
+      v-show="!$store.getters.currentUserIsAdmin"
       v-bind:src="
         require('../assets/icon-' + pothole.locationOnRoadway + '.jpg')
       "
     />
-    <p v-show="$store.getters.currentUserIsAdmin">
-      {{assignedTo?"Assigned":"Unassigned"}}
-    </p>
+    <img
+      v-bind:src="
+        assignedTo
+          ? require('../assets/checked.png')
+          : require('../assets/unchecked.png')
+      "
+      v-show="$store.getters.currentUserIsAdmin"
+    />
     <img
       class="show-modal-icon"
       @click="showAdminModal = true"
@@ -72,10 +77,10 @@ export default {
       beingDragged: false,
     };
   },
-  computed:{
-    assignedTo(){
-      return this.pothole.statuses.find(status=>status.name=="Assigned");
-    }
+  computed: {
+    assignedTo() {
+      return this.pothole.statuses.find((status) => status.name == "Assigned");
+    },
   },
   methods: {
     handleDelete() {
@@ -167,7 +172,6 @@ img.severity-icon-pothole-card {
   height: 60px;
   align-self: center;
 }
-
 </style>
 
 
