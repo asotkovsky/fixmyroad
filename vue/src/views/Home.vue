@@ -51,12 +51,14 @@ export default {
 #report-icon{
   grid-area: report-icon;
   align-items: center;
+  padding-top: 10vh;
 
 }
 
 #list-icon{
   grid-area: list-icon;
   align-items: center;
+  padding-top: 10vh;
 }
 
 .home img {

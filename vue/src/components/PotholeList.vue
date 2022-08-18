@@ -132,13 +132,14 @@
               v-model="filter.status"
             >
               <option value=""></option>
-              <option value="Reported">reported</option>
+              <option value="Reported">Reported</option>
+              <option value="Assigned">Assigned</option>
               <option value="Scheduled For Inspection">
-                scheduled for inspection
+                Scheduled For Inspection
               </option>
-              <option value="Inspected">inspected</option>
-              <option value="Scheduled For Repair">scheduled for repair</option>
-              <option value="Repaired">repaired</option>
+              <option value="Inspected">Inspected</option>
+              <option value="Scheduled For Repair">Scheduled For Repair</option>
+              <option value="Repaired">Repaired</option>
             </select>
           </span>
           <span id="location-filter">
