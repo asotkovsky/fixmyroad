@@ -314,6 +314,11 @@ export default {
 
   mounted() {
     this.$store.dispatch("reloadPotholes");
+    this.showFilters = this.$store.getters.currentUserIsAdmin;
+    this.$store.commit("SET_FILTER_FIELD", {
+      fieldName: "assigned",
+      value: this.$store.getters.currentUserIsAdmin?2:0,
+    });
     let roadNames = this.$store.state.potholes.map(
       (pothole) => pothole.roadName
     );
