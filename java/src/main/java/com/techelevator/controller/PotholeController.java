@@ -64,7 +64,7 @@ public class PotholeController {
     @RequestMapping(path = "/employees", method = RequestMethod.GET)
     public List<Employee> getEmployees ()
     {
-        List<Employee> employeeList = employeeDao.gitAllEmployee();
+        List<Employee> employeeList = employeeDao.getAllEmployee();
         return employeeList;}
 
 

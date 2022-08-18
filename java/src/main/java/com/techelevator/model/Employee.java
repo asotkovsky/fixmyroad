@@ -2,6 +2,15 @@ package com.techelevator.model;
 
 public class Employee {
     private int id;
+    private String fullName;
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
 
     public int getId() {
         return id;

@@ -197,11 +197,13 @@
           :key="currentPothole.id"
           :pothole="currentPothole"
         />
+
       </div>
+        <employeeList id="employee-list"/>
     </div>
-    <div>
-      <employeeList />
-    </div>
+  
+  
+  
   </div>
 </template>
 
@@ -460,11 +462,20 @@ div.potholes-list-map-view {
   display: grid;
   grid-template-areas:
     "buttons headers"
-    "map pothole-cards";
+    "map pothole-cards"
+    "employeelist employeelist";
   height: 70vh;
   flex-direction: column;
   align-content: center;
   margin-top: 30px;
+  padding-top: 25px;
+}
+#employee-list{
+  grid-area: employeelist;
+  display: flex;
+  gap: 10px;
+  padding-top: 10px;
+
 }
 
 div.map {

@@ -1,7 +1,8 @@
 <template>
-  <div class="employee_card" v-on:dragover.prevent v-on:drop.prevent="handleDrop" v-on:click="handleClick">
-{{employee.name}}
-{{assignedPotholes.length}}
+  <div class="employee_card" v-on:dragover.prevent v-on:drop.prevent="handleDrop">
+      {{employee.fullName}}
+        {{employee.name}}
+        {{assignedPotholes.length}}
 
       
   </div>
@@ -63,8 +64,13 @@ export default {
 
 <style>
 .employee_card{
-    background-color: rgb(43, 226, 141);
-    height: 100px;
-    width: 100px;
+    background-color: #737373;
+    padding: 12px;
+    border-radius: 5px;
+    
+    
+}
+.employee_card:hover{
+    filter: brightness(65%)
 }
 </style>
