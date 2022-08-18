@@ -4,6 +4,7 @@
     @dragend="beingDragged = false"
     v-on:dragstart="dragStart"
     :class="{
+      'hidden':beingDragged,
       'pothole-card-hover': descriptionHover,
     }"
     class="pothole-card"
@@ -171,6 +172,9 @@ img.severity-icon-pothole-card {
   width: 60px;
   height: 60px;
   align-self: center;
+}
+.pothole-card.hidden{
+  opacity: 50%;
 }
 </style>
 
