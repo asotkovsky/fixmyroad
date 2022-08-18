@@ -101,6 +101,7 @@ export default {
     dragStart(event) {
       event.dataTransfer.setData("text/plain", this.pothole.id);
       this.beingDragged = true;
+
     },
   },
 };
@@ -173,9 +174,11 @@ img.severity-icon-pothole-card {
   height: 60px;
   align-self: center;
 }
+
 .pothole-card.hidden{
-  opacity: 50%;
+  opacity:50%;
 }
+
 </style>
 
 

@@ -103,6 +103,7 @@ export default {
   font-family: sans-serif;
   font-size: 0.75em;
   background-color: whitesmoke;
+  max-height: 80vh;
 }
 
 .btn-close {

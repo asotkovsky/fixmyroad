@@ -1,14 +1,14 @@
 <template>
-<div>
+<div id="details">
 <h1>Details
 </h1>
- <img
+ <p>Severity: <img
         class="severity-icon"
         v-if="pothole.severity != 0"
         v-bind:src="
           require('../assets/severity-icon-' + pothole.severity + '.png')
         "
-      />
+      /></p>
 <p>
     Last Status: {{getlastStatusName()}}
 </p>
@@ -79,5 +79,29 @@ export default {
 </script>
 
 <style>
+#details {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
 
+#details p{
+    font-size: 1.2em;
+    margin: 2px;
+    padding-right: 20px;
+    justify-content: center;
+    font-weight: 700;
+}
+
+#details h1{
+    margin: 0px;
+}
+
+#details img {
+    margin-left: -5px;
+    height: 30px;
+    width: 30px;
+    /* margin-top: 5px;
+    margin-bottom: 5px; */
+}
 </style>
