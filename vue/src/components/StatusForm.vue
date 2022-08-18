@@ -1,7 +1,8 @@
 <template>
-  <div>
-    <div class="modal_image_holder">
-      <pothole-details :pothole="pothole" /><img
+  <div id="status-form">
+    <div id="img-and-details-container">
+      <pothole-details class="details" :pothole="pothole" />
+      <img
         class="modal_image"
         v-for="Url in pothole.imageUrl"
         :key="Url"
@@ -9,7 +10,8 @@
       />
     </div>
     <timeline id="timeline" :statuses="pothole.statuses" />
-    <button
+    <div id="status-form-buttons">
+      <button
       class="status-buttons"
       id="noticed-button"
       v-show="checkIfUser && !isNoticed"
@@ -24,6 +26,7 @@
     >
       {{ subscribeButtonText }}
     </button>
+    </div>
     <div class="status_holder">
       <form
         v-if="checkIfAdmin"
@@ -175,6 +178,20 @@ export default {
 </script>
 
 <style>
+
+#timeline{
+  grid-area: timeline;
+}
+
+#status-form{
+  display: grid;
+  grid-template-areas: "img-and-details-container"
+                        "timeline"
+                        "buttons"
+                        "status-holder";
+  gap: 5px;
+  justify-content: center;
+}
 form.status-form {
   display: flex;
   flex-direction: column;
@@ -184,20 +201,31 @@ form.status-form {
   width: 50%;
 }
 
-div.modal_image_holder {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
+div#img-and-details-container {
+  display: grid;
+  grid-template-areas: "details image";
+  grid-area: img-and-details-container;
   width: 100%;
+  align-items: center;
 }
 .modal_image {
   max-width: 35vw;
   max-height: 35vh;
+  grid-area: image;
+  border:
+}
+.details{
+  grid-area: details;
+  word-wrap: break-word;
+  flex-wrap: wrap;
+  width: 300px;
+  
 }
 .status_holder {
   display: flex;
   justify-content: center;
   font-size: 15px;
+  grid-area: status-holder;
 }
 
 .status-buttons {
@@ -211,7 +239,11 @@ div.modal_image_holder {
   font-weight: 750;
 }
 
+#status-form-buttons{
+grid-area: buttons
+}
 #noticed-button {
   margin-right: 10px;
 }
+
 </style>

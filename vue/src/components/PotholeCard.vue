@@ -84,6 +84,8 @@ export default {
     dragStart(event){
       event.dataTransfer.setData("text/plain", this.pothole.id);
       this.beingDragged = true;
+
+      // event.target.style.display="none"
     }
   },
 };
@@ -158,7 +160,7 @@ img.severity-icon-pothole-card {
 }
 
 .pothole-card.hidden{
-  visibility: hidden;
+  opacity:50%;
 }
 </style>
 
