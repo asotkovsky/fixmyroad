@@ -74,6 +74,13 @@ CREATE INDEX "PK FK" ON  "pothole_status" ("pothole_id", "status_id");
 INSERT INTO users (username, first_name, last_name, password_hash,role) VALUES ('user@fixmyroad.com','April', 'Ludgate','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER');
 INSERT INTO users (username, first_name, last_name, password_hash,role) VALUES ('admin@fixmyroad.com','Leslie','Knope','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_ADMIN');
 
+INSERT INTO users (username, first_name, last_name, password_hash, role) VALUES ('reena@fixmyroad.com', 'Reena','Ahmed','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC', 'ROLE_ADMIN');
+INSERT INTO users (username, first_name, last_name, password_hash, role) VALUES ('doug@fixmyroad.com', 'Doug','Waxman','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC', 'ROLE_ADMIN');
+INSERT INTO users (username, first_name, last_name, password_hash, role) VALUES ('alex@fixmyroad.com', 'Alex','Sotkovsky','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC', 'ROLE_ADMIN');
+INSERT INTO users (username, first_name, last_name, password_hash, role) VALUES ('bryan@fixmyroad.com', 'Brian','Lauvray','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC', 'ROLE_ADMIN');
+INSERT INTO users (username, first_name, last_name, password_hash, role) VALUES ('scott@fixmyroad.com', 'Scott','Sedor','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC', 'ROLE_ADMIN');
+INSERT INTO users (username, first_name, last_name, password_hash, role) VALUES ('vinny@fixmyroad.com', 'Vinny','Sanfillipo','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC', 'ROLE_ADMIN');
+
 INSERT INTO status (status_name, is_public)
  VALUES ('Reported', true),
    ('Assigned', true),
