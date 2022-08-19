@@ -1,7 +1,7 @@
 <template>
   <div>
     <div
-      :class="showMap ? 'potholes-list-map-view' : 'pothole-list-hide-map-view'"
+      :class="[showMap ? 'potholes-list-map-view' : 'pothole-list-hide-map-view']"
     >
       <div class="buttons">
         <button
@@ -30,7 +30,7 @@
 
       <div
         class="card-container list-headers"
-        :class="{ 'card-container-show-map': showMap }"
+        :class="showMap ? 'card-container-show-map': 'card-container-hide-map'"
       >
         <div
           :class="
@@ -38,6 +38,7 @@
               ? 'pothole-card-alignment-show-map'
               : 'pothole-card-alignment-hide-map'
           "
+          id="filters"
         >
           <span id="severity-filter">
             Severity
@@ -497,12 +498,14 @@ div.potholes-list-map-view {
     "buttons headers"
     "map pothole-cards"
     "employeelist employeelist";
+  grid-template-rows: auto auto auto;
   height: 70vh;
   flex-direction: column;
   align-content: center;
-  margin-top: 30px;
+  margin-top: 25px;
   padding-top: 25px;
 }
+
 #employee-list{
   grid-area: employeelist;
   display: flex;
@@ -514,22 +517,39 @@ div.potholes-list-map-view {
 div.map {
   grid-area: map;
   width: 47vw;
-  height: 100%;
   display: flex;
+  margin-left:5px;
   flex-direction: column;
 }
 
-.card-container {
-  margin-left: 5px;
-  margin-right: 10px;
+.card-container{
+  display: flex;
+  gap: 5px;
+  flex-direction: column;
+}
+
+.card-container-show-map {
   display: flex;
   flex-direction: column;
+  width: 51vw;
+  gap: 5px;
+}
+
+.card-container-hide-map{
+  display: flex;
+  flex-direction: column;
+  width: 95vw;
   gap: 5px;
 }
 
 .list-headers {
   grid-area: headers;
+
   justify-content: end;
+}
+
+#filters{
+  grid-area: headers;
 }
 
 .list-body {
@@ -542,9 +562,7 @@ div.pothole-card-alignment-show-map {
   display: grid;
   justify-content: left;
   gap: 15px;
-  margin-right: 10px;
   grid-template-columns: 0.5fr 1fr 1fr 1fr 1fr 0.5fr 0.5fr;
-  width: 47vw;
   grid-area: headers;
   align-items: center;
   margin-left: 10px;
@@ -554,6 +572,7 @@ div.pothole-card-alignment-show-map {
 div.pothole-list-hide-map-view {
   display: flex;
   flex-direction: column;
+  height: 82vh;
   align-content: center;
   margin-bottom: 10px;
 }
@@ -582,6 +601,7 @@ input {
   max-width: 50vw;
   align-items: end;
   height: 70px;
+  margin-left: 5px;
   padding-bottom: 5px;
 }
 

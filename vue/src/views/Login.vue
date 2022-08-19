@@ -80,7 +80,8 @@ export default {
           if (response.status == 200) {
             this.$store.commit("SET_AUTH_TOKEN", response.data.token);
             this.$store.commit("SET_USER", response.data.user);
-            this.$store.commit("SET_USER_AUTHORITIES", response.data.user.authorities)
+            this.$store.commit("SET_USER_AUTHORITIES", response.data.user.authorities);
+            this.$store.commit("CLEAR_FILTERS");
             this.$router.push("/");
           }
         })

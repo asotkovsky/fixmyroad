@@ -207,19 +207,25 @@ div#img-and-details-container {
   grid-area: img-and-details-container;
   width: 100%;
   align-items: center;
+  align-items: start;
+    gap: 10px;
 }
 .modal_image {
   max-width: 35vw;
   max-height: 35vh;
   grid-area: image;
-  border:
 }
+
 .details{
   grid-area: details;
   word-wrap: break-word;
   flex-wrap: wrap;
   width: 300px;
-  
+  background: white;
+  border-width: 3px;
+  border-style: solid;
+  border-radius: 5px;
+  border-color: #737373;
 }
 .status_holder {
   display: flex;

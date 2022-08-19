@@ -235,7 +235,6 @@ export default {
 .report-attributes {
   display: grid;
   grid-template-columns: 1.7fr 2fr;
-  padding-top: 10px;
 }
 
 img.selected {
@@ -342,6 +341,12 @@ width: 60px;
 #submit {
   margin-bottom: 10px;
 }
+
+#checkbox-to-subscribe {
+width: 20px;
+margin-right: 10px;
+}
+
 ::-webkit-scrollbar {
   width: 14px;
 }

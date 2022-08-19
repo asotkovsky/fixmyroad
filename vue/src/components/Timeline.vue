@@ -50,7 +50,7 @@ export default {
     to bottom,
     rgba(15, 15, 15, 0) 0%,
     rgba(255, 255, 255, 0) 45%,
-    rgb(175, 149, 33) 50%,
+    rgb(115,115,115) 50%,
     rgba(255, 255, 255, 0) 57%,
     rgba(255, 255, 255, 0) 100%
   );
@@ -63,7 +63,7 @@ export default {
 .timeline li {
   width: 20px;
   height: 20px;
-  background: #737373;
+  background: #0079BF;
   text-align: center;
   line-height: 1.2;
   position: relative;

@@ -49,6 +49,7 @@ export default {
     },
     handleClick() {
       console.log("handleClickCalled");
+      this.$store.commit("CLEAR_FILTERS");
       this.$store.commit("SET_FILTER_FIELD", {
         fieldName: "employeeName",
         value: this.employee.name,

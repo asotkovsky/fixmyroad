@@ -3,7 +3,7 @@
 <h1>Details
 </h1>
  <p>Severity: <img
-        class="severity-icon"
+        class="details-severity-icon"
         v-if="pothole.severity != 0"
         v-bind:src="
           require('../assets/severity-icon-' + pothole.severity + '.png')
@@ -88,7 +88,7 @@ export default {
 #details p{
     font-size: 1.2em;
     margin: 2px;
-    padding-right: 20px;
+    padding: 2px;
     justify-content: center;
     font-weight: 700;
 }
@@ -98,9 +98,10 @@ export default {
 }
 
 #details img {
-    margin-left: -5px;
+    margin-bottom: -10px;
     height: 30px;
     width: 30px;
+
     /* margin-top: 5px;
     margin-bottom: 5px; */
 }

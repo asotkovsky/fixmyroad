@@ -3,7 +3,7 @@
     <div class="modal">
       <header class="modal-header">
         <span> Pothole ID: {{ pothole.id }} </span>
-        <button type="button" class="btn-close" @click="close()">x</button>
+        <button type="button" class="btn-close" @click="close()">X</button>
       </header>
 
       <section class="modal-body">
@@ -119,7 +119,6 @@ export default {
   background: #fad52f;
   border-radius: 5px;
   height: 25px;
-  padding-top: .3px;
 }
 .delete {
   width: 50%;

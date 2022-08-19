@@ -144,17 +144,6 @@ div.pothole-card {
   padding-right: 0px;
 }
 
-/* div.pothole-card-no-map {
-  grid-template-columns: 0.5fr 1fr 1fr 1.5fr 2fr 1fr 0.5fr 0.5fr;
-div.pothole-card-no-map {
-  grid-template-columns: 0.5fr 1fr 1fr 1fr 1fr 0.5fr 0.5fr 0.2fr;
-}
-
-div.pothole-card-show-map{
-  grid-template-columns: 0.5fr 1fr 1fr 1fr 1fr 0.5fr 0.5fr;
-
-} */
-
 div.pothole-card-hover {
   height: auto;
 }
