@@ -81,7 +81,6 @@ export default new Vuex.Store({
     },
     SET_FILTER_FIELD(state, payload) {
       state.filter[payload.fieldName] = payload.value
-      console.log(payload.name, payload.value)
     },
     CLEAR_FILTERS(state) {
       state.filter = {

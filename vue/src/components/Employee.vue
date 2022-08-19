@@ -5,9 +5,12 @@
     v-on:drop.prevent="handleDrop"
     v-on:click="handleClick"
   >
+  <span>
     {{ employee.fullName }}
-    {{ employee.name }}
-    {{ assignedPotholes.length }}
+  </span>
+  <span>
+    Assigned Potholes: {{ assignedPotholes.length }}
+  </span>
   </div>
 </template>
 
@@ -48,8 +51,7 @@ export default {
       });
     },
     handleClick() {
-      console.log("handleClickCalled");
-      this.$store.commit("CLEAR_FILTERS");
+      this.$store.commit('CLEAR_FILTERS');
       this.$store.commit("SET_FILTER_FIELD", {
         fieldName: "employeeName",
         value: this.employee.name,
@@ -71,6 +73,9 @@ export default {
   background-color: #737373;
   padding: 12px;
   border-radius: 5px;
+  display:flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 .employee_card:hover {
   filter: brightness(65%);

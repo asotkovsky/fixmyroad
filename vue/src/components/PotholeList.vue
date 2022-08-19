@@ -44,14 +44,16 @@
             Severity
             <select
               v-on:change="
-                $store.commit('SET_FILTER_FIELD', {
-                  fieldName: 'severity',
-                  value: filter.severity,
-                })
+                (e) => {
+                  $store.commit('SET_FILTER_FIELD', {
+                    fieldName: 'severity',
+                    value: e.target.value,
+                  });
+                }
               "
               v-show="showFilters"
               name="filterSeverity"
-              v-model.number="filter.severity"
+              :value="$store.state.filter.severity"
             >
               <option value=""></option>
               <option value="1">1</option>
@@ -65,14 +67,16 @@
             Reported
             <select
               v-on:change="
-                $store.commit('SET_FILTER_FIELD', {
-                  fieldName: 'numberOfDays',
-                  value: filter.numberOfDays,
-                })
+                (e) => {
+                  $store.commit('SET_FILTER_FIELD', {
+                    fieldName: 'numberOfDays',
+                    value: e.target.value,
+                  });
+                }
               "
               v-show="showFilters"
               name="filterDate"
-              v-model.number="filter.numberOfDays"
+              :value="$store.state.filter.numberOfDays"
             >
               <option value=""></option>
               <option value="7">Last 7 Days</option>
@@ -84,15 +88,17 @@
             Road
             <input
               v-on:change="
-                $store.commit('SET_FILTER_FIELD', {
-                  fieldName: 'roadName',
-                  value: filter.roadName,
-                })
+                (e) => {
+                  $store.commit('SET_FILTER_FIELD', {
+                    fieldName: 'roadName',
+                    value: e.target.value,
+                  });
+                }
               "
               v-show="showFilters"
               list="filteredRoadName"
               type="text"
-              v-model="filter.roadName"
+              :value="$store.state.filter.roadName"
             />
             <datalist id="filteredRoadName">
               <option v-for="roadName in roadNames" v-bind:key="roadName">
@@ -104,15 +110,17 @@
             Neighborhood
             <input
               v-on:change="
-                $store.commit('SET_FILTER_FIELD', {
-                  fieldName: 'neighborhood',
-                  value: filter.neighborhood,
-                })
+                (e) => {
+                  $store.commit('SET_FILTER_FIELD', {
+                    fieldName: 'neighborhood',
+                    value: e.target.value,
+                  });
+                }
               "
               v-show="showFilters"
               list="filterNeighborhood"
               type="text"
-              v-model="filter.neighborhood"
+              :value="$store.state.filter.neighborhood"
             />
             <datalist id="filterNeighborhood">
               <option
@@ -127,28 +135,32 @@
             Description
             <input
               v-on:input="
-                $store.commit('SET_FILTER_FIELD', {
-                  fieldName: 'description',
-                  value: filter.description,
-                })
+                (e) => {
+                  $store.commit('SET_FILTER_FIELD', {
+                    fieldName: 'description',
+                    value: filter.description,
+                  });
+                }
               "
               v-show="showFilters"
               type="text"
-              v-model="filter.description"
+              :value="$store.state.filter.description"
             />
           </span>
           <span id="status-filter">
             Status
             <select
               v-on:change="
-                $store.commit('SET_FILTER_FIELD', {
-                  fieldName: 'status',
-                  value: filter.status,
-                })
+                (e) => {
+                  $store.commit('SET_FILTER_FIELD', {
+                    fieldName: 'status',
+                    value: e.target.value,
+                  });
+                }
               "
               v-show="showFilters"
               name="filterStatus"
-              v-model="filter.status"
+              :value="$store.state.filter.status"
             >
               <option value=""></option>
               <option value="Reported">Reported</option>
@@ -161,38 +173,46 @@
               <option value="Repaired">Repaired</option>
             </select>
           </span>
-          <span id="location-filter" v-show="!$store.getters.currentUserIsAdmin">
+          <span
+            id="location-filter"
+            v-show="!$store.getters.currentUserIsAdmin"
+          >
             Location
             <select
               v-on:change="
-                $store.commit('SET_FILTER_FIELD', {
-                  fieldName: 'locationOnRoadway',
-                  value: filter.locationOnRoadway,
-                })
+                (e) => {
+                  $store.commit('SET_FILTER_FIELD', {
+                    fieldName: 'locationOnRoadway',
+                    value: e.target.value,
+                  });
+                }
               "
               v-show="showFilters"
               name="filterLocationOnRoadway"
-              v-model="filter.locationOnRoadway"
+              :value="$store.state.filter.locationOnRoadway"
             >
               <option value=""></option>
               <option value="Road">Road</option>
               <option value="Shoulder">Shoulder</option>
             </select>
           </span>
-          <span v-show="$store.getters.currentUserIsAdmin"> Assigned
-             <select
+          <span v-show="$store.getters.currentUserIsAdmin">
+            Assigned
+            <select
               v-on:change="
-                $store.commit('SET_FILTER_FIELD', {
-                  fieldName: 'assigned',
-                  value: filter.assigned,
-                })
+                (e) => {
+                  $store.commit('SET_FILTER_FIELD', {
+                    fieldName: 'assigned',
+                    value: e.target.value,
+                  });
+                }
               "
               v-show="showFilters"
-              v-model="filter.assigned"
+              :value="$store.state.filter.assigned"
             >
-              <option value= 0 ></option>
-              <option value= 1 >Assigned</option>
-              <option value= 2 >Unassigned</option>
+              <option value="0"></option>
+              <option value="1">Assigned</option>
+              <option value="2">Unassigned</option>
             </select>
           </span>
         </div>
@@ -214,13 +234,12 @@
           :key="currentPothole.id"
           :pothole="currentPothole"
         />
-
       </div>
-        <employeeList id="employee-list"/>
+      <employeeList
+        id="employee-list"
+        v-if="$store.getters.currentUserIsAdmin"
+      />
     </div>
-  
-  
-  
   </div>
 </template>
 
@@ -248,39 +267,20 @@ export default {
       toggleUserFilterText: "Show My Potholes",
       showMap: true,
       toggleMapText: "Hide Map",
-      filter: {
-        severity: "",
-        roadName: "",
-        neighborhood: "",
-        description: "",
-        status: "",
-        locationOnRoadway: "",
-        city: null,
-        state: null,
-        numberOfDays: "",
-        assigned: 0
-      },
     };
   },
   methods: {
+    getShowMapButtonText(){
+      if (this.$store.getters.currentUserIsAdmin){
+        this.toggleFilterText = "Hide Filters"
+      }
+      else {this.toggleFilterText ="Show Filters"}
+    },
     clearFilters() {
-      this.filter = {
-        severity: "",
-        roadName: "",
-        neighborhood: "",
-        description: "",
-        status: "",
-        locationOnRoadway: "",
-        city: null,
-        state: null,
-        numberOfDays: "",
-        assigned: 0
-      };
       this.$store.commit("SET_SELECTED_POTHOLE", {});
       this.$store.commit("CLEAR_FILTERS");
       this.filterUserFavorite = false;
       this.toggleUserFilterText = "Show My Potholes";
-      console.log(this.$store.state.selectedPothole.id);
     },
     flipShowFilters() {
       this.showFilters = !this.showFilters;
@@ -321,6 +321,12 @@ export default {
 
   mounted() {
     this.$store.dispatch("reloadPotholes");
+    this.getShowMapButtonText();
+    this.showFilters = this.$store.getters.currentUserIsAdmin;
+    this.$store.commit("SET_FILTER_FIELD", {
+      fieldName: "assigned",
+      value: this.$store.getters.currentUserIsAdmin?2:0,
+    });
     let roadNames = this.$store.state.potholes.map(
       (pothole) => pothole.roadName
     );
@@ -368,7 +374,7 @@ export default {
       if (this.$store.state.filter.employeeName) {
         return true;
       }
-      if(this.$store.state.filter.assigned > 0){
+      if (this.$store.state.filter.assigned > 0) {
         return true;
       }
       if (this.filterUserFavorite) {
@@ -473,18 +479,18 @@ export default {
             );
           }
         })
-        .filter(pothole=>{
-          if(this.$store.state.filter.assigned == 0){
-            return true
+        .filter((pothole) => {
+          if (this.$store.state.filter.assigned == 0) {
+            return true;
+          } else if (this.$store.state.filter.assigned == 1) {
+            return pothole.statuses.find((status) => status.name == "Assigned");
+          } else {
+            let assignedStatuses = pothole.statuses.filter(
+              (status) => status.name == "Assigned"
+            );
+            return assignedStatuses.length == 0;
           }
-          else if(this.$store.state.filter.assigned == 1){
-            return pothole.statuses.find(status=> status.name == "Assigned")
-          }
-          else{
-            let assignedStatuses = pothole.statuses.filter( status => status.name == "Assigned")
-            return assignedStatuses.length == 0
-          }
-        })
+        });
     },
   },
 };
@@ -498,20 +504,18 @@ div.potholes-list-map-view {
     "buttons headers"
     "map pothole-cards"
     "employeelist employeelist";
-  grid-template-rows: auto auto auto;
-  height: 70vh;
+  height: 69vh;
   flex-direction: column;
   align-content: center;
   margin-top: 25px;
   padding-top: 25px;
 }
 
-#employee-list{
+#employee-list {
   grid-area: employeelist;
   display: flex;
   gap: 10px;
   padding-top: 10px;
-
 }
 
 div.map {
@@ -554,7 +558,7 @@ div.map {
 
 .list-body {
   grid-area: pothole-cards;
-  height: 70vh;
+  height: 69vh;
   overflow-y: auto;
 }
 
