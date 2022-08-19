@@ -174,7 +174,7 @@ export default {
       PotholeService.createPothole(this.newPothole)
         .then((response) => {
           const subscribeStatus = {
-            id: 7,
+            id: 8,
             date: new Date().toISOString().slice(0, 10),
           };
           const pothole = response.data;
