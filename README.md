@@ -1,92 +1,79 @@
-# final-capstone
+# FixMyRoad 
 
+FixMyRoad is an application that citizens can use to report potholes to their cities for repair. As an admin or an employee of the city, you can review reports, assign employees to a pothole, update status, and schedule potholes for inspection/repair among other features. Citizens can subscribe to email updates on a specific pothole and follow the status from it's initial report to eventual repair. 
 
+<h3>Some context:</h3>
+I worked on this project as 1 on a team of 4 developers for our final capstone project at Tech Elevator (an intensive 14-week coding bootcamp). What really excited me about this project was the user experience first approach that we took with our design. We spent a lot of time putting ourselves in the user's shoes and considering features or design choices that may make the site less intuitive. We built in error handling to keep the user on track with their task. I think that consideration is evidenced in the usability and clean styling of our end product. I plan on deploying the app to Heroku soon so anyone interested can interact with FixMyRoad directly! 
 
-## Getting started
+## Logging In
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+<img src="https://github.com/asotkovsky/fixmyroad/blob/main/fixmyroad-screenshots/login.png" width="500">
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+- Users can login or register a new account from the login page
+- Unathenticated users can navigate to the reported potholes page to review existing potholes
 
-## Add your files
+## Home Page
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+<img src="https://github.com/asotkovsky/fixmyroad/blob/main/fixmyroad-screenshots/home-page.png" width="500">
 
-```
-cd existing_repo
-git remote add origin https://git.techelevator.com/campuses/cbus/may-2022/java-blue/student-pairs/final-capstone.git
-git branch -M main
-git push -uf origin main
-```
+The site greets the logged in user where they can chose to navigate to:
 
-## Integrate with your tools
+    - Report a new pothole
+    - Review reported potholes
+    
+## Report Pothole Form
 
-- [ ] [Set up project integrations](https://git.techelevator.com/campuses/cbus/may-2022/java-blue/student-pairs/final-capstone/-/settings/integrations)
+<img src="https://github.com/asotkovsky/fixmyroad/blob/main/fixmyroad-screenshots/report-form.png" width="500">
 
-## Collaborate with your team
+Users must drop a pin on a map that is centered on their current location and select a severity on a scale of 1 - 5
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Automatically merge when pipeline succeeds](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
+    - Metadata about the pin location is displayed including:
+        - Road Name
+        - Neighborhood (if available)
+        - City Name and State
+        
+Other optional fields include:
 
-## Test and Deploy
+        - Location on Roadway (Road or Shoulder)
+        - Description
+        - Image upload (preview displays once uploaded)
+        - Subscription to status update emails
+        
+Upon submission user is directed to a list of reported potholes
+        
+## Reported Potholes
 
-Use the built-in continuous integration in GitLab.
+<img src="https://github.com/asotkovsky/fixmyroad/blob/main/fixmyroad-screenshots/user-pothole-list.png" width="500"><img src="https://github.com/asotkovsky/fixmyroad/blob/main/fixmyroad-screenshots/employee-pothole-list.png" width="500">
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing(SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+The view of this page varies depending on if you are an authenticated user/citizen or admin. Both versions feature a map that syncs with the filters that have been applied by the user.
 
-***
+Employees/admins can drag and drop unassgined potholes to the employees on the bottom of the page. Clicking on an employee filters the list and the map down to only potholes that are assigned to that particular employee.
 
-# Editing this README
+## Pothole Detail View
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thank you to [makeareadme.com](https://www.makeareadme.com/) for this template.
+<img src="https://github.com/asotkovsky/fixmyroad/blob/main/fixmyroad-screenshots/user-detail-view.png" width="500"><img src="https://github.com/asotkovsky/fixmyroad/blob/main/fixmyroad-screenshots/employee-details-view.png" width="500">
 
-## Suggestions for a good README
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+Clicking the blue plus icon on a pothole from the list view takes you to a modal with more detailed information about the pothole.
+Again the details view depends on what type of user is viewing the page. 
 
-## Name
-Choose a self-explaining name for your project.
+Both users can see:
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+  - Details of pothole
+  - Photo (if available)
+  - Timeline of pothole statuses and scheduled inspection/repairs
+  - Option to subscribe to email updates
+  
+Citizens can:
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+    - "Notice" a pothole which emphasizes a pothole that someone else has reported and can help employees prioritize
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+Admins can:
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+    - Update status of pothole
+    - Schedule inspection or repair
+    - Delete a pothole
+    
+<h3>And just for fun ... our 404 page:</h3>
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+<img src="https://github.com/asotkovsky/fixmyroad/blob/main/fixmyroad-screenshots/404-page.png" width="500">
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
-
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
-
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
-
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
-
-## License
-For open source projects, say how it is licensed.
-
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
