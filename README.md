@@ -3,7 +3,12 @@
 FixMyRoad is an application that citizens can use to report potholes to their cities for repair. As an admin or an employee of the city, you can review reports, assign employees to a pothole, update status, and schedule potholes for inspection/repair among other features. Citizens can subscribe to email updates on a specific pothole and follow the status from it's initial report to eventual repair. 
 
 <h3>Some context:</h3>
-I worked on this project as 1 on a team of 4 developers for our final capstone project at Tech Elevator (an intensive 14-week coding bootcamp). What really excited me about this project was the user experience first approach that we took with our design. We spent a lot of time putting ourselves in the user's shoes and considering features or design choices that may make the site less intuitive. We built in error handling to keep the user on track with their task. I think that consideration is evidenced in the usability and clean styling of our end product. I plan on deploying the app to Heroku soon so anyone interested can interact with FixMyRoad directly! 
+I worked on this project as 1 on a team of 4 developers for our final capstone project at Tech Elevator (an intensive 14-week coding bootcamp). What really excited me about this project was the user experience first approach that we took with our design. We spent a lot of time putting ourselves in the user's shoes and considering features or design choices that may make the site less intuitive. We built in error handling to keep the user on track with their task. I think that consideration is evidenced in the usability and clean styling of our end product. 
+
+What's next?
+
+- I plan on deploying the app to Heroku soon so anyone interested can interact with FixMyRoad directly! 
+- Developing API documentation
 
 ## Logging In
 
